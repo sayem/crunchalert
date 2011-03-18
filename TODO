@@ -1,14 +1,19 @@
 
+- do rough designs and put'em up ---- have main funcs placed up on homepage and account --- also have links
+- then continue working on form + password + cookies/session + welcome email + forgotten password email
 
-- put user DB in with rake and hashed password + email 
-- forgot password
-- cookie
-- work out all design/photoshop/etc and do all layout with Rails/CSS
+	
+- login form and figure out all password with AES + welcome email + forgot password email
+- and emailing if they dont remember, and welcome email
+- figure out signedin/signed out with cookies
 
+
+
+- work out all design/photoshop/etc and do all layout with Rails/CSS -----> model CrunchBase theme, but red/orangeish
 
 DB 
 - user table: email address, password hashed
-- crunchalerts table: email address, list of CSV crunchbase profile names
+- crunchalerts table: email address, list of CSV crunchbase profile names, boolean news feed 
 - cookie table: guid, email address
 
 HOMEPAGE
@@ -32,6 +37,7 @@ ACCOUNT SETTINGS
 -----> careful parsing with nokogiri on cron.rb
 -----> and cron-email.rb needs to have good email formatting --- plain and some colors, include all links relevant detail
 
+- need to also think of routing unknown directories back to URL --- 401 redirects, etc on routes.rb
 
 ============================================================================================================================
 
@@ -45,7 +51,6 @@ ACCOUNT SETTINGS
 - techmeme + techcrunch posts by date
 - use actionmailer for welcome emails and stuff
 - cron ruby file every 24 hours and one for every week too
-
 
 - ADD ----> do regex validation, then pull URL with AJAX as so:
 
