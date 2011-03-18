@@ -1,8 +1,7 @@
 
-- do rough designs and put'em up ---- have main funcs placed up on homepage and account --- also have links
-- then continue working on form + password + cookies/session + welcome email + forgotten password email
+- layout/design rough funcs and page structs ----> understand view/controller/layout/helper ---- do all front-end basics
 
-	
+- then continue working on form + password + cookies/session + welcome email + forgotten password email
 - login form and figure out all password with AES + welcome email + forgot password email
 - and emailing if they dont remember, and welcome email
 - figure out signedin/signed out with cookies
