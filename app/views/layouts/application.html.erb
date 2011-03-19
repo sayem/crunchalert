@@ -1,16 +1,85 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <title>Crunchalert</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <title>CrunchAlert - email alerts on CrunchBase updates from your favorite tech companies and people</title>
+  <meta name="description" content="email alerts on CrunchBase updates from your favorite tech companies and people" />
+  <%= favicon_link_tag 'favicon.ico' %>
+  <%= stylesheet_link_tag 'blueprint/screen', :media => 'screen' %>
   <%= stylesheet_link_tag "main" %>
-  <%= javascript_include_tag "jquery-1.5.1.min" %>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+  <%= javascript_include_tag "jquery.hint" %>
   <%= csrf_meta_tag %>
 </head>
 <body>
+<div class="container">
 
-<%= image_tag("crunchalert_logo.png", :alt => "crunchalert") %>
+
+  <div id="header">
+    <a href="/"><%= image_tag("crunchalert_logo.png", :alt => "crunchalert") %></a>
+    <b>email alerts on CrunchBase updates from your favorite tech companies and people</b>
+
+    <div class="login">
+    Register | Login <!-- need to change depending on user state --> 
+    </div>
+  </div>
+
+
+
+
+
+
+
+<div class="center-container">
+
+
+<ul class="blurb">
+<li>1 - Sign up with your email address</li>
+<li>2 - Add a list of your favorite CrunchBase profiles</li>
+<li>3 - And get a heads up from us whenever they're updated</li>
+</ul>
+
+<hr />
+
+
+  <div class="popular">
+    Most Popular
+    <ul>
+      <li>Google</li>
+      <li>Facebook</li>
+      <li>Twitter</li>
+      <li>Justin Beiber</li>
+    </ul>
+  </div>
+
 
 <%= yield %>
 
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="footer">
+&copy; 2011 CrunchAlert | <a href="mailto:contact@crunchalert.com">contact@crunchalert.com</a>
+</div>
+
+
+
+
+
+
+
+
+</div>
 </body>
+<%= javascript_include_tag "crunchalert" %>
 </html>

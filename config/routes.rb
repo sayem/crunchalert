@@ -1,6 +1,7 @@
 Crunchalert::Application.routes.draw do
   root :to => "pages#home"
   match '/account', :to => 'pages#account'
+  match '/register', :to => 'pages#register'
 
 
   # The priority is based upon order of creation:

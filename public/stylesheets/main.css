@@ -1,2 +1,9 @@
 
-/* crunchalert */
+.container { position: relative; }
+#header { margin-top: 25px; }
+.login { position: absolute; right: 0px; }
+.blurb { margin-top: 25px; }
+.popular { position:absolute; right: 0px; }
+.footer { text-align: center; }
+
+hr { height: 13px; }

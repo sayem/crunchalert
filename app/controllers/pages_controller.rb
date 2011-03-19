@@ -3,6 +3,9 @@ class PagesController < ApplicationController
     @user = User.new
   end
 
+  def register
+  end
+
   def account
   end
 
