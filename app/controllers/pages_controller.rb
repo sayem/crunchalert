@@ -6,6 +6,9 @@ class PagesController < ApplicationController
   def register
   end
 
+  def login
+  end
+
   def account
   end
 
