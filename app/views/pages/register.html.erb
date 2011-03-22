@@ -1,25 +1,23 @@
 
 <%= form_for :user do |f| %>
 
-  <div class="email">
+  <div>
     <%= f.label :email %><br />
     <%= f.text_field :email %>
   </div>
 
-  <div class="password">
+  <div>
     <%= f.label :password %><br />
     <%= f.password_field :password, :size => 40 %>
   </div>
 
-  <div class="field">
+  <div>
     <%= f.label :password_confirmation  %><br />
     <%= f.password_field :password_confirmation, :size => 40 %>
   </div>
 
-  <div class="actions">
+  <div>
     <%= f.submit "Sign up" %>
   </div>
+
 <% end %>
-
-
-
