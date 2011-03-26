@@ -40,19 +40,19 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.xml
   def create
-    @user = User.new(params[:user])
 
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to(:action=> 'index') }
-        format.xml  { render :xml => @user, :status => :created, 
-                             :location => @user }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @user.errors, 
-                             :status => :unprocessable_entity }
-      end
+
+    @user = User.new(params[:user])
+    if @user.save
+      sign_in @user
+      flash[:success] = "Welcome to the Sample App!"
+      redirect_to @user
+    else
+      render 'new'
     end
+
+
+
   end
 
 
