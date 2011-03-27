@@ -95,4 +95,31 @@ class UsersController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+
+
+  def forgot_password
+    if request.post?
+      u= User.find_by_email(params[:user][:email])
+      if u and u.send_new_password
+        flash[:message]  = "A new password has been sent by email."
+        redirect_to :action=>'login'
+      else
+        flash[:warning]  = "Couldn't send password"
+      end
+    end
+  end
+
+  def change_password
+    @user=session[:user]
+    if request.post?
+      @user.update_attributes(:password=>params[:user][:password], :password_confirmation => params[:user][:password_confirmation])
+      if @user.save
+        flash[:message]="Password Changed"
+      end
+    end
+  end
+
+
+
 end
