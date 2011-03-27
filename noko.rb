@@ -1,5 +1,5 @@
 
-=begin
+
 
 require 'open-uri'
 require 'nokogiri'
@@ -9,7 +9,7 @@ doc.css('li').each do |link|
   puts link.content
 end
 
-=end
+
 
 
 =begin

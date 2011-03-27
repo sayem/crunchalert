@@ -40,8 +40,6 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.xml
   def create
-
-
     @user = User.new(params[:user])
     if @user.save
       sign_in @user
@@ -50,16 +48,7 @@ class UsersController < ApplicationController
     else
       render 'new'
     end
-
-
-
   end
-
-
-
-
-
-
 
   def login
     if request.post?
@@ -78,12 +67,6 @@ class UsersController < ApplicationController
     flash[:notice] = "Logged out"
     redirect_to(:action => "login")
   end
-
-
-
-
-
-
 
   # PUT /users/1
   # PUT /users/1.xml

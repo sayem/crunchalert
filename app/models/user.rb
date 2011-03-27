@@ -39,11 +39,10 @@ private
   end
 
   def create_new_salt
-    self.salt = self.object_id.to_s + rand.to_s
+    self.salt = BCrypt::Engine.generate_salt
   end
 
   def self.encrypted_password(password, salt)
-    string_to_hash = password + "wibble" + salt
-    Digest::SHA1.hexdigest(string_to_hash)
+    BCrypt::Engine.hash_secret(password, salt)
   end
 end
