@@ -1,4 +1,3 @@
-require 'digest/sha1'
 
 class User < ActiveRecord::Base
 
@@ -19,30 +18,35 @@ class User < ActiveRecord::Base
       end
     end
     user
-end
-
-def password
-  @password
-end
-
-def password=(pwd)
-  @password = pwd
-  return if pwd.blank?
-  create_new_salt
-  self.hashed_password = User.encrypted_password(self.password, self.salt)
-end
-
-private
-
-  def password_non_blank
-    errors.add(:password, "Missing password") if hashed_password.blank?
   end
 
-  def create_new_salt
-    self.salt = BCrypt::Engine.generate_salt
+  def password
+    @password
   end
 
-  def self.encrypted_password(password, salt)
-    BCrypt::Engine.hash_secret(password, salt)
+  def password=(pwd)
+    @password = pwd
+    return if pwd.blank?
+    create_new_salt
+    self.hashed_password = User.encrypted_password(self.password, self.salt)
   end
+
+  def self.authenticate_with_salt(id, cookie_salt)
+    user = find_by_id(id)
+    (user && user.salt == cookie_salt) ? user : nil
+  end
+
+  private
+
+    def password_non_blank
+      errors.add(:password, "Missing password") if hashed_password.blank?
+    end
+
+    def create_new_salt
+      self.salt = BCrypt::Engine.generate_salt
+    end
+
+    def self.encrypted_password(password, salt)
+      BCrypt::Engine.hash_secret(password, salt)
+    end
 end

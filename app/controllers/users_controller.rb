@@ -68,6 +68,17 @@ class UsersController < ApplicationController
     redirect_to(:action => "login")
   end
 
+
+
+
+
+
+
+
+
+  def account
+  end
+
   # PUT /users/1
   # PUT /users/1.xml
   def update
@@ -96,8 +107,6 @@ class UsersController < ApplicationController
     end
   end
 
-
-
   def forgot_password
     if request.post?
       u= User.find_by_email(params[:user][:email])
@@ -119,7 +128,4 @@ class UsersController < ApplicationController
       end
     end
   end
-
-
-
 end

@@ -4,13 +4,15 @@ Crunchalert::Application.routes.draw do
   resources :sessions, :only => [:new, :create, :destroy]
 
   root :to => "pages#home"
-  match '/account', :to => 'pages#account'
-  match '/register', :to => 'pages#register'
-  match '/login', :to => 'pages#login'
-
   match '/signup',  :to => 'users#new'
-  match '/signin',  :to => 'sessions#new'
-  match '/signout', :to => 'sessions#destroy'
+  match '/login',  :to => 'sessions#new'
+  match '/logout', :to => 'sessions#destroy'
+  match '/account', :to => 'users#account'
+
+
+  # also maybe put in /signedin to pages#signedin for pages to display signedin ---- think about layout more on home and signedin
+
+
 
 
   # The priority is based upon order of creation:
