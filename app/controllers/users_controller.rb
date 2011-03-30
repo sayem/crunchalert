@@ -1,6 +1,4 @@
 class UsersController < ApplicationController
-  # GET /users
-  # GET /users.xml
   def index
     @users = User.all
 
@@ -10,8 +8,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /users/1
-  # GET /users/1.xml
   def show
     @user = User.find(params[:id])
 
@@ -21,8 +17,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /users/new
-  # GET /users/new.xml
   def new
     @user = User.new
 
@@ -32,13 +26,10 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /users/1/edit
   def edit
     @user = User.find(params[:id])
   end
 
-  # POST /users
-  # POST /users.xml
   def create
     @user = User.new(params[:user])
     if @user.save
@@ -69,6 +60,24 @@ class UsersController < ApplicationController
     redirect_to(:action => "login")
   end
 
+  def forgot_password
+    if request.post?
+      u= User.find_by_email(params[:user][:email])
+      if u and u.send_new_password
+        flash[:message]  = "A new password has been sent by email."
+        redirect_to login_path
+      else
+        flash[:warning]  = "Couldn't send password"
+      end
+    end
+  end
+
+
+
+
+
+
+
 
 
 
@@ -80,8 +89,6 @@ class UsersController < ApplicationController
   def account
   end
 
-  # PUT /users/1
-  # PUT /users/1.xml
   def update
     @user = User.find(params[:id])
 
@@ -96,8 +103,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # DELETE /users/1
-  # DELETE /users/1.xml
   def destroy
     @user = User.find(params[:id])
     @user.destroy
@@ -108,17 +113,13 @@ class UsersController < ApplicationController
     end
   end
 
-  def forgot_password
-    if request.post?
-      u= User.find_by_email(params[:user][:email])
-      if u and u.send_new_password
-        flash[:message]  = "A new password has been sent by email."
-        redirect_to :action=>'login'
-      else
-        flash[:warning]  = "Couldn't send password"
-      end
-    end
-  end
+
+
+
+
+
+
+
 
   def change_password
     @user=session[:user]
@@ -129,4 +130,9 @@ class UsersController < ApplicationController
       end
     end
   end
+
+
+
+
+
 end

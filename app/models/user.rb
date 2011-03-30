@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
 
   validate  :password_non_blank
 
+  attr_protected  :id, :salt
+
   def self.authenticate(email, password)
     user = self.find_by_email(email)
     if user
@@ -36,6 +38,13 @@ class User < ActiveRecord::Base
     (user && user.salt == cookie_salt) ? user : nil
   end
 
+  def send_new_password
+    new_pass = User.random_string(10)
+    self.password = self.password_confirmation = new_pass
+    self.save
+    UserMailer.deliver_forgot_password(self.email, new_pass)
+  end
+
   private
 
     def password_non_blank
@@ -48,5 +57,12 @@ class User < ActiveRecord::Base
 
     def self.encrypted_password(password, salt)
       BCrypt::Engine.hash_secret(password, salt)
+    end
+
+    def self.random_string(len)
+      chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
+      newpass = ""
+      1.upto(len) { |i| newpass << chars[rand(chars.size-1)] }
+      return newpass
     end
 end

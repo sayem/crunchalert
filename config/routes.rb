@@ -8,7 +8,7 @@ Crunchalert::Application.routes.draw do
   match '/login',  :to => 'sessions#new'
   match '/logout', :to => 'sessions#destroy'
   match '/account', :to => 'users#account'
-
+  match '/forgot_password',  :to => 'users#forgot_password'
 
   # also maybe put in /signedin to pages#signedin for pages to display signedin ---- think about layout more on home and signedin
 
