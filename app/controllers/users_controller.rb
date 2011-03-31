@@ -50,11 +50,27 @@ class UsersController < ApplicationController
     end
   end
 
+
+
+
+
   def logout
     session[:user_id] = nil
     flash[:notice] = "Logged out"
     redirect_to(:action => "login")
   end
+
+
+
+
+
+
+
+
+
+
+
+
 
   def forgot_password
     if request.post?
@@ -68,29 +84,7 @@ class UsersController < ApplicationController
     end
   end
 
-
-
-
-
-
-
-
-
-
-
   def edit
-    @user = User.find(params[:id])
-  end
-
-
-
-
-
-
-
-
-
-  def account
     @user = User.find(params[:id])
   end
 
@@ -100,38 +94,17 @@ class UsersController < ApplicationController
       flash[:success] = "Profile updated."
       redirect_to @user
     else
-      @title = "Edit user"
       render 'edit'
     end
   end
 
+
+
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(users_url) }
-      format.xml  { head :ok }
-    end
+    redirect_to root_path
   end
-
-
-
-
-
-
-  def change_password
-    @user=session[:user]
-    if request.post?
-      @user.update_attributes(:password=>params[:user][:password], :password_confirmation => params[:user][:password_confirmation])
-      if @user.save
-        flash[:message]="Password Changed"
-      end
-    end
-  end
-
-
-
 
 
 end

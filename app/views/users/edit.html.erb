@@ -17,4 +17,7 @@
   <div class="actions">
     <%= f.submit "Update" %>
   </div>
+
+<%= button_to 'Delete', @user, :confirm => 'Are you sure?', :method => :delete %>
+
 <% end %>

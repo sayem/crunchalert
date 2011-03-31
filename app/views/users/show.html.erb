@@ -15,9 +15,5 @@
   <%= @user.salt %>
 </p>
 
-
-
-
-<td><%= link_to 'Account', edit_user_path(@user) %></td>
-
+<%= link_to 'Account', edit_user_path(@user) %>
 <%= link_to 'Logout', logout_path, :method => :delete %>
