@@ -18,6 +18,9 @@
     <%= f.submit "Update" %>
   </div>
 
-<%= button_to 'Delete', @user, :confirm => 'Are you sure?', :method => :delete %>
+
+
+<%= link_to 'Delete', @user, :method => :delete %>
+
 
 <% end %>

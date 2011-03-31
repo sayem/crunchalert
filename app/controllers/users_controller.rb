@@ -26,52 +26,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def create
-    @user = User.new(params[:user])
-    if @user.save
-      sign_in @user
-      flash[:success] = "Welcome to the Sample App!"
-      redirect_to @user
-      UserMailer.welcome_email(@user).deliver
-    else
-      render 'new'
-    end
-  end
-
-  def login
-    if request.post?
-      user = User.authenticate(params[:email], params[:password])
-      if user
-        session[:user_id] = user.id
-        redirect_to @user
-      else
-        flash.now[:notice] = "Invalid user/password combination"
-      end
-    end
-  end
-
-
-
-
-
-  def logout
-    session[:user_id] = nil
-    flash[:notice] = "Logged out"
-    redirect_to(:action => "login")
-  end
-
-
-
-
-
-
-
-
-
-
-
-
-
   def forgot_password
     if request.post?
       u= User.find_by_email(params[:user][:email])
@@ -98,13 +52,9 @@ class UsersController < ApplicationController
     end
   end
 
-
-
   def destroy
     @user = User.find(params[:id])
     @user.destroy
     redirect_to root_path
   end
-
-
 end

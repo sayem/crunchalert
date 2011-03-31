@@ -6,9 +6,8 @@
   <meta name="description" content="email alerts on CrunchBase updates from your favorite tech companies and people" />
   <%= favicon_link_tag 'favicon.ico' %>
   <%= stylesheet_link_tag 'blueprint/screen', :media => 'screen' %>
-  <%= stylesheet_link_tag "main" %>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-  <%= javascript_include_tag "jquery.hint" %>
+  <%= stylesheet_link_tag 'main' %>
+  <%= javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js', 'rails', 'jquery.hint', 'application' %>
   <%= csrf_meta_tag %>
 </head>
 <body>
@@ -71,7 +70,7 @@
 
 
 
+
 </div>
 </body>
-<%= javascript_include_tag "crunchalert" %>
 </html>

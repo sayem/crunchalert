@@ -11,14 +11,6 @@ Crunchalert::Application.routes.draw do
   match '/forgot_password', :to => 'users#forgot_password'
 
 
-  match '/delete', :to => 'users#destroy'  
-
-
-  # also maybe put in /signedin to pages#signedin for pages to display signedin ---- think about layout more on home and signedin
-
-
-
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
