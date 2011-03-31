@@ -16,5 +16,8 @@
 </p>
 
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+
+
+<td><%= link_to 'Account', edit_user_path(@user) %></td>
+
+<%= link_to 'Logout', logout_path, :method => :delete %>

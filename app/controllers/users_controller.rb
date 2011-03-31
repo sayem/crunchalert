@@ -26,10 +26,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit
-    @user = User.find(params[:id])
-  end
-
   def create
     @user = User.new(params[:user])
     if @user.save
@@ -47,7 +43,7 @@ class UsersController < ApplicationController
       user = User.authenticate(params[:email], params[:password])
       if user
         session[:user_id] = user.id
-        redirect_to(:action => "index")
+        redirect_to @user
       else
         flash.now[:notice] = "Invalid user/password combination"
       end
@@ -82,24 +78,30 @@ class UsersController < ApplicationController
 
 
 
+  def edit
+    @user = User.find(params[:id])
+  end
+
+
+
+
+
 
 
 
 
   def account
+    @user = User.find(params[:id])
   end
 
   def update
     @user = User.find(params[:id])
-
-    respond_to do |format|
-      if @user.update_attributes(params[:user])
-        format.html { redirect_to(:action=> 'index') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
-      end
+    if @user.update_attributes(params[:user])
+      flash[:success] = "Profile updated."
+      redirect_to @user
+    else
+      @title = "Edit user"
+      render 'edit'
     end
   end
 
@@ -112,9 +114,6 @@ class UsersController < ApplicationController
       format.xml  { head :ok }
     end
   end
-
-
-
 
 
 
