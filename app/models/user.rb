@@ -3,11 +3,14 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :email
 
   attr_accessor  :password_confirmation
+  
   validates_confirmation_of  :password
 
   validate  :password_non_blank
 
   attr_protected  :id, :salt
+
+  has_many :alerts, :dependent => :destroy
 
   def self.authenticate(email, password)
     user = self.find_by_email(email)

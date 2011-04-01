@@ -2,6 +2,7 @@ Crunchalert::Application.routes.draw do
 
   resources :users
   resources :sessions, :only => [:new, :create, :destroy]
+  resources :alerts, :only => [:create, :update, :destroy]
 
   root :to => "pages#home"
   match '/signup',  :to => 'users#new'
