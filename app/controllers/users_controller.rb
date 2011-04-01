@@ -26,6 +26,18 @@ class UsersController < ApplicationController
     end
   end
 
+  def create
+    @user = User.new(params[:user])
+    if @user.save
+      sign_in @user
+      flash[:success] = "Welcome to the Sample App!"
+      redirect_to @user
+      UserMailer.welcome_email(@user).deliver
+    else
+      render 'new'
+    end
+  end
+
   def forgot_password
     if request.post?
       u= User.find_by_email(params[:user][:email])

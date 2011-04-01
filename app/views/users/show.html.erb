@@ -5,15 +5,12 @@
   <%= @user.email %>
 </p>
 
-<p>
-  <b>Hashed password:</b>
-  <%= @user.hashed_password %>
-</p>
 
-<p>
-  <b>Salt:</b>
-  <%= @user.salt %>
-</p>
+
+- newsfeed checkbox
+- form for crunchbase profiles
+
+
 
 <%= link_to 'Account', edit_user_path(@user) %>
 <%= link_to 'Logout', logout_path, :method => :delete %>
