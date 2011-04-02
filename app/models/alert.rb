@@ -1,5 +1,5 @@
 class Alert < ActiveRecord::Base
-  attr_acccessible :content
+  attr_accessible :content
 
   belongs_to :user
 

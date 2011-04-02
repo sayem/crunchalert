@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     if @user.save
       sign_in @user
       flash[:success] = "Welcome to the Sample App!"
-      redirect_to @user
+      redirect_to root_path
       UserMailer.welcome_email(@user).deliver
     else
       render 'new'
@@ -58,7 +58,8 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user.update_attributes(params[:user])
       flash[:success] = "Profile updated."
-      redirect_to @user
+      sign_in @user  
+      redirect_to root_path
     else
       render 'edit'
     end

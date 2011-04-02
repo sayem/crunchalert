@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-  <title>CrunchAlert - email alerts on CrunchBase updates from your favorite tech companies and people</title>
+  <title>CrunchAlert - Email Alerts on CrunchBase Updates</title>
   <meta name="description" content="email alerts on CrunchBase updates from your favorite tech companies and people" />
   <%= favicon_link_tag 'favicon.ico' %>
   <%= stylesheet_link_tag 'blueprint/screen', :media => 'screen' %>
@@ -23,6 +23,9 @@
       <% if !signed_in? %>
       <%= link_to "Register", signup_path %>
       <%= link_to "Login", login_path %>
+      <% else %>
+      <%= link_to "Account", edit_user_path(current_user) %>
+      <%= link_to "Logout", logout_path, :method => :delete %>
       <% end %>
 
     </div>

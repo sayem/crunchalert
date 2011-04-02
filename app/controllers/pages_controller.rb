@@ -1,5 +1,7 @@
 class PagesController < ApplicationController
   def home
-    redirect_to current_user, and return if signed_in?
+    if signed_in?
+      @alert = Alert.new
+    end
   end
 end
