@@ -4,4 +4,4 @@ log/*.log
 tmp/
 /TODO
 *~
-/#_
+*#
