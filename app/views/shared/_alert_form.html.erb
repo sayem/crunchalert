@@ -1,4 +1,4 @@
-<%= form_for @alert do |f| %>
+<%= form_for(@alert, :remote => true) do |f| %>
 
   <div class="field">
     <%= f.text_field(:content) %>
@@ -10,7 +10,7 @@
 <%= label_tag(:company, "Company") %>
 <%= radio_button_tag(:cbase, "person") %>
 <%= label_tag(:person, "Person") %>
-<%= radio_button_tag(:cbase, "fund") %>
+<%= radio_button_tag(:cbase, "financial-organization") %>
 <%= label_tag(:fund, "Venture Fund") %>
 
 <br /><br />
@@ -20,3 +20,7 @@
   </div>
 
 <% end %>
+
+    <ul id="my_list">
+      <li>Original item... please add more!</li>
+    </ul>

@@ -1,15 +1,34 @@
 
-
-
 require 'open-uri'
 require 'nokogiri'
 
-doc = Nokogiri::HTML(open('http://www.crunchbase.com/company/bit-ly'))
+begin
+  doc = Nokogiri::HTML(open('http://www.crunchbase.com/company/facebook'))
+  puts "exists"
+
+rescue OpenURI::HTTPError 
+  puts "not there"
+end
+
+
+
+=begin
+
+if doc?
+  puts "exists"
+else
+  puts "not there"
+end
+
+=end
+
+=begin
+
 doc.css('li').each do |link|
   puts link.content
 end
 
-
+=end
 
 
 =begin

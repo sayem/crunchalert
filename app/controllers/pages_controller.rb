@@ -3,5 +3,6 @@ class PagesController < ApplicationController
     if signed_in?
       @alert = Alert.new
     end
+
   end
 end
