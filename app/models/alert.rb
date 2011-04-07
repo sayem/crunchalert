@@ -1,10 +1,18 @@
 class Alert < ActiveRecord::Base
-  attr_accessible :content
-
   belongs_to :user
 
-  validates :content, :presence => true
-  validates :user_id, :presence => true
+  has_many :users
+
+  attr_accessible :content
+
+  content_regex = /[\w+\-.]/i
+
+  validates :user_id, :presence   => true
+
+  validates_uniqueness_of :content, :scope => :user_id, :case_sensitive => false
+
+  validates :content, :presence   => true,
+                      :format     => { :with => content_regex }
 
   default_scope :order => 'alerts.created_at DESC'
 end

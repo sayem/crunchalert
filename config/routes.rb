@@ -9,7 +9,6 @@ Crunchalert::Application.routes.draw do
   match '/signup',  :to => 'users#new'
   match '/login',  :to => 'sessions#new'
   match '/logout', :to => 'sessions#destroy'
-  match '/account', :to => 'users#account'
   match '/forgot_password', :to => 'users#forgot_password'
 
 
