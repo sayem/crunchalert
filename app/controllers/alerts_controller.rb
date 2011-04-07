@@ -5,19 +5,27 @@ class AlertsController < ApplicationController
   before_filter :authenticate
   before_filter :authorized_user, :only => :destroy
 
-  # need to have some unique index in here
-
-  
+ 
   def create
 
+    # regex filter content here /[\w+\-.]/i
+    content = params[:alert]['content'].gsub(/[\s\.]/,'-')
 
     begin
-      content = params[:alert]['content'].gsub(/[\s\.]/,'-')
       doc = Nokogiri::HTML(open("http://crunchbase.com/#{params[:cbase]}/#{content}"))
-      @ass = "exists"
-      @alert = current_user.alerts.build(params[:alert])
-      if @alert.save
-        respond_to do |format|        
+      milestones = doc.css('#milestones').text.strip!
+      if milestones
+        @ass = "exists"
+        @alert = current_user.alerts.build(params[:alert])
+        if @alert.save
+          respond_to do |format|        
+            format.html { redirect_to root_path }
+            format.js
+          end
+        end
+      else
+        @ass = "not there"
+        respond_to do |format|
           format.html { redirect_to root_path }
           format.js
         end
@@ -29,8 +37,6 @@ class AlertsController < ApplicationController
         format.js
       end
     end
-
-
   end
 
   def destroy

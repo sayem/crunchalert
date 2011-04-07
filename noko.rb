@@ -2,6 +2,8 @@
 require 'open-uri'
 require 'nokogiri'
 
+=begin
+
 begin
   doc = Nokogiri::HTML(open('http://www.crunchbase.com/company/facebook'))
   puts "exists"
@@ -10,7 +12,7 @@ rescue OpenURI::HTTPError
   puts "not there"
 end
 
-
+=end
 
 =begin
 
@@ -22,13 +24,22 @@ end
 
 =end
 
-=begin
 
-doc.css('li').each do |link|
-  puts link.content
+
+begin
+  doc = Nokogiri::HTML(open('http://www.crunchbase.com/company/facebook'))
+  milestones = doc.css('#milestones').text.strip!
+
+  if milestones
+    puts milestones
+  else 
+    puts "not there"
+  end
+
+rescue OpenURI::HTTPError 
+  puts "not there"
 end
 
-=end
 
 
 =begin
@@ -41,4 +52,3 @@ doc.css('li').each do |link|
 end
 
 =end
-
