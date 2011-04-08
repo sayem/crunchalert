@@ -7,13 +7,21 @@ class AlertsController < ApplicationController
 
  
   def create    
+
+
     content = params[:alert]['content'].gsub(/[\s\.]/,'-')
     if content =~ /[\w+\-]/i
       begin
         doc = Nokogiri::HTML(open("http://crunchbase.com/#{params[:cbase]}/#{content}"))
         milestones = doc.css('#milestones').text.strip!
+        logo = doc.css('#company_logo img').to_s()
+        pic = logo.split('"');
+
         if milestones
           @check = "exists"
+          @pic = pic[1]
+          @link = "http://crunchbase.com/#{params[:cbase]}/#{content}"
+
           @alert = current_user.alerts.build(params[:alert])
           if @alert.save
             respond_to do |format|        
@@ -21,6 +29,13 @@ class AlertsController < ApplicationController
               format.js
             end
           end
+
+
+
+        # put in elseif to check for errors  
+
+
+
         else
           @check = "not there"
           respond_to do |format|
@@ -42,6 +57,8 @@ class AlertsController < ApplicationController
         format.js
       end
     end
+
+
   end
 
   def destroy
