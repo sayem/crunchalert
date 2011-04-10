@@ -15,28 +15,22 @@
 
 <br /><br />
 
+
+<ul id="link">
+</ul>
+
 <%= select(:alert, :freq, options_for_select([['Daily', true], ['Weekly', false]])) %>
 
 <br /><br />
 
 <%= check_box(:alert, :news, {}, true, false) %>
-<%= label_tag(:news, "Include TechCrunch & TechMeme news updates") %>
+<%= label_tag(:news, 'Include TechCrunch & TechMeme news updates') %>
 
 <br /><br />
 
-  <div class="actions">
-    <%= f.submit "Submit" %>
-  </div>
+<div class='actions'>
+  <%= f.submit 'Submit' %>
+</div>
+
 
 <% end %>
-
-    <ul id="link">
-      <li>Original item... please add more!</li>
-    </ul>
-
-    <ul id="pic">
-      <li>Original item... please add more!</li>
-    </ul>
-
-<img src="http://www.crunchbase.com/assets/images/resized/0000/4561/4561v1-max-250x250.png" border="0" alt="Facebook Picture">
-
