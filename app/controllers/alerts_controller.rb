@@ -4,7 +4,28 @@ require 'nokogiri'
 class AlertsController < ApplicationController
   before_filter :authenticate
   before_filter :authorized_user, :only => :destroy
- 
+
+  def crunchbase
+    content = params[:crunchbase]
+    type = params[:cbase]
+    
+
+
+
+
+
+
+    render :text => "#{content} and #{type}"
+
+
+
+# put in all rules here to get pictures and render form
+# validate content in jquery beforesubmit
+
+
+
+  end
+
   def create
     content = params[:alert]['content'].gsub(/[\s\.]/,'-')
     if content =~ /[\w+\-]/i

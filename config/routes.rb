@@ -4,12 +4,13 @@ Crunchalert::Application.routes.draw do
   resources :sessions, :only => [:new, :create, :destroy]
   resources :alerts, :only => [:create, :update, :destroy]
 
-
   root :to => "pages#home"
   match '/signup',  :to => 'users#new'
   match '/login',  :to => 'sessions#new'
   match '/logout', :to => 'sessions#destroy'
   match '/forgot_password', :to => 'users#forgot_password'
+
+  match '/crunchbase', :to => 'alerts#crunchbase'
 
 
   # The priority is based upon order of creation:
