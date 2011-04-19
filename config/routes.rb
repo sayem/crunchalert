@@ -11,6 +11,7 @@ Crunchalert::Application.routes.draw do
   match '/forgot_password', :to => 'users#forgot_password'
 
   match '/crunchbase', :to => 'alerts#crunchbase'
+  match '/crunchalert', :to => 'alerts#crunchalert'
 
 
   # The priority is based upon order of creation:

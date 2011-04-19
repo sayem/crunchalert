@@ -1,55 +1,44 @@
 
 $(document).ready(function() {
-    var value = $('#form-crunchbase *').fieldValue();
-    content = value[0];
-    type = value[1];
-
-    var options = {
+    var crunchbase_options = {
 	url: '/crunchbase',
-	target: '#ass',
-	beforeSubmit:  showRequest, /* put in regex here */
-	success: function() { $('#form-crunchbase').clearForm(); }
+	dataType: 'json',
+	success: switch_form
     };
-    $('#form-crunchbase').ajaxForm(options);
+    $('#form-crunchbase').ajaxForm(crunchbase_options);
 });
 
+function switch_form(data) {
+    var content = $('#form-crunchbase *').fieldValue()[0];
+    $('#form-crunchbase').remove();
+    $('#input').append(data[0]);
+    $('#input').append(data[1]);
+
+    var new_form = "<form id='form-alert' method='post' name='alert'><select id='freq' name='freq'><option value='true'>Daily</option><option value='false'>Weekly</option></select><input id='news' name='news' type='checkbox' check value='true' /><input name='news' type='hidden' value='false' /><label for='news'>Include TechCrunch &amp; TechMeme news updates</label><div class='actions'><input id='alert_submit' type='submit' value='Submit' /></div></form>";
+    $('#input').append(new_form);
+
+    $('#form-alert').submit(function() {
+	var prefs = $('#form-alert *').fieldValue();
+	$.post('/crunchalert', { content: content, freq: prefs[0], news: prefs[1] }, function(data) {
+
+
+/*
+	    if (data)
+		alert(data);
+	    else 
+		alert('not true');
+
+*/
+
+
+	});
+
+
+	alert('added');
+
+
+    });
 
 
 
-
-
-
-
-
-function showRequest(formData, jqForm, options) { 
-    // formData is an array; here we use $.param to convert it to a string to display it 
-    // but the form plugin does this for you automatically when it submits the data 
-    var queryString = $.param(formData); 
- 
-    // jqForm is a jQuery object encapsulating the form element.  To access the 
-    // DOM element for the form do this: 
-    // var formElement = jqForm[0]; 
- 
-    alert('About to submit: \n\n' + queryString); 
- 
-    // here we could return false to prevent the form from being submitted; 
-    // returning anything other than false will allow the form submit to continue 
-    return true; 
-} 
- 
-// post-submit callback 
-function showResponse(responseText, statusText, xhr, $form)  { 
-    // for normal html responses, the first argument to the success callback 
-    // is the XMLHttpRequest object's responseText property 
- 
-    // if the ajaxForm method was passed an Options Object with the dataType 
-    // property set to 'xml' then the first argument to the success callback 
-    // is the XMLHttpRequest object's responseXML property 
- 
-    // if the ajaxForm method was passed an Options Object with the dataType 
-    // property set to 'json' then the first argument to the success callback 
-    // is the json data object returned by the server 
- 
-    alert('status: ' + statusText + '\n\nresponseText: \n' + responseText + 
-        '\n\nThe output div should have already been updated with the responseText.'); 
-} 
+};
