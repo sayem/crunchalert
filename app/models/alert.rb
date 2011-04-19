@@ -3,9 +3,7 @@ class Alert < ActiveRecord::Base
 
   has_many :users
 
-  attr_accessible :content
-  attr_accessible :freq
-  attr_accessible :news
+  attr_accessible :content, :user_id, :freq, :news
 
   content_regex = /[\w+\-.]/i
 

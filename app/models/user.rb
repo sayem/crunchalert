@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :email
 
   attr_accessor  :password_confirmation
-  
+
   validates_confirmation_of  :password
 
   validate  :password_non_blank
