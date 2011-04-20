@@ -17,12 +17,11 @@ class AlertsController < ApplicationController
         pic = logo.split('"');
         if milestones
           check = "exists"
-          picture = "<img src=#{pic[1]}></img>"
+          picurl = pic[1]
+          picture = "<img src=#{picurl}></img>"
           link = "<a href=http://crunchbase.com/#{type}/#{content} target=_blank>#{params[:crunchbase]}</a>"
-          profile = [picture, link]        
+          profile = [picurl, picture, link]        
           render :json => profile
-
-
         elsif error == "The page you are looking for is temporarily unavailable.\nPlease try again later."
           check = "crunchbase is unavailable"
           render :json => check
@@ -34,7 +33,6 @@ class AlertsController < ApplicationController
         check = "not there"
         render :json => check
       end
-
     else
       check = "bad regex input"
       render :json => check
@@ -42,7 +40,14 @@ class AlertsController < ApplicationController
   end
 
   def crunchalert
-    Alert.create(:content => params[:content], :user_id => current_user[:id], :news => params[:news], :freq => params[:freq])
+    Alert.create(:content => params[:content].downcase, :user_id => current_user[:id], :news => params[:news], :freq => params[:freq])
+    Picture.create(:content => params[:content].downcase, :url => params[:pic])
+
+
+
+# if picture with content exists != :pic, then update ----> test out with IRB and then put in string into javascript to check
+
+
   end
 
   def destroy
