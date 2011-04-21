@@ -41,13 +41,16 @@ class AlertsController < ApplicationController
 
   def crunchalert
     Alert.create(:content => params[:content].downcase, :user_id => current_user[:id], :news => params[:news], :freq => params[:freq])
-    Picture.create(:content => params[:content].downcase, :url => params[:pic])
-
-
-
-# if picture with content exists != :pic, then update ----> test out with IRB and then put in string into javascript to check
-
-
+    begin
+      pic = Picture.find_by_content(params[:content])
+      unless pic == params[:pic]
+        pic = Picture.find_by_content(params[:content])
+        pic.url = params[:pic]
+        pic.save
+      end
+    rescue NameError
+      Picture.create(:content => params[:content].downcase, :url => params[:pic])
+    end
   end
 
   def destroy
