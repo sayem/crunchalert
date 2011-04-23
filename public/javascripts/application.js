@@ -6,6 +6,23 @@ $(document).ready(function() {
 	success: switch_form
     };
     $('#form-crunchbase').ajaxForm(crunchbase_options);
+
+    $('.edit_alert').click(function() {
+	$this.remove();
+	
+
+
+
+    })
+/*
+
+- ajax for removing this Edit and showing freq/news fields and update/delete/cancel button  ----- add html
+- then put in delete button and cancel button
+
+*/
+
+    
+
 });
 
 function switch_form(data) {
@@ -33,10 +50,6 @@ function switch_form(data) {
 
 
 	});
-
-
 	alert('added');
-
-
     });
 };

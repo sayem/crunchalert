@@ -53,11 +53,6 @@ class AlertsController < ApplicationController
     end
   end
 
-  def destroy
-    @alert.destroy
-    redirect_to root_path, :flash => { :success => "Alert deleted!" }
-  end
-
   private
 
     def authorized_user

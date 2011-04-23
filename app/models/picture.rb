@@ -9,5 +9,4 @@ class Picture < ActiveRecord::Base
 
   validates :content, :presence   => true,
                       :format     => { :with => content_regex }
-
 end
