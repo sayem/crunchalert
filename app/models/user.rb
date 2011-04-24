@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   attr_protected  :id, :salt
 
   has_many :alerts, :dependent => :destroy
+  has_many :news, :dependent => :destroy
 
   def self.authenticate(email, password)
     user = self.find_by_email(email)

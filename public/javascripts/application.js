@@ -7,21 +7,35 @@ $(document).ready(function() {
     };
     $('#form-crunchbase').ajaxForm(crunchbase_options);
 
+
+
+    var crunchnews_options = {
+	url: '/news',
+	dataType: 'json',
+    };
+    $('#form-crunchnews').ajaxForm(crunchnews_options);
+
+
+
+
     $('.edit_alert').click(function() {
-	$this.remove();
-	
+	$(this).text('');
+	var update_alert = "<form id='form-update' method='post' name='alert'><select id='freq' name='freq'><option value='true'>Daily</option><option value='false'>Weekly</option></select><input id='news' name='news' type='checkbox' check value='true' /><input name='news' type='hidden' value='false' /><label for='news'>Include TechCrunch &amp; TechMeme news updates</label><div class='actions'><input id='alert_submit' type='submit' value='Submit' /></div></form>";
+	$(this).append(update_alert);
+	var delete_button = "delete";
+	var cancel_button = "cancel";
+	$(this).append(delete_button);
+	$(this).append(cancel_button);
+    });
 
 
-
-    })
 /*
 
-- ajax for removing this Edit and showing freq/news fields and update/delete/cancel button  ----- add html
+- get ajax values for update alert for news/freq, figure out form submission
+- ajax for removing this Edit and showing freq/news fields and update/delete/cancel button
 - then put in delete button and cancel button
 
-*/
-
-    
+*/    
 
 });
 

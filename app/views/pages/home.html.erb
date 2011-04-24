@@ -3,12 +3,14 @@
 
 <%= render 'shared/crunchbase_form' %>
 
+<%= render 'shared/news_form' %>
+
 <% @alerts.each do |alert| %>
 
  <div class="crunchalert">
   <%= image_tag(Picture.find_by_content(alert.content)[:url]) %>
   <%=h alert.content.capitalize %>
-  <%= link_to "Edit", "/", :class => "edit_alert" %>
+  <span class="edit_alert">Edit</span> 
  </div>
 
 <% end %>

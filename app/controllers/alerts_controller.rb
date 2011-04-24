@@ -6,7 +6,7 @@ class AlertsController < ApplicationController
   before_filter :authorized_user, :only => :destroy
 
   def crunchbase
-    content = params[:crunchbase].gsub(/[\s\.]/,'-')
+    content = params[:crunchbase].downcase.gsub(/[\s\.]/,'-')
     type = params[:cbase]
     if content =~ /[\w+\-]/i
       begin
@@ -40,17 +40,22 @@ class AlertsController < ApplicationController
   end
 
   def crunchalert
-    Alert.create(:content => params[:content].downcase, :user_id => current_user[:id], :news => params[:news], :freq => params[:freq])
+    content = params[:content].downcase
+    Alert.create(:content => content, :user_id => current_user[:id], :news => params[:news], :freq => params[:freq])
     begin
-      pic = Picture.find_by_content(params[:content])
+      pic = Picture.find_by_content(content)
       unless pic == params[:pic]
-        pic = Picture.find_by_content(params[:content])
+        pic = Picture.find_by_content(content)
         pic.url = params[:pic]
         pic.save
       end
     rescue NameError
-      Picture.create(:content => params[:content].downcase, :url => params[:pic])
+      Picture.create(:content => content, :url => params[:pic])
     end
+  end
+
+  def news
+    News.create(:user_id => current_user[:id], :news => params[:news], :freq => params[:freq])    
   end
 
   private
