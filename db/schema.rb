@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110419233404) do
+ActiveRecord::Schema.define(:version => 20110424030328) do
 
   create_table "alerts", :force => true do |t|
     t.string   "content"
@@ -22,6 +22,14 @@ ActiveRecord::Schema.define(:version => 20110419233404) do
   end
 
   add_index "alerts", ["user_id"], :name => "index_alerts_on_user_id"
+
+  create_table "news", :force => true do |t|
+    t.string   "user_id"
+    t.boolean  "news"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "freq"
+  end
 
   create_table "pictures", :force => true do |t|
     t.string   "content"
