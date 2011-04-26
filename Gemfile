@@ -24,6 +24,8 @@ gem 'jquery-rails', '>= 0.2.6'
 # Bundle the extra gems:
 # gem 'bj'
 
+gem 'whenever', :require => false
+
 gem 'nokogiri'
 
 # gem 'sqlite3-ruby', :require => 'sqlite3'

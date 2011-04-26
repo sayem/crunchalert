@@ -13,4 +13,7 @@ class UserMailer < ActionMailer::Base
     mail(:to => to,
          :subject => "Your password is ...") 
   end
+
+
+
 end
