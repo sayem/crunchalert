@@ -7,15 +7,11 @@ $(document).ready(function() {
     };
     $('#form-crunchbase').ajaxForm(crunchbase_options);
 
-
-
     var crunchnews_options = {
 	url: '/news',
 	dataType: 'json',
     };
     $('#form-crunchnews').ajaxForm(crunchnews_options);
-
-
 
 
     $('.edit_alert').click(function() {
