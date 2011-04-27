@@ -1,3 +1,8 @@
+    require 'mail'
+    require 'nokogiri'
+    require 'open-uri'
+
+
 class User < ActiveRecord::Base
   validates_presence_of     :email
   validates_uniqueness_of   :email
@@ -45,6 +50,21 @@ class User < ActiveRecord::Base
     self.password = self.password_confirmation = new_pass
     self.save
     UserMailer.deliver_forgot_password(self.email, new_pass)
+  end
+
+  def self.cron
+    User.all.each do |user|
+      alerts = Alert.find_all_by_user_id_and_freq(user.id, true)
+      alerts.each do |alert|
+        mail = Mail.new do
+          from 'CrunchAlert <admin@crunchalert.com>'
+          to user.email
+          subject 'whatsup'
+          body alert.content
+        end
+        mail.deliver!
+      end
+    end
   end
 
   private
