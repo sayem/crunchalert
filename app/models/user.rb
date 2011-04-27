@@ -1,7 +1,6 @@
-    require 'mail'
-    require 'nokogiri'
-    require 'open-uri'
-
+require 'mail'
+require 'nokogiri'
+require 'open-uri'
 
 class User < ActiveRecord::Base
   validates_presence_of     :email

@@ -1,7 +1,4 @@
 
-every 1.minute do
-  runner "User.cron", environment => 'development'
-end
 
 # Use this file to easily define all of your cron jobs.
 #
