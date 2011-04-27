@@ -1,6 +1,6 @@
 
 every 1.minute do
-  command "cd #{current_path} && ruby cronmail.rb"
+  runner "User.cron", environment => 'development'
 end
 
 # Use this file to easily define all of your cron jobs.

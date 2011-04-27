@@ -80,6 +80,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt-ruby
   jquery-rails (>= 0.2.6)
+  mail
   nokogiri
   rails (= 3.0.5)
   sqlite3
