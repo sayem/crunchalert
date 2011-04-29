@@ -41,7 +41,7 @@ class AlertsController < ApplicationController
 
   def crunchalert
     content = params[:content].downcase
-    Alert.create(:content => content, :user_id => current_user[:id], :news => params[:news], :freq => params[:freq])
+    Alert.create(:content => content, :content_type => params[:type], :user_id => current_user[:id], :news => params[:news], :freq => params[:freq])
     begin
       pic = Picture.find_by_content(content)
       unless pic == params[:pic]
