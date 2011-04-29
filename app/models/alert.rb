@@ -1,7 +1,7 @@
 class Alert < ActiveRecord::Base
   belongs_to :user
 
-  attr_accessible :content, :user_id, :freq, :news
+  attr_accessible :content, :content_type, :user_id, :freq, :news
 
   content_regex = /[\w+\-.]/i
 

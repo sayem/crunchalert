@@ -37,6 +37,7 @@ $(document).ready(function() {
 
 function switch_form(data) {
     var content = $('#form-crunchbase *').fieldValue()[0];
+    var type = $('#form-crunchbase *').fieldValue()[1];
     var picurl = data[0];
     $('#form-crunchbase').remove();
     $('#input').append(data[1]);
@@ -47,7 +48,7 @@ function switch_form(data) {
 
     $('#form-alert').submit(function() {
 	var prefs = $('#form-alert *').fieldValue();
-	$.post('/crunchalert', { content: content, freq: prefs[0], news: prefs[1], pic: picurl }, function(data) {
+	$.post('/crunchalert', { content: content, type: type, freq: prefs[0], news: prefs[1], pic: picurl }, function(data) {
 
 
 /*
