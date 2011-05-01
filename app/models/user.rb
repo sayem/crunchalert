@@ -54,30 +54,11 @@ class User < ActiveRecord::Base
 
   def self.daily
     User.all.each do |user|
-
-=begin
-
-- then compile into user.rb and set emails
-
-
-- clean up all HTML spacing and shit
-- then weekly cron
-- then work on newsfeed portion daily/weekly ---- put in alongside user/alert loop for daily/weekly (order by funding, acq, products/companies) 
-
----> then start working on other comp to work on design 
-
-=end
-  
       crunchalerts = Array.new
       yesterday = Date.today.prev_day.strftime("%m/%d/%y")
       yesterday.slice!(0) if yesterday.slice(0) == '0'
       alerts = Alert.find_all_by_user_id_and_freq(user.id, true)
       alerts.each do |alert|
-
-
-        crunchalerts.push(alert.content)
-
-
         content_url = alert.content.gsub(/[\s\.]/,'-')
         doc = Nokogiri::HTML(open("http://crunchbase.com/#{alert.content_type}/#{content_url}"))
         milestones = doc.css('#milestones li').each do |milestone|
@@ -85,43 +66,73 @@ class User < ActiveRecord::Base
             text = milestone.at_css('.milestone_text').to_s().gsub(/\/#{alert.content_type}\/#{alert.content}/,"http://crunchbase.com/#{alert.content_type}/#{alert.content}").gsub(/<div class="milestone_text">|<\/div>/,'')
 
 
-            crunchalerts.push(text)
+            crunchalerts.push("<p>#{alert.content.capitalize}</p>")            
+            crunchalerts.push("<p>#{text}<p>")
           end
         end
 
-
-
-
-        crunchalerts.push('NEWS')
         techcrunch = Date.today.prev_day.strftime("%Y/%m/%d")
         techmeme = Date.today.prev_day.strftime("%y%m%d")
+        alertlinks = doc.css('.recently_link').each do |alertlink|
+          if alertlink.to_s() =~ /#{techcrunch}|#{techmeme}/
+            links = alertlink.to_s().gsub(/<div class="recently_link">|<\/div>/,'')
 
-        news = doc.css('.recently_link').each do |news|
-          if news.to_s() =~ /#{techcrunch}|#{techmeme}/
-            links = news.to_s().gsub(/<div class="recently_link">|<\/div>/,'')
 
-
-            crunchalerts.push(links)
+            crunchalerts.push('News:')
+            crunchalerts.push("<p>#{links}</p>")
           end
         end
-
       end              
-      puts crunchalerts
-      puts techcrunch
-      puts techmeme
 
-
-=begin
-        mail = Mail.new do
+      if !crunchalerts.empty?
+        Mail.deliver do
           from 'CrunchAlert <admin@crunchalert.com>'
           to user.email
-          subject 'whatsup'
-          body alert.content
+          subject 'CrunchAlert.com'
+
+          html_part do
+            content_type 'text/html; charset=UTF-8'
+            body crunchalerts
+          end
         end
-        mail.deliver!
-=end
+      end
+
+
+
+
+
+
+      news = News.find_all_by_user_id_and_freq(user.id, true)
+      if !news.empty?
+
+=begin
+
+- EDIT once crunchbase has some milestones up on the homepage 
+- order funding, acq, products/companies
+- separate email
+
+=end      
+
+      end
+
+
+
 
     end
+  end
+
+
+
+
+  def self.weekly
+
+=begin
+
+- store daily crawls of alerts/news and crunchbase front page into DB 
+- send mail of all the saved feeds/links since one week and empty DB
+
+=end
+
   end
 
   private
