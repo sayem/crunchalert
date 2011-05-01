@@ -3,7 +3,7 @@ require 'open-uri'
 require 'date'
 
 begin
-  doc = Nokogiri::HTML(open('http://crunchbase.com/company/facebook'))
+  doc = Nokogiri::HTML(open('http://crunchbase.com/company/twitter'))
   techcrunch = Date.today.prev_day.strftime("%Y/%m/%d")
   techmeme = Date.today.prev_day.strftime("%y%m%d")
 

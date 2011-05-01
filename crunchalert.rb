@@ -10,7 +10,6 @@ begin
     yesterday.slice!(0) if yesterday.slice(0) == '0'
 
 
-
     if milestone.text =~ /#{yesterday}/
       text = milestone.at_css('.milestone_text').to_s().gsub(/\/company\/ideeli/,'http://crunchbase.com/company/ideeli').gsub(/<div class="milestone_text">|<\/div>/,'')
       puts text
