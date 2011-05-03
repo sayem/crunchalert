@@ -55,8 +55,14 @@ class User < ActiveRecord::Base
   def self.daily
     User.all.each do |user|
       crunchalerts = Array.new
+
+
+
       yesterday = Date.today.prev_day.strftime("%m/%d/%y")
       yesterday.slice!(0) if yesterday.slice(0) == '0'
+
+
+
       alerts = Alert.find_all_by_user_id_and_freq(user.id, true)
       alerts.each do |alert|
         content_url = alert.content.gsub(/[\s\.]/,'-')
@@ -64,6 +70,7 @@ class User < ActiveRecord::Base
         milestones = doc.css('#milestones li').each do |milestone|
           if milestone.text =~ /#{yesterday}/
             text = milestone.at_css('.milestone_text').to_s().gsub(/\/#{alert.content_type}\/#{alert.content}/,"http://crunchbase.com/#{alert.content_type}/#{alert.content}").gsub(/<div class="milestone_text">|<\/div>/,'')
+
 
 
             crunchalerts.push("<p>#{alert.content.capitalize}</p>")            
@@ -76,6 +83,7 @@ class User < ActiveRecord::Base
         alertlinks = doc.css('.recently_link').each do |alertlink|
           if alertlink.to_s() =~ /#{techcrunch}|#{techmeme}/
             links = alertlink.to_s().gsub(/<div class="recently_link">|<\/div>/,'')
+
 
 
             crunchalerts.push('News:')
@@ -99,19 +107,36 @@ class User < ActiveRecord::Base
 
 
 
-
-
-
       news = News.find_all_by_user_id_and_freq(user.id, true)
       if !news.empty?
+        doc = Nokogiri::HTML(open('http://crunchbase.com'))       
 
-=begin
+        month = Date.today.month.to_s()
+        day = Date.today.day.to_s()
+        year = Date.today.year.to_s()
+        year.slice!(0..1)
+        today = month << '/' << day << '/' << year
 
-- EDIT once crunchbase has some milestones up on the homepage 
-- order funding, acq, products/companies
-- separate email
+        news_alerts = Array.new
+        milestones = doc.css('#milestones li').each do |milestone|
+          if milestone.text =~ /#{today}/
+            text = milestone.at_css('.milestone_text').to_s().gsub(/\/company\//,'http://crunchbase.com/company/').gsub(/\/person\//,'http://crunchbase.com/person/').gsub(/\/financial-organization\//,'http://crunchbase.com/financial-organization/').gsub(/<div class="milestone_text">|<\/div>/,'')
+            news_alerts.push("<p>#{text}</p>")
+          end
+        end
 
-=end      
+        if !news_alerts.empty?
+          Mail.deliver do
+            from 'CrunchAlert <admin@crunchalert.com>'
+            to user.email
+            subject 'CrunchAlert.com News'
+
+            html_part do
+              content_type 'text/html; charset=UTF-8'
+              body news_alerts
+            end
+          end
+        end
 
       end
 
