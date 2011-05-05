@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110428222810) do
+ActiveRecord::Schema.define(:version => 20110503225844) do
 
   create_table "alerts", :force => true do |t|
     t.string   "content"
@@ -48,5 +48,18 @@ ActiveRecord::Schema.define(:version => 20110428222810) do
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+
+  create_table "weekly_alerts", :force => true do |t|
+    t.string   "content"
+    t.text     "weekly_data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "weekly_news", :force => true do |t|
+    t.text     "weekly_data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

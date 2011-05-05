@@ -3,26 +3,24 @@ require 'open-uri'
 require 'date'
 
 begin
-  doc = Nokogiri::HTML(open('http://www.crunchbase.com/company/ideeli'))
+  doc = Nokogiri::HTML(open('http://www.crunchbase.com/company/nestio'))
   milestones = doc.css('#milestones li').each do |milestone|
 
-    yesterday = Date.today.prev_day.strftime("%m/%d/%y")
-    yesterday.slice!(0) if yesterday.slice(0) == '0'
+
+    month = Date.today.prev_day.month.to_s()
+    day = Date.today.prev_day.day.to_s()
+    year = Date.today.prev_day.year.to_s()
+    year.slice!(0..1)
+    yesterday = month << '/' << day << '/' << year
 
 
     if milestone.text =~ /#{yesterday}/
-      text = milestone.at_css('.milestone_text').to_s().gsub(/\/company\/ideeli/,'http://crunchbase.com/company/ideeli').gsub(/<div class="milestone_text">|<\/div>/,'')
+      text = milestone.at_css('.milestone_text').to_s().gsub(/\/company\/nestio/,'http://crunchbase.com/company/nestio').gsub(/<div class="milestone_text">|<\/div>/,'')
       puts text
     end
-    
 
 
-=begin   
-    text = milestone.at_css('.milestone_text').to_s().gsub(/<div class="milestone_text">|<\/div>/,'')  
-    meta = milestone.at_css('.meta_milestone').to_s().gsub(/<div class="meta_milestone">|<\/div>/,'')
-    puts text 
-    puts meta
-=end
+
 
   end
 

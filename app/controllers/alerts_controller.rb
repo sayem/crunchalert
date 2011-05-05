@@ -41,6 +41,15 @@ class AlertsController < ApplicationController
 
   def crunchalert
     content = params[:content].downcase
+    alert = Alert.find_by_content(content)
+    unless alert
+      if params[:freq] == 'false' 
+        weekly_alert = WeeklyAlert.find_all_by_content(content)
+        if weekly_alert.empty?
+          WeeklyAlert.create(:content => content, :weekly_data => {})
+        end
+      end
+    end
     Alert.create(:content => content, :content_type => params[:type], :user_id => current_user[:id], :news => params[:news], :freq => params[:freq])
     begin
       pic = Picture.find_by_content(content)

@@ -55,13 +55,11 @@ class User < ActiveRecord::Base
   def self.daily
     User.all.each do |user|
       crunchalerts = Array.new
-
-
-
-      yesterday = Date.today.prev_day.strftime("%m/%d/%y")
-      yesterday.slice!(0) if yesterday.slice(0) == '0'
-
-
+      month = Date.today.prev_day.month.to_s()
+      day = Date.today.prev_day.day.to_s()
+      year = Date.today.prev_day.year.to_s()
+      year.slice!(0..1)
+      yesterday = month << '/' << day << '/' << year
 
       alerts = Alert.find_all_by_user_id_and_freq(user.id, true)
       alerts.each do |alert|
@@ -70,6 +68,7 @@ class User < ActiveRecord::Base
         milestones = doc.css('#milestones li').each do |milestone|
           if milestone.text =~ /#{yesterday}/
             text = milestone.at_css('.milestone_text').to_s().gsub(/\/#{alert.content_type}\/#{alert.content}/,"http://crunchbase.com/#{alert.content_type}/#{alert.content}").gsub(/<div class="milestone_text">|<\/div>/,'')
+
 
 
 
@@ -92,6 +91,16 @@ class User < ActiveRecord::Base
         end
       end              
 
+
+      
+      date = Date.today.strftime("%m.%d.%y")
+      weekly_alert = WeeklyAlert.find_all_by_content(alert.content)  ###
+      unless weekly_alert.weekly_data[date]
+        weekly_alert.weekly_data[date] = crunchalerts
+      end
+
+
+
       if !crunchalerts.empty?
         Mail.deliver do
           from 'CrunchAlert <admin@crunchalert.com>'
@@ -107,56 +116,54 @@ class User < ActiveRecord::Base
 
 
 
-      news = News.find_all_by_user_id_and_freq(user.id, true)
-      if !news.empty?
-        doc = Nokogiri::HTML(open('http://crunchbase.com'))       
-
-        month = Date.today.month.to_s()
-        day = Date.today.day.to_s()
-        year = Date.today.year.to_s()
-        year.slice!(0..1)
-        today = month << '/' << day << '/' << year
-
-        news_alerts = Array.new
-        milestones = doc.css('#milestones li').each do |milestone|
-          if milestone.text =~ /#{today}/
-            text = milestone.at_css('.milestone_text').to_s().gsub(/\/company\//,'http://crunchbase.com/company/').gsub(/\/person\//,'http://crunchbase.com/person/').gsub(/\/financial-organization\//,'http://crunchbase.com/financial-organization/').gsub(/<div class="milestone_text">|<\/div>/,'')
-            news_alerts.push("<p>#{text}</p>")
-          end
-        end
-
-        if !news_alerts.empty?
-          Mail.deliver do
-            from 'CrunchAlert <admin@crunchalert.com>'
-            to user.email
-            subject 'CrunchAlert.com News'
-
-            html_part do
-              content_type 'text/html; charset=UTF-8'
-              body news_alerts
-            end
-          end
-        end
-
-      end
-
-
-
-
     end
+
+
+
+
+    doc = Nokogiri::HTML(open('http://crunchbase.com'))
+    news_alerts = Array.new
+    milestones = doc.css('#milestones li').each do |milestone|
+      if milestone.text =~ /#{yesterday}/
+        text = milestone.at_css('.milestone_text').to_s().gsub(/\/company\//,'http://crunchbase.com/company/').gsub(/\/person\//,'http://crunchbase.com/person/').gsub(/\/financial-organization\//,'http://crunchbase.com/financial-organization/').gsub(/<div class="milestone_text">|<\/div>/,'')
+        news_alerts.push("<p>#{text}</p>")
+      end
+    end
+    if !news_alerts.empty?
+      weekly_news = WeeklyNews.find_by_id('1')
+      unless weekly_news.weekly_data[date]
+        weekly_news.weekly_data[date] = news_alerts
+      end
+      news = News.find_all_by_news(true)
+      news.each do |news|
+        id = news.user_id
+        user = User.find_by_id(id)
+        Mail.deliver do
+          from 'CrunchAlert <admin@crunchalert.com>'
+          to user.email
+          subject 'CrunchAlert.com News'
+
+          html_part do
+            content_type 'text/html; charset=UTF-8'
+            body news_alerts
+          end
+        end
+      end  
+    end
+
+
   end
-
-
-
 
   def self.weekly
 
+
 =begin
 
-- store daily crawls of alerts/news and crunchbase front page into DB 
-- send mail of all the saved feeds/links since one week and empty DB
+- send mail to users of alerts with weekly freq
+- send mail to users with news with weekly freq
 
 =end
+
 
   end
 

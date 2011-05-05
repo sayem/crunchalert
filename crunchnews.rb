@@ -13,6 +13,9 @@ begin
       puts links
     end
 
+
+
+
 =begin
 
     links = news.css('.recently_link').to_s().gsub(/<div class="recently_link">|<div class="recently_desc">|<\/div>/,'')    
