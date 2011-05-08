@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110503225844) do
+ActiveRecord::Schema.define(:version => 20110507023235) do
 
   create_table "alerts", :force => true do |t|
     t.string   "content"
@@ -51,15 +51,27 @@ ActiveRecord::Schema.define(:version => 20110503225844) do
 
   create_table "weekly_alerts", :force => true do |t|
     t.string   "content"
-    t.text     "weekly_data"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "sun"
+    t.text     "mon"
+    t.text     "tue"
+    t.text     "wed"
+    t.text     "thu"
+    t.text     "fri"
+    t.text     "sat"
   end
 
   create_table "weekly_news", :force => true do |t|
-    t.text     "weekly_data"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "sun"
+    t.text     "mon"
+    t.text     "tue"
+    t.text     "wed"
+    t.text     "thu"
+    t.text     "fri"
+    t.text     "sat"
   end
 
 end

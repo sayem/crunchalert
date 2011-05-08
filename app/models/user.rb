@@ -53,14 +53,15 @@ class User < ActiveRecord::Base
   end
 
   def self.daily
+    month = Date.today.prev_day.month.to_s()
+    day = Date.today.prev_day.day.to_s()
+    year = Date.today.prev_day.year.to_s()
+    year.slice!(0..1)
+    yesterday = month << '/' << day << '/' << year
+    today = Date.today.strftime("%a").downcase    
+
     User.all.each do |user|
       crunchalerts = Array.new
-      month = Date.today.prev_day.month.to_s()
-      day = Date.today.prev_day.day.to_s()
-      year = Date.today.prev_day.year.to_s()
-      year.slice!(0..1)
-      yesterday = month << '/' << day << '/' << year
-
       alerts = Alert.find_all_by_user_id_and_freq(user.id, true)
       alerts.each do |alert|
         content_url = alert.content.gsub(/[\s\.]/,'-')
@@ -68,10 +69,6 @@ class User < ActiveRecord::Base
         milestones = doc.css('#milestones li').each do |milestone|
           if milestone.text =~ /#{yesterday}/
             text = milestone.at_css('.milestone_text').to_s().gsub(/\/#{alert.content_type}\/#{alert.content}/,"http://crunchbase.com/#{alert.content_type}/#{alert.content}").gsub(/<div class="milestone_text">|<\/div>/,'')
-
-
-
-
             crunchalerts.push("<p>#{alert.content.capitalize}</p>")            
             crunchalerts.push("<p>#{text}<p>")
           end
@@ -82,26 +79,23 @@ class User < ActiveRecord::Base
         alertlinks = doc.css('.recently_link').each do |alertlink|
           if alertlink.to_s() =~ /#{techcrunch}|#{techmeme}/
             links = alertlink.to_s().gsub(/<div class="recently_link">|<\/div>/,'')
-
-
-
             crunchalerts.push('News:')
             crunchalerts.push("<p>#{links}</p>")
+
+            weekly_alert = WeeklyAlert.find_by_content(alert.content)
+            if weekly_alert
+              unless weekly_alert.send(today)
+                weekly_alert.send("#{today}=", crunchalerts)
+                weekly_alert.save
+              end
+            end
           end
         end
-      end              
-
-
-      
-      date = Date.today.strftime("%m.%d.%y")
-      weekly_alert = WeeklyAlert.find_all_by_content(alert.content)  ###
-      unless weekly_alert.weekly_data[date]
-        weekly_alert.weekly_data[date] = crunchalerts
       end
 
-
-
       if !crunchalerts.empty?
+
+=begin
         Mail.deliver do
           from 'CrunchAlert <admin@crunchalert.com>'
           to user.email
@@ -112,14 +106,10 @@ class User < ActiveRecord::Base
             body crunchalerts
           end
         end
+=end
+
       end
-
-
-
     end
-
-
-
 
     doc = Nokogiri::HTML(open('http://crunchbase.com'))
     news_alerts = Array.new
@@ -129,15 +119,20 @@ class User < ActiveRecord::Base
         news_alerts.push("<p>#{text}</p>")
       end
     end
+
     if !news_alerts.empty?
       weekly_news = WeeklyNews.find_by_id('1')
-      unless weekly_news.weekly_data[date]
-        weekly_news.weekly_data[date] = news_alerts
+      unless weekly_news.send(today)
+        weekly_news.send("#{today}=", crunchalerts)
+        weekly_news.save
       end
+
       news = News.find_all_by_news(true)
       news.each do |news|
         id = news.user_id
         user = User.find_by_id(id)
+
+=begin
         Mail.deliver do
           from 'CrunchAlert <admin@crunchalert.com>'
           to user.email
@@ -148,10 +143,10 @@ class User < ActiveRecord::Base
             body news_alerts
           end
         end
+=end
+
       end  
     end
-
-
   end
 
   def self.weekly
