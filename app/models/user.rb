@@ -85,6 +85,9 @@ class User < ActiveRecord::Base
             weekly_alert = WeeklyAlert.find_by_content(alert.content)
             if weekly_alert
               unless weekly_alert.send(today)
+                if crunchalerts.empty?
+                  crunchalerts = nil
+                end
                 weekly_alert.send("#{today}=", crunchalerts)
                 weekly_alert.save
               end
@@ -119,7 +122,7 @@ class User < ActiveRecord::Base
     if !news_alerts.empty?
       weekly_news = WeeklyNews.find_by_id('1')
       unless weekly_news.send(today)
-        weekly_news.send("#{today}=", crunchalerts)
+        weekly_news.send("#{today}=", news_alerts)
         weekly_news.save
       end
 
