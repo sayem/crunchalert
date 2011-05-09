@@ -46,7 +46,7 @@ class AlertsController < ApplicationController
       if params[:freq] == 'false' 
         weekly_alert = WeeklyAlert.find_all_by_content(content)
         if weekly_alert.empty?
-          WeeklyAlert.create(:content => content, :weekly_data => Hash.new)
+          WeeklyAlert.create(:content => content)
         end
       end
     end

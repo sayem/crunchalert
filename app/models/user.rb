@@ -94,8 +94,6 @@ class User < ActiveRecord::Base
       end
 
       if !crunchalerts.empty?
-
-=begin
         Mail.deliver do
           from 'CrunchAlert <admin@crunchalert.com>'
           to user.email
@@ -106,8 +104,6 @@ class User < ActiveRecord::Base
             body crunchalerts
           end
         end
-=end
-
       end
     end
 
@@ -131,8 +127,6 @@ class User < ActiveRecord::Base
       news.each do |news|
         id = news.user_id
         user = User.find_by_id(id)
-
-=begin
         Mail.deliver do
           from 'CrunchAlert <admin@crunchalert.com>'
           to user.email
@@ -143,23 +137,52 @@ class User < ActiveRecord::Base
             body news_alerts
           end
         end
-=end
-
       end  
     end
   end
 
   def self.weekly
+    User.all.each do |user|
+      days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
+      alerts = Alert.find_all_by_user_id_and_freq(user.id, false)
+      if !alerts.empty?
+        weekly_total = Array.new
+        alerts.each do |alert|
+          weekly_alert = WeeklyAlert.find_by_content(alert.content) 
+          alert.content = days.collect {|day| weekly_alert.send(day)}
+          weekly_total.push("<p>#{alert.content}</p>")
+        end
+        if !weekly_total.empty?
+          Mail.deliver do
+            from 'CrunchAlert <admin@crunchalert.com>'
+            to user.email
+            subject 'CrunchAlert.com Weekly Alerts'
 
+            html_part do
+              content_type 'text/html; charset=UTF-8'
+              body weekly_total
+            end
+          end
+        end
+      end
 
-=begin
+      if News.find_by_user_id_and_freq(user.id, false)
+        weekly_news = WeeklyNews.find_by_id('1')
+        weekly_digest = days.collect {|day| weekly_news.send(day)}
+        if !weekly_digest.empty?
+          Mail.deliver do
+            from 'CrunchAlert <admin@crunchalert.com>'
+            to user.email
+            subject 'CrunchAlert.com Weekly News'
 
-- send mail to users of alerts with weekly freq
-- send mail to users with news with weekly freq
-
-=end
-
-
+            html_part do
+              content_type 'text/html; charset=UTF-8'
+              body weekly_digest
+            end
+          end
+        end
+      end
+    end
   end
 
   private
