@@ -33,6 +33,7 @@ class UsersController < ApplicationController
       flash[:success] = "Welcome to the Sample App!"
       redirect_to root_path
       UserMailer.welcome_email(@user).deliver
+      UserMailer.welcome_preview(@user).deliver
     else
       render 'new'
     end

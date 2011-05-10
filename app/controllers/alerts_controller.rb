@@ -20,7 +20,7 @@ class AlertsController < ApplicationController
           picurl = pic[1]
           picture = "<img src=#{picurl}></img>"
           link = "<a href=http://crunchbase.com/#{type}/#{content} target=_blank>#{params[:crunchbase]}</a>"
-          profile = [picurl, picture, link]        
+          profile = [picurl, picture, link]
           render :json => profile
         elsif error == "The page you are looking for is temporarily unavailable.\nPlease try again later."
           check = "crunchbase is unavailable"
@@ -31,11 +31,48 @@ class AlertsController < ApplicationController
         end
       rescue OpenURI::HTTPError
         check = "not there"
-        render :json => check
+        render :text => check
       end
     else
       check = "bad regex input"
-      render :json => check
+      render :text => check
+    end
+  end
+
+  def crunchbase_url
+    url = params[:url]
+    if url =~ /^(http:\/\/)(www\.)?(crunchbase.com\/)(company|person|financial-organization)\/([\w+\-])(\/)?$/
+      begin
+        doc = Nokogiri::HTML(open(url))
+        milestones = doc.css('#milestones').text.strip!
+        error = doc.css('td').text.strip!
+        logo = doc.css('#company_logo img').to_s()
+        pic = logo.split('"');
+        if milestones
+          check = "exists"
+          picurl = pic[1]
+          picture = "<img src=#{picurl}></img>"
+          if url.slice(-1) == '/'
+            url.slice!(-1)
+          end
+          name = url.scan(/\w+$/)[0]
+          link = "<a href=#{url} target=_blank>#{name}</a>"
+          profile = [picurl, picture, link]
+          render :json => profile
+        elsif error == "The page you are looking for is temporarily unavailable.\nPlease try again later."
+          check = "crunchbase is unavailable"
+          render :json => check
+        else
+          check = "not there"
+          render :json => check
+        end
+      rescue OpenURI::HTTPError
+        check = 'not there'
+        render :text => check
+      end
+    else
+      check = "bad regex input"
+      render :text => check
     end
   end
 

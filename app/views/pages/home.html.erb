@@ -5,18 +5,23 @@
 
 <%= render 'shared/news_form' %>
 
+<br />
+<br />
+
+<div id="input">
+</div>
+
+<br />
+<br />
+
 <% @alerts.each do |alert| %>
 
- <div class="crunchalert">
+<div class="crunchalert">
   <%= image_tag(Picture.find_by_content(alert.content)[:url]) %>
   <%=h alert.content.capitalize %>
   <span class="edit_alert">Edit</span> 
- </div>
+</div>
 
 <% end %>
-
- <div id="input">
- </div>
-
 
 <% end %>

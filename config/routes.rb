@@ -10,6 +10,7 @@ Crunchalert::Application.routes.draw do
   match '/forgot_password', :to => 'users#forgot_password'
 
   match '/crunchbase', :to => 'alerts#crunchbase'
+  match '/crunchbase_url', :to => 'alerts#crunchbase_url'
   match '/crunchalert', :to => 'alerts#crunchalert'
   match '/news', :to => 'alerts#news'
 
