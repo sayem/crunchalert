@@ -1,6 +1,15 @@
 
 link = "http://www.crunchbase.com/company/buddymedia"
 
+
+#name = link.scan(/\w+$/)[0]  .gsub(/\//, '')
+
+# type = link.scan(/\/\w+\//)[0].delete('/')
+
+# puts type.class
+
+
+=begin
 if link =~ /^(http:\/\/)(www\.)?(crunchbase.com\/)(company|person|financial-organization)\/([\w+\-]+)(\/)?$/
 
   puts 'good crunchbase link'
@@ -10,7 +19,7 @@ else
   puts 'not a good link'
 
 end
-
+=end
 
 
 =begin

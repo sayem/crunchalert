@@ -56,15 +56,15 @@ class AlertsController < ApplicationController
             url.slice!(-1)
           end
           name = url.scan(/\w+$/)[0]
-          link = "<a href=#{url} target=_blank>#{name}</a>"
-          profile = [picurl, picture, link]
+          type = url.scan(/\/\w+\//)[0].delete('/')
+          profile = [picurl, picture, name, type]
           render :json => profile
         elsif error == "The page you are looking for is temporarily unavailable.\nPlease try again later."
           check = "crunchbase is unavailable"
-          render :json => check
+          render :text => check
         else
           check = "not there"
-          render :json => check
+          render :text => check
         end
       rescue OpenURI::HTTPError
         check = 'not there'
