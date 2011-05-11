@@ -1,9 +1,7 @@
 
-=begin
+link = "http://www.crunchbase.com/company/buddymedia"
 
-link = "http://crunchbase.com/company/twitter"
-
-# /^(http:\/\/)(www\.)?(crunchbase.com\/)(company|person|financial-organization)\/([\w+\-]+)(\/)?$/
+if link =~ /^(http:\/\/)(www\.)?(crunchbase.com\/)(company|person|financial-organization)\/([\w+\-]+)(\/)?$/
 
   puts 'good crunchbase link'
 
@@ -13,10 +11,9 @@ else
 
 end
 
-=end
 
 
-
+=begin
 
 require 'open-uri'
 require 'nokogiri'
@@ -32,3 +29,5 @@ rescue OpenURI::HTTPError
   puts formatted
   
 end
+
+=end

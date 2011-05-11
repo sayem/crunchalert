@@ -41,14 +41,9 @@ class AlertsController < ApplicationController
 
   def crunchbaseurl
     url = params[:url]
-    render :text => 'test'
-
-
-=begin
-    if url =~ /^(http:\/\/)(www\.)?(crunchbase.com\/)(company|person|financial-organization)\/([\w+\-])(\/)?$/
+    if url =~ /^(http:\/\/)(www\.)?(crunchbase.com\/)(company|person|financial-organization)\/([\w+\-]+)(\/)?$/
       begin
         doc = Nokogiri::HTML(open(url))
-
         milestones = doc.css('#milestones').text.strip!
         error = doc.css('td').text.strip!
         logo = doc.css('#company_logo img').to_s()
@@ -79,8 +74,6 @@ class AlertsController < ApplicationController
       check = "bad regex input"
       render :text => check
     end
-=end
-
   end
 
   def crunchalert

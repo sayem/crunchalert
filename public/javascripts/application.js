@@ -35,12 +35,24 @@ function switch_form(data) {
 	$('#form-crunchbase').remove();
 	var submit_url = "Couldn't find the profile. Please enter the CrunchBase profile URL here:<form id='form-submit_url' method='post' name='url'><input id='url' name='url' type='text' title='crunchbase url' /><input id='url_submit' type='submit' value='Submit' /></form>";
 	$('#input').append(submit_url);
+
+
 	$('#form-submit_url').submit(function() {
 	    url = $('#form-submit_url *').val();
 	    $.post('/crunchbaseurl', { url: url }, function(data) {
+
+// put in rules to switch to crunchalert form if good, else re-enter ----> change this entire thing to an ajaxform, just like crunchbaseform
+
 		alert(data);
+
+
 	    });
 	});
+
+// put in cancel button
+
+
+
     }
     else {
 	var content = $('#form-crunchbase *').fieldValue()[0];
