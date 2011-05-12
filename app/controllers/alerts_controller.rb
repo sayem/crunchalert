@@ -104,6 +104,33 @@ class AlertsController < ApplicationController
     News.create(:user_id => current_user[:id], :news => params[:news], :freq => params[:freq])    
   end
 
+  def edit
+    content = params[:content].downcase
+    alert = Alert.find_by_content_and_user_id(content, current_user[:id])
+    alert.freq = params[:freq]
+    alert.news = params[:news]
+    alert.save
+
+    if params[:freq] == 'true'
+      check_weekly = Alert.find_all_by_content_and_freq(content, false)
+      weekly = WeeklyAlert.find_by_content(content)
+      if check_weekly.empty? && weekly
+        weekly.delete
+      end
+    else
+      weekly_alert = WeeklyAlert.find_all_by_content(content)
+      if weekly_alert.empty?
+        WeeklyAlert.create(:content => content)
+      end
+    end
+  end
+
+  def delete
+
+
+
+  end
+
   private
 
     def authorized_user

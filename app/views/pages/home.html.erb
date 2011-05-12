@@ -14,7 +14,7 @@
 <br />
 
 <% @alerts.each do |alert| %>
-<div class="crunchalert">
+<div class="crunchalert" id="<%= alert.content %>">
   <%= image_tag(Picture.find_by_content(alert.content)[:url]) %>
 
   <% unless alert.content.split[1] %>
@@ -23,7 +23,9 @@
     <%=h alert.content.split[0].capitalize << ' ' << alert.content.split[1].capitalize %>
   <% end %>
 
-  <span class="edit_alert">Edit</span> 
+ <span class="edit_alert">Edit</span>
+
+
 </div>
 <% end %>
 

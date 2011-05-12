@@ -1,11 +1,8 @@
 /*
 
-- finish editing/updating alert
-- get ajax values for update alert for news/freq, figure out form submission
-- ajax for removing this Edit and showing freq/news fields and update/delete/cancel button
-- then put in delete button and cancel button
-
-- put in cancel button on url form and check errors/responses too
+- figure out asynch/alert problem
+- put in delete button and test
+- put in cancel button on url/edit form and check errors/responses too
 
 */
 
@@ -20,26 +17,30 @@ $(document).ready(function() {
 	dataType: 'json',
     };
     $('#form-crunchnews').ajaxForm(crunchnews_options);
-
-
-
     $('.edit_alert').click(function() {
-
-
 	$(this).text('');
 	var update_alert = "<form id='form-update' method='post' name='alert'><select id='freq' name='freq'><option value='true'>Daily</option><option value='false'>Weekly</option></select><input id='news' name='news' type='checkbox' check value='true' /><input name='news' type='hidden' value='false' /><label for='news'>Include TechCrunch &amp; TechMeme news updates</label><div class='actions'><input id='alert_submit' type='submit' value='Submit' /></div></form>";
-	$(this).append(update_alert);
+	$(this).parent().append(update_alert);
 	var delete_button = "delete button";
 	var cancel_button = "cancel button";
-	$(this).append(delete_button);
-	$(this).append(cancel_button);
+	$('#form-update').append(delete_button);
+	$('#form-update').append(cancel_button);
+	$('#form-update').submit(function() {
+	    var prefs = $('#form-update *').fieldValue();
+	    var content = $(this).parent().attr('id');
+	    $.post('/editalert', { content: content, freq: prefs[0], news: prefs[1] });
+
+	    alert('updated'); // same problem, figure out why this requires alert for post to go through
+	});
+
+
+
+
+	// put in delete func to post too, on click
+
 
 
     });
-
-
-
-
 });
 
 function switch_form(data) {

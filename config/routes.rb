@@ -12,6 +12,8 @@ Crunchalert::Application.routes.draw do
   match '/crunchbase', :to => 'alerts#crunchbase'
   match '/crunchbaseurl', :to => 'alerts#crunchbaseurl'
   match '/crunchalert', :to => 'alerts#crunchalert'
+  match '/editalert', :to => 'alerts#edit'
+  match '/deletealert', :to => 'alerts#delete'
   match '/news', :to => 'alerts#news'
 
 
