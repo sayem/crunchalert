@@ -126,9 +126,9 @@ class AlertsController < ApplicationController
   end
 
   def delete
-
-
-
+    content = params[:content].downcase
+    delete_alert = Alert.find_by_content_and_user_id(content, current_user[:id])
+    delete_alert.delete
   end
 
   private

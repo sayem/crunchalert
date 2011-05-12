@@ -1,6 +1,6 @@
 /*
 
-- put in delete button and test
+- tweak edit for clicks outside puts edit back in and removes form-update
 - put in cancel button on url/edit form and check errors/responses too
 
 */
@@ -11,17 +11,19 @@ $(document).ready(function() {
 	success: switch_form
     };
     $('#form-crunchbase').ajaxForm(crunchbase_options);
+
     var crunchnews_options = {
 	url: '/news',
 	dataType: 'json',
     };
     $('#form-crunchnews').ajaxForm(crunchnews_options);
+
     $('.edit_alert').click(function() {
 	$(this).text('');
 	var update_alert = "<form id='form-update' method='post' name='alert'><select id='freq' name='freq'><option value='true'>Daily</option><option value='false'>Weekly</option></select><input id='news' name='news' type='checkbox' check value='true' /><input name='news' type='hidden' value='false' /><label for='news'>Include TechCrunch &amp; TechMeme news updates</label><div class='actions'><input id='alert_submit' type='submit' value='Submit' /></div></form>";
 	$(this).parent().append(update_alert);
-	var delete_button = "delete button";
-	var cancel_button = "cancel button";
+	var delete_button = "<br /><div id='delete_button'>delete button</div><br />";
+	var cancel_button = "<br /><div id='cancel_button'>cancel button</div<br />>";
 	$('#form-update').append(delete_button);
 	$('#form-update').append(cancel_button);
 
@@ -36,8 +38,24 @@ $(document).ready(function() {
 	    });
 	});
 
+	$('#delete_button').click(function() { 
+	    var content = $(this).parents('.crunchalert').attr('id');
+	    $.ajax({
+		url: '/deletealert',
+		type: 'post',
+		data: { content: content },
+		async: false
+	    });
+	    window.location.reload();
+	});
 
-	// put in delete func to post too, on click
+	$('#cancel_button').click(function() {
+	    $('#form-update').remove();
+	});
+
+
+	// also have it so that any clicks outside of parent removes form-update, only have one form-update open at all times
+	// also bring edit back on that parent once focus shifts too
 
 
     });
