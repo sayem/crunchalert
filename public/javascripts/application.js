@@ -1,6 +1,5 @@
 /*
 
-- figure out asynch/alert problem
 - put in delete button and test
 - put in cancel button on url/edit form and check errors/responses too
 
@@ -25,19 +24,20 @@ $(document).ready(function() {
 	var cancel_button = "cancel button";
 	$('#form-update').append(delete_button);
 	$('#form-update').append(cancel_button);
+
 	$('#form-update').submit(function() {
 	    var prefs = $('#form-update *').fieldValue();
 	    var content = $(this).parent().attr('id');
-	    $.post('/editalert', { content: content, freq: prefs[0], news: prefs[1] });
-
-	    alert('updated'); // same problem, figure out why this requires alert for post to go through
+	    $.ajax({
+		url: '/editalert',
+		type: 'post', 
+		data: { content: content, freq: prefs[0], news: prefs[1] },
+		async: false
+	    });
 	});
 
 
-
-
 	// put in delete func to post too, on click
-
 
 
     });
@@ -50,7 +50,7 @@ function switch_form(data) {
 	$('#input').append(submit_url);
 	var url_options = {
 	    url: '/crunchbaseurl',
-	    success: switch_form //
+	    success: switch_form
 	};
 	$('#form-submit_url').ajaxForm(url_options);
     }
@@ -71,12 +71,12 @@ function switch_form(data) {
 	$('#input').append(new_form);
 	$('#form-alert').submit(function() {
 	    var prefs = $('#form-alert *').fieldValue();
-	    $.post('/crunchalert', { content: content, type: type, freq: prefs[0], news: prefs[1], pic: picurl });
-
-
-	    alert('added');  // figure out why this is needed for .post to go through!
-
-
+	    $.ajax({
+		url: '/crunchalert',
+		type: 'post', 
+		data: { content: content, type: type, freq: prefs[0], news: prefs[1], pic: picurl },
+		async: false
+	    });
 	});
     }
 };
