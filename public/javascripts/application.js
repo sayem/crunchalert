@@ -1,9 +1,3 @@
-/*
-
-- tweak edit for clicks outside puts edit back in and removes form-update
-- put in cancel button on url/edit form and check errors/responses too
-
-*/
 
 $(document).ready(function() {
     var crunchbase_options = {
@@ -20,16 +14,19 @@ $(document).ready(function() {
 
     $('.edit_alert').click(function() {
 	$(this).text('');
-	var update_alert = "<form id='form-update' method='post' name='alert'><select id='freq' name='freq'><option value='true'>Daily</option><option value='false'>Weekly</option></select><input id='news' name='news' type='checkbox' check value='true' /><input name='news' type='hidden' value='false' /><label for='news'>Include TechCrunch &amp; TechMeme news updates</label><div class='actions'><input id='alert_submit' type='submit' value='Submit' /></div></form>";
+	var update_alert = "<form class='form-update' method='post' name='alert'><select id='freq' name='freq'><option value='true'>Daily</option><option value='false'>Weekly</option></select><input id='news' name='news' type='checkbox' check value='true' /><input name='news' type='hidden' value='false' /><label for='news'>Include TechCrunch &amp; TechMeme news updates</label><div class='actions'><input id='alert_submit' type='submit' value='Submit' /></div></form>";
 	$(this).parent().append(update_alert);
-	var delete_button = "<br /><div id='delete_button'>delete button</div><br />";
-	var cancel_button = "<br /><div id='cancel_button'>cancel button</div<br />>";
-	$('#form-update').append(delete_button);
-	$('#form-update').append(cancel_button);
+	var content = $(this).parent().attr('id');
+	var alert_class = '.' + content;
+	$(this).parent().find('form').addClass(content);
 
-	$('#form-update').submit(function() {
-	    var prefs = $('#form-update *').fieldValue();
-	    var content = $(this).parent().attr('id');
+	var delete_button = "<br /><div id='delete_button'>delete button</div><br />";
+	var cancel_button = "<br /><div id='cancel_button'>cancel button</div><br />";
+	$(alert_class).append(delete_button);
+	$(alert_class).append(cancel_button);
+
+	$(alert_class).submit(function() {
+	    var prefs = $(alert_class + ' *').fieldValue();
 	    $.ajax({
 		url: '/editalert',
 		type: 'post', 
@@ -38,8 +35,7 @@ $(document).ready(function() {
 	    });
 	});
 
-	$('#delete_button').click(function() { 
-	    var content = $(this).parents('.crunchalert').attr('id');
+	$('#delete_button').click(function() {
 	    $.ajax({
 		url: '/deletealert',
 		type: 'post',
@@ -50,14 +46,17 @@ $(document).ready(function() {
 	});
 
 	$('#cancel_button').click(function() {
-	    $('#form-update').remove();
+	    $(alert_class).remove();
 	});
+    });
 
+    $(".crunchalert").click(function(e){     // need to check/define crunchalert width and spacing
+	e.stopPropagation();
+    });
 
-	// also have it so that any clicks outside of parent removes form-update, only have one form-update open at all times
-	// also bring edit back on that parent once focus shifts too
-
-
+    $(document).click(function(){
+	$(".form-update").remove();
+	$(".edit_alert").text('Edit');
     });
 });
 
@@ -66,6 +65,13 @@ function switch_form(data) {
 	$('#form-crunchbase').remove();
 	var submit_url = "Couldn't find the profile. Please enter the CrunchBase profile URL here:<form id='form-submit_url' method='post' name='url'><input id='url' name='url' type='text' title='crunchbase url' /><input id='url_submit' type='submit' value='Submit' /></form>";
 	$('#input').append(submit_url);
+
+	var cancel_button = "<br /><div id='cancel_button'>cancel button</div><br />";
+	$('#form-submit_url').append(cancel_button);
+	$('#cancel_button').click(function() {
+	    window.location.reload();
+	});
+
 	var url_options = {
 	    url: '/crunchbaseurl',
 	    success: switch_form
