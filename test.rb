@@ -39,4 +39,18 @@ rescue OpenURI::HTTPError
   
 end
 
+
+
+Mail.deliver do
+  from 'CrunchAlert <admin@crunchalert.com>'
+  to user.email
+  subject 'CrunchAlert.com'
+
+  html_part do
+    content_type 'text/html; charset=UTF-8'
+    body crunchalerts
+  end
+end
+
+
 =end

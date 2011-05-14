@@ -3,7 +3,7 @@ class UsersController < ApplicationController
     @users = User.all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html 
       format.xml  { render :xml => @users }
     end
   end
@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html 
       format.xml  { render :xml => @user }
     end
   end
@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     @user = User.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html 
       format.xml  { render :xml => @user }
     end
   end

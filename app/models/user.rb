@@ -97,16 +97,7 @@ class User < ActiveRecord::Base
       end
 
       if !crunchalerts.empty?
-        Mail.deliver do
-          from 'CrunchAlert <admin@crunchalert.com>'
-          to user.email
-          subject 'CrunchAlert.com'
-
-          html_part do
-            content_type 'text/html; charset=UTF-8'
-            body crunchalerts
-          end
-        end
+        DailyMailer.deliver_alerts(user.email, crunchalerts)
       end
     end
 
@@ -130,16 +121,7 @@ class User < ActiveRecord::Base
       news.each do |news|
         id = news.user_id
         user = User.find_by_id(id)
-        Mail.deliver do
-          from 'CrunchAlert <admin@crunchalert.com>'
-          to user.email
-          subject 'CrunchAlert.com News'
-
-          html_part do
-            content_type 'text/html; charset=UTF-8'
-            body news_alerts
-          end
-        end
+        DailyMailer.deliver_news(user.email, news_alerts)
       end  
     end
   end
@@ -156,16 +138,7 @@ class User < ActiveRecord::Base
           weekly_total.push("<p>#{alert.content}</p>")
         end
         if !weekly_total.empty?
-          Mail.deliver do
-            from 'CrunchAlert <admin@crunchalert.com>'
-            to user.email
-            subject 'CrunchAlert.com Weekly Alerts'
-
-            html_part do
-              content_type 'text/html; charset=UTF-8'
-              body weekly_total
-            end
-          end
+          WeeklyMailer.deliver_alerts(user.email, weekly_total)
         end
       end
 
@@ -173,16 +146,7 @@ class User < ActiveRecord::Base
         weekly_news = WeeklyNews.find_by_id('1')
         weekly_digest = days.collect {|day| weekly_news.send(day)}
         if !weekly_digest.empty?
-          Mail.deliver do
-            from 'CrunchAlert <admin@crunchalert.com>'
-            to user.email
-            subject 'CrunchAlert.com Weekly News'
-
-            html_part do
-              content_type 'text/html; charset=UTF-8'
-              body weekly_digest
-            end
-          end
+          WeeklyMailer.deliver_news(user.email, weekly_digest)
         end
       end
     end
