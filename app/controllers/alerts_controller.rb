@@ -77,58 +77,16 @@ class AlertsController < ApplicationController
   end
 
   def crunchalert
-    content = params[:content].downcase
-    alert = Alert.find_by_content(content)
-    unless alert
-      if params[:freq] == 'false' 
-        weekly_alert = WeeklyAlert.find_all_by_content(content)
-        if weekly_alert.empty?
-          WeeklyAlert.create(:content => content)
-        end
-      end
-    end
-    Alert.create(:content => content, :content_type => params[:type], :user_id => current_user[:id], :news => params[:news], :freq => params[:freq])
-    begin
-      pic = Picture.find_by_content(content)
-      unless pic == params[:pic]
-        pic = Picture.find_by_content(content)
-        pic.url = params[:pic]
-        pic.save
-      end
-    rescue NameError
-      Picture.create(:content => content, :url => params[:pic])
-    end
-  end
-
-  def news
-    News.create(:user_id => current_user[:id], :news => params[:news], :freq => params[:freq])    
+    Alert.crunchalert(params[:content].downcase, params[:type], params[:news], params[:freq], current_user[:id])
+    Picture.update(params[:content].downcase, params[:pic])
   end
 
   def edit
-    content = params[:content].downcase
-    alert = Alert.find_by_content_and_user_id(content, current_user[:id])
-    alert.freq = params[:freq]
-    alert.news = params[:news]
-    alert.save
-
-    if params[:freq] == 'true'
-      check_weekly = Alert.find_all_by_content_and_freq(content, false)
-      weekly = WeeklyAlert.find_by_content(content)
-      if check_weekly.empty? && weekly
-        weekly.delete
-      end
-    else
-      weekly_alert = WeeklyAlert.find_all_by_content(content)
-      if weekly_alert.empty?
-        WeeklyAlert.create(:content => content)
-      end
-    end
+    Alert.edit(params[:content].downcase, params[:freq], params[:news], current_user[:id])
   end
 
-  def delete
-    content = params[:content].downcase
-    delete_alert = Alert.find_by_content_and_user_id(content, current_user[:id])
-    delete_alert.delete
+  def remove
+    Alert.remove(params[:content].downcase, current_user[:id])
   end
 
   private

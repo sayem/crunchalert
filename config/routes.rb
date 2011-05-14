@@ -13,8 +13,9 @@ Crunchalert::Application.routes.draw do
   match '/crunchbaseurl', :to => 'alerts#crunchbaseurl'
   match '/crunchalert', :to => 'alerts#crunchalert'
   match '/editalert', :to => 'alerts#edit'
-  match '/deletealert', :to => 'alerts#delete'
-  match '/news', :to => 'alerts#news'
+  match '/removealert', :to => 'alerts#remove'
+
+  match '/news', :to => 'news#update'
 
 
   # The priority is based upon order of creation:

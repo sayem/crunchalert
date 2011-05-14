@@ -53,9 +53,9 @@ class User < ActiveRecord::Base
   end
 
   def self.daily
-    month = Date.today.prev_day.month.to_s()
-    day = Date.today.prev_day.day.to_s()
-    year = Date.today.prev_day.year.to_s()
+    month = Date.today.prev_day.month.to_s
+    day = Date.today.prev_day.day.to_s
+    year = Date.today.prev_day.year.to_s
     year.slice!(0..1)
     yesterday = month << '/' << day << '/' << year
     today = Date.today.strftime("%a").downcase    
@@ -68,7 +68,7 @@ class User < ActiveRecord::Base
         doc = Nokogiri::HTML(open("http://crunchbase.com/#{alert.content_type}/#{content_url}"))
         milestones = doc.css('#milestones li').each do |milestone|
           if milestone.text =~ /#{yesterday}/
-            text = milestone.at_css('.milestone_text').to_s().gsub(/\/#{alert.content_type}\/#{alert.content}/,"http://crunchbase.com/#{alert.content_type}/#{alert.content}").gsub(/<div class="milestone_text">|<\/div>/,'')
+            text = milestone.at_css('.milestone_text').to_s.gsub(/\/#{alert.content_type}\/#{alert.content}/,"http://crunchbase.com/#{alert.content_type}/#{alert.content}").gsub(/<div class="milestone_text">|<\/div>/,'')
             crunchalerts.push("<p>#{alert.content.capitalize}</p>")            
             crunchalerts.push("<p>#{text}<p>")
           end
@@ -77,8 +77,8 @@ class User < ActiveRecord::Base
         techcrunch = Date.today.prev_day.strftime("%Y/%m/%d")
         techmeme = Date.today.prev_day.strftime("%y%m%d")
         alertlinks = doc.css('.recently_link').each do |alertlink|
-          if alertlink.to_s() =~ /#{techcrunch}|#{techmeme}/
-            links = alertlink.to_s().gsub(/<div class="recently_link">|<\/div>/,'')
+          if alertlink.to_s =~ /#{techcrunch}|#{techmeme}/
+            links = alertlink.to_s.gsub(/<div class="recently_link">|<\/div>/,'')
             crunchalerts.push('News:')
             crunchalerts.push("<p>#{links}</p>")
 
@@ -114,7 +114,7 @@ class User < ActiveRecord::Base
     news_alerts = Array.new
     milestones = doc.css('#milestones li').each do |milestone|
       if milestone.text =~ /#{yesterday}/
-        text = milestone.at_css('.milestone_text').to_s().gsub(/\/company\//,'http://crunchbase.com/company/').gsub(/\/person\//,'http://crunchbase.com/person/').gsub(/\/financial-organization\//,'http://crunchbase.com/financial-organization/').gsub(/<div class="milestone_text">|<\/div>/,'')
+        text = milestone.at_css('.milestone_text').to_s.gsub(/\/company\//,'http://crunchbase.com/company/').gsub(/\/person\//,'http://crunchbase.com/person/').gsub(/\/financial-organization\//,'http://crunchbase.com/financial-organization/').gsub(/<div class="milestone_text">|<\/div>/,'')
         news_alerts.push("<p>#{text}</p>")
       end
     end
