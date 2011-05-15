@@ -5,9 +5,11 @@
   </head>
   <body>
 
-    <p>
-      <%= @dailynews %>
-    </p>
+    <% @dailynews.each do |news| %>
+
+      <%= raw("<p>#{news}</p>") %>
+
+    <% end %>
 
   </body>
 </html>

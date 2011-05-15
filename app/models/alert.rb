@@ -15,11 +15,10 @@ class Alert < ActiveRecord::Base
   default_scope :order => 'alerts.created_at DESC'
 
   def self.crunchalert(content, type, news, freq, user)
-    alert = Alert.find_by_content(content)
+    alert = Alert.where(:content => content)
     unless alert
-      if freq == 'false' 
-        weekly_alert = WeeklyAlert.find_all_by_content(content)
-        if weekly_alert.empty?
+      if freq == 'false'
+        if !WeeklyAlert.where(:content => content).exists?
           WeeklyAlert.create(:content => content)
         end
       end
@@ -28,17 +27,17 @@ class Alert < ActiveRecord::Base
   end
 
   def self.edit(content, freq, news, user)
-    alert = Alert.find_by_content_and_user_id(content, user)
+    alert = Alert.where(:content => content, :user => user)
     alert.update_attributes(:freq => freq, :news => news)
 
     if freq == 'true'
-      check_weekly = Alert.find_all_by_content_and_freq(content, false)
-      weekly = WeeklyAlert.find_by_content(content)
+      check_weekly = Alert.where(:content => content, :freq => false)
+      weekly = WeeklyAlert.where(:content => content)
       if check_weekly.empty? && weekly
         weekly.delete
       end
     else
-      weekly_alert = WeeklyAlert.find_all_by_content(content)
+      weekly_alert = WeeklyAlert.where(:content => content)
       if weekly_alert.empty?
         WeeklyAlert.create(:content => content)
       end
@@ -46,7 +45,7 @@ class Alert < ActiveRecord::Base
   end
 
   def self.remove(content, user)
-    delete_alert = Alert.find_by_content_and_user_id(content, user)
+    delete_alert = Alert.where(:content => content, :user_id => user)
     delete_alert.delete
   end
 end

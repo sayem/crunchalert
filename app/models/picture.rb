@@ -12,9 +12,8 @@ class Picture < ActiveRecord::Base
 
   def self.update(content, picture)
     begin
-      pic = Picture.find_by_content(content)
+      pic = Picture.where(:content => content)
       unless pic == picture
-        pic = Picture.find_by_content(content)
         pic.url = picture
         pic.save
       end

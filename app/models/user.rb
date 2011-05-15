@@ -58,19 +58,19 @@ class User < ActiveRecord::Base
     year = Date.today.prev_day.year.to_s
     year.slice!(0..1)
     yesterday = month << '/' << day << '/' << year
-    today = Date.today.strftime("%a").downcase    
+    today = Date.today.strftime("%a").downcase
 
     User.all.each do |user|
       crunchalerts = Array.new
-      alerts = Alert.find_all_by_user_id_and_freq(user.id, true)
+      alerts = Alert.where(:user_id => user.id, :freq => true)
       alerts.each do |alert|
         content_url = alert.content.gsub(/[\s\.]/,'-')
         doc = Nokogiri::HTML(open("http://crunchbase.com/#{alert.content_type}/#{content_url}"))
         milestones = doc.css('#milestones li').each do |milestone|
           if milestone.text =~ /#{yesterday}/
             text = milestone.at_css('.milestone_text').to_s.gsub(/\/#{alert.content_type}\/#{alert.content}/,"http://crunchbase.com/#{alert.content_type}/#{alert.content}").gsub(/<div class="milestone_text">|<\/div>/,'')
-            crunchalerts.push("<p>#{alert.content.capitalize}</p>")            
-            crunchalerts.push("<p>#{text}<p>")
+            crunchalerts.push(alert.content.capitalize) # maybe check for dupes here if multiple alert texts
+            crunchalerts.push(text)
           end
         end
 
@@ -79,12 +79,12 @@ class User < ActiveRecord::Base
         alertlinks = doc.css('.recently_link').each do |alertlink|
           if alertlink.to_s =~ /#{techcrunch}|#{techmeme}/
             links = alertlink.to_s.gsub(/<div class="recently_link">|<\/div>/,'')
-            crunchalerts.push('News:')
-            crunchalerts.push("<p>#{links}</p>")
+            crunchalerts.push("<b>CrunchBase News:</b>")
+            crunchalerts.push(links)
 
             weekly_alert = WeeklyAlert.find_by_content(alert.content)
             if weekly_alert
-              unless weekly_alert.send(today)
+              unless weekly_alert.send(today)   
                 if crunchalerts.empty?
                   crunchalerts = nil
                 end
@@ -105,8 +105,8 @@ class User < ActiveRecord::Base
     news_alerts = Array.new
     milestones = doc.css('#milestones li').each do |milestone|
       if milestone.text =~ /#{yesterday}/
-        text = milestone.at_css('.milestone_text').to_s.gsub(/\/company\//,'http://crunchbase.com/company/').gsub(/\/person\//,'http://crunchbase.com/person/').gsub(/\/financial-organization\//,'http://crunchbase.com/financial-organization/').gsub(/<div class="milestone_text">|<\/div>/,'')
-        news_alerts.push("<p>#{text}</p>")
+        text = milestone.at_css('.milestone_text').to_s.gsub(/\/company\//,'http://crunchbase.com/company/').gsub(/\/person\//,'http://crunchbase.com/person/').gsub(/\/financial-organization\//,'http://crunchbase.com/financial-organization/').gsub(/<div class="milestone_text">|<\/div>/,'')    # gsub for other cats too
+        news_alerts.push(text)
       end
     end
 
@@ -117,7 +117,7 @@ class User < ActiveRecord::Base
         weekly_news.save
       end
 
-      news = News.find_all_by_news(true)
+      news = News.where(:news => true)
       news.each do |news|
         id = news.user_id
         user = User.find_by_id(id)
@@ -129,20 +129,20 @@ class User < ActiveRecord::Base
   def self.weekly
     User.all.each do |user|
       days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
-      alerts = Alert.find_all_by_user_id_and_freq(user.id, false)
+      alerts = Alert.where(:user_id => user.id, :freq => false)
       if !alerts.empty?
         weekly_total = Array.new
         alerts.each do |alert|
           weekly_alert = WeeklyAlert.find_by_content(alert.content) 
           alert.content = days.collect {|day| weekly_alert.send(day)}
-          weekly_total.push("<p>#{alert.content}</p>")
+          weekly_total.push(alert.content)
         end
         if !weekly_total.empty?
           WeeklyMailer.deliver_alerts(user.email, weekly_total)
         end
       end
 
-      if News.find_by_user_id_and_freq(user.id, false)
+      if News.where(:user_id => user.id, :freq => false)
         weekly_news = WeeklyNews.find_by_id('1')
         weekly_digest = days.collect {|day| weekly_news.send(day)}
         if !weekly_digest.empty?

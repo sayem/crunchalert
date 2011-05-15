@@ -5,9 +5,11 @@
   </head>
   <body>
 
-    <p>
-      <%= @dailyalerts %>
-    </p>
+    <% @dailyalerts.each do |alert| %>
+
+      <%= raw(alert) %>
+
+    <% end %>
 
   </body>
 </html>

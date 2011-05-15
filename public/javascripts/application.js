@@ -1,17 +1,6 @@
-
 $(document).ready(function() {
-    var crunchbase_options = {
-	url: '/crunchbase',
-	success: switch_form
-    };
-    $('#form-crunchbase').ajaxForm(crunchbase_options);
-
-    var crunchnews_options = {
-	url: '/news',
-	dataType: 'json',
-    };
-    $('#form-crunchnews').ajaxForm(crunchnews_options);
-
+    $('#form-crunchbase').ajaxForm({ url: '/crunchbase', success: switch_form });
+    $('#form-crunchnews').ajaxForm({ url: '/news' });
     $('.edit_alert').click(function() {
 	$(this).text('');
 	var update_alert = "<form class='form-update' method='post' name='alert'><select id='freq' name='freq'><option value='true'>Daily</option><option value='false'>Weekly</option></select><input id='news' name='news' type='checkbox' check value='true' /><input name='news' type='hidden' value='false' /><label for='news'>Include TechCrunch &amp; TechMeme news updates</label><div class='actions'><input id='alert_submit' type='submit' value='Submit' /></div></form>";
@@ -71,19 +60,14 @@ function switch_form(data) {
 	$('#cancel_button').click(function() {
 	    window.location.reload();
 	});
-
-	var url_options = {
-	    url: '/crunchbaseurl',
-	    success: switch_form
-	};
-	$('#form-submit_url').ajaxForm(url_options);
+	$('#form-submit_url').ajaxForm({ url: '/crunchbaseurl', success: switch_form });
     }
     else {
 	if (data[3]) {
 	    var content = data[2];
 	    var type = data[3];
 	}
-	else {	
+	else {
 	    var content = $('#form-crunchbase *').fieldValue()[0];
 	    var type = $('#form-crunchbase *').fieldValue()[1];
 	    $('#input').append(data[2]);
