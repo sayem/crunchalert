@@ -4,12 +4,12 @@ class DailyMailer < ActionMailer::Base
   def alerts(to, body)
     @dailyalerts = body
     mail(:to => to,
-         :subject => "CrunchAlert Daily Alerts")
+         :subject => "CrunchAlert | Daily Alerts")
   end
 
   def news(to, body)
     @dailynews = body
     mail(:to => to,
-         :subject => "CrunchAlert Daily News")
+         :subject => "CrunchAlert | Daily News")
   end
 end

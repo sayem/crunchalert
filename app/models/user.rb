@@ -73,38 +73,44 @@ class User < ActiveRecord::Base
             alert_milestones.push(text)
           end
         end
-        if !alert_milestones.empty?
-          unless alert.content.split[1]
-            name = alert.content.capitalize
-          else
-            name = Array.new
-            alert.content.split.each do |x|
-              name.push(x.capitalize)
-            end
-            name = name.join(' ')
+
+        unless alert.content.split[1]
+          name = alert.content.capitalize
+        else
+          name = Array.new
+          alert.content.split.each do |x|
+            name.push(x.capitalize)
           end
+          name = name.join(' ')
+        end
+
+        if !alert_milestones.empty?
           alert_milestones.insert(0, "<br /><b>#{name}</b>")
           crunchalerts = crunchalerts + alert_milestones
         end
 
         techcrunch = Date.today.prev_day.strftime("%Y/%m/%d")
         techmeme = Date.today.prev_day.strftime("%y%m%d")
+        alert_news = Array.new
         alertlinks = doc.css('.recently_link').each do |alertlink|
           if alertlink.to_s =~ /#{techcrunch}|#{techmeme}/
             links = alertlink.to_s.gsub(/<div class="recently_link">|<\/div>/,'')
-            crunchalerts.push("<b>#{alert.content.capitalize} News:</b>")
-            crunchalerts.push(links)
+            alert_news.push(links)
+          end
+        end
+        if !alert_news.empty?
+          alert_news.insert(0, "<br /><b>#{name} News:</b>")
+          crunchalerts = crunchalerts + alert_news
+        end
 
-            weekly_alert = WeeklyAlert.find_by_content(alert.content)
-            if weekly_alert
-              unless weekly_alert.send(today)   
-                if crunchalerts.empty?
-                  crunchalerts = nil
-                end
-                weekly_alert.send("#{today}=", crunchalerts)
-                weekly_alert.save
-              end
+        weekly_alert = WeeklyAlert.find_by_content(alert.content)
+        if weekly_alert
+          unless weekly_alert.send(today)   
+            if crunchalerts.empty?
+              crunchalerts = nil
             end
+            weekly_alert.send("#{today}=", crunchalerts)
+            weekly_alert.save
           end
         end
       end

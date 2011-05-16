@@ -14,12 +14,12 @@ class UserMailer < ActionMailer::Base
     @user = user
     @news = WeeklyNews.find_by_id('1').send(yesterday)
     mail(:to => user.email,
-         :subject => "CrunchAlert News Preview")
+         :subject => "CrunchAlert | News Sample")
   end
 
   def forgot_password(to, pass)
     @pass = pass
     mail(:to => to,
-         :subject => "Your password is ...") 
+         :subject => "CrunchAlert | Password Reset") 
   end
 end

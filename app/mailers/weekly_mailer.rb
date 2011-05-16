@@ -4,12 +4,12 @@ class WeeklyMailer < ActionMailer::Base
   def alerts(to, body)
     @weeklyalerts = body
     mail(:to => to,
-         :subject => "CrunchAlert Weekly Alerts")
+         :subject => "CrunchAlert | Weekly Alerts")
   end
 
   def news(to, body)
     @weeklynews = body
     mail(:to => to,
-         :subject => "CrunchAlert Weekly Alerts")
+         :subject => "CrunchAlert | Weekly News")
   end
 end
