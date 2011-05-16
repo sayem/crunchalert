@@ -83,7 +83,7 @@ class User < ActiveRecord::Base
             end
             name = name.join(' ')
           end
-          alert_milestones.insert(0, "<b>#{name}</b>")
+          alert_milestones.insert(0, "<br /><b>#{name}</b>")
           crunchalerts = crunchalerts + alert_milestones
         end
 
@@ -116,12 +116,24 @@ class User < ActiveRecord::Base
 
     doc = Nokogiri::HTML(open('http://crunchbase.com'))
     news_alerts = Array.new
+    acquisitions = Array.[]("<br /><b>Acquisitions</b>")
+    fundings = Array.[]("<br /><b>Fundings</b>")
+    procos = Array.[]("<br /><b>Products and Companies</b>")
+
     milestones = doc.css('#milestones li').each do |milestone|
       if milestone.text =~ /#{yesterday}/
         text = milestone.at_css('.milestone_text').to_s.gsub(/\/company\//,'http://crunchbase.com/company/').gsub(/\/person\//,'http://crunchbase.com/person/').gsub(/\/financial-organization\//,'http://crunchbase.com/financial-organization/').gsub(/\/product\//,'http://crunchbase.com/product/').gsub(/\/service-provider\//,'http://crunchbase.com/service-provider/').gsub(/<div class="milestone_text">|<\/div>/,'')
-        news_alerts.push(text)
+        if milestone.to_s =~ /milestone_acquisition/
+          acquisitions.push(text)
+        elsif milestone.to_s =~ /milestone_funding_round/
+          fundings.push(text)
+        else
+          procos.push(text)
+        end
       end
     end
+
+    news_alerts = acquisitions + fundings + procos
 
     if !news_alerts.empty?
       weekly_news = WeeklyNews.find_by_id('1')
