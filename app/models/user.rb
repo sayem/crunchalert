@@ -67,10 +67,15 @@ class User < ActiveRecord::Base
         content_url = alert.content.gsub(/[\s\.]/,'-')
         doc = Nokogiri::HTML(open("http://crunchbase.com/#{alert.content_type}/#{content_url}"))
         milestones = doc.css('#milestones li').each do |milestone|
+          alert_milestones = Array.new
           if milestone.text =~ /#{yesterday}/
-            text = milestone.at_css('.milestone_text').to_s.gsub(/\/#{alert.content_type}\/#{alert.content}/,"http://crunchbase.com/#{alert.content_type}/#{alert.content}").gsub(/<div class="milestone_text">|<\/div>/,'')
-            crunchalerts.push(alert.content.capitalize) # maybe check for dupes here if multiple alert texts
-            crunchalerts.push(text)
+            text = milestone.at_css('.milestone_text').to_s.gsub(/\/#{alert.content_type}\/#{alert.content}/,"http://crunchbase.com/#{alert.content_type}/#{alert.con
+tent}").gsub(/<div class="milestone_text">|<\/div>/,'')
+            alert_milestones.push(text)
+          end
+          if !alert_milestones.empty?
+            alert_milestones.insert(0, "<b>#{alert.content.capitalize}</b>")
+            crunchalerts = crunchalerts + alert_milestones
           end
         end
 
@@ -79,7 +84,7 @@ class User < ActiveRecord::Base
         alertlinks = doc.css('.recently_link').each do |alertlink|
           if alertlink.to_s =~ /#{techcrunch}|#{techmeme}/
             links = alertlink.to_s.gsub(/<div class="recently_link">|<\/div>/,'')
-            crunchalerts.push("<b>CrunchBase News:</b>")
+            crunchalerts.push("<b>#{alert.content.capitalize} News:</b>")
             crunchalerts.push(links)
 
             weekly_alert = WeeklyAlert.find_by_content(alert.content)
@@ -105,7 +110,7 @@ class User < ActiveRecord::Base
     news_alerts = Array.new
     milestones = doc.css('#milestones li').each do |milestone|
       if milestone.text =~ /#{yesterday}/
-        text = milestone.at_css('.milestone_text').to_s.gsub(/\/company\//,'http://crunchbase.com/company/').gsub(/\/person\//,'http://crunchbase.com/person/').gsub(/\/financial-organization\//,'http://crunchbase.com/financial-organization/').gsub(/<div class="milestone_text">|<\/div>/,'')    # gsub for other cats too
+        text = milestone.at_css('.milestone_text').to_s.gsub(/\/company\//,'http://crunchbase.com/company/').gsub(/\/person\//,'http://crunchbase.com/person/').gsub(/\/financial-organization\//,'http://crunchbase.com/financial-organization/').gsub(/\/product\//,'http://crunchbase.com/product/').gsub(/\/service-provider\//,'http://crunchbase.com/service-provider/').gsub(/<div class="milestone_text">|<\/div>/,'')
         news_alerts.push(text)
       end
     end
