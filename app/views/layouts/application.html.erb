@@ -7,11 +7,17 @@
   <%= favicon_link_tag 'favicon.ico' %>
   <%= stylesheet_link_tag 'blueprint/screen', :media => 'screen' %>
   <%= stylesheet_link_tag 'main' %>
-  <%= javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js', 'rails', 'jquery.hint', 'jquery.form', 'application' %>
+  <%= javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js', 'rails', 'jquery.hint', 'jquery.form', 'application' %>
   <%= csrf_meta_tag %>
 </head>
 <body>
 <div class="container">
+
+
+
+
+
+
 
 
   <div id="header">
@@ -39,9 +45,9 @@
 
 <ul class="blurb">
 
+</ul>
+
 <hr />
-
-
 
 <%= yield %>
 
@@ -53,6 +59,11 @@
 <div class="footer">
 &copy; 2011 CrunchAlert | <a href="mailto:contact@crunchalert.com">contact@crunchalert.com</a>
 </div>
+
+
+
+
+
 
 
 

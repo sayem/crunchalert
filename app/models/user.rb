@@ -66,17 +66,25 @@ class User < ActiveRecord::Base
       alerts.each do |alert|
         content_url = alert.content.gsub(/[\s\.]/,'-')
         doc = Nokogiri::HTML(open("http://crunchbase.com/#{alert.content_type}/#{content_url}"))
+        alert_milestones = Array.new
         milestones = doc.css('#milestones li').each do |milestone|
-          alert_milestones = Array.new
           if milestone.text =~ /#{yesterday}/
-            text = milestone.at_css('.milestone_text').to_s.gsub(/\/#{alert.content_type}\/#{alert.content}/,"http://crunchbase.com/#{alert.content_type}/#{alert.con
-tent}").gsub(/<div class="milestone_text">|<\/div>/,'')
+            text = milestone.at_css('.milestone_text').to_s.gsub(/\/company\//,'http://crunchbase.com/company/').gsub(/\/person\//,'http://crunchbase.com/person/').gsub(/\/financial-organization\//,'http://crunchbase.com/financial-organization/').gsub(/\/product\//,'http://crunchbase.com/product/').gsub(/\/service-provider\//,'http://crunchbase.com/service-provider/').gsub(/<div class="milestone_text">|<\/div>/,'')
             alert_milestones.push(text)
           end
-          if !alert_milestones.empty?
-            alert_milestones.insert(0, "<b>#{alert.content.capitalize}</b>")
-            crunchalerts = crunchalerts + alert_milestones
+        end
+        if !alert_milestones.empty?
+          unless alert.content.split[1]
+            name = alert.content.capitalize
+          else
+            name = Array.new
+            alert.content.split.each do |x|
+              name.push(x.capitalize)
+            end
+            name = name.join(' ')
           end
+          alert_milestones.insert(0, "<b>#{name}</b>")
+          crunchalerts = crunchalerts + alert_milestones
         end
 
         techcrunch = Date.today.prev_day.strftime("%Y/%m/%d")

@@ -20,7 +20,9 @@
   <% unless alert.content.split[1] %>
     <%=h alert.content.capitalize %>
   <% else %>
-    <%=h alert.content.split[0].capitalize << ' ' << alert.content.split[1].capitalize %>
+    <% alert.content.split.each do |x| %>
+    <%=h x.capitalize %>
+    <% end %>
   <% end %>
 
  <span class="edit_alert">Edit</span>
