@@ -5,9 +5,15 @@
   </head>
   <body>
 
-    <p>
-      <%= @news %>
-    </p>
+    <% @news.each do |news| %>
 
+    <%= raw("<p>#{news}</p>") %>
+
+    <% end %>
+
+    <br />
+    <hr color="#333333"/>
+    <br />
+      Manage your email alerts at <a href="http://crunchalert.com">CrunchAlert.com</a>.
   </body>
 </html>

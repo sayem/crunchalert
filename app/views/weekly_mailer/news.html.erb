@@ -4,14 +4,16 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
   </head>
   <body>
-
  
-      <%= @weeklynews %>
- 
+    <% @weeklynews.each do |weeklynews| %>
 
-      <br />
-      <hr color="#333333"/>
-      <br />
-      Manage all of your email alerts at <a href="http://crunchalert.com">CrunchAlert.com</a>. 
+    <%= raw("<p>#{weeklynews}</p>") %>
+
+    <% end %>
+    
+    <br />
+    <hr color="#333333"/>
+    <br />
+    Manage your email alerts at <a href="http://crunchalert.com">CrunchAlert.com</a>. 
   </body>
 </html>

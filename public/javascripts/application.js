@@ -26,7 +26,7 @@ $(document).ready(function() {
 
 	$('#delete_button').click(function() {
 	    $.ajax({
-		url: '/deletealert',
+		url: '/removealert',
 		type: 'post',
 		data: { content: content },
 		async: false

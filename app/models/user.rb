@@ -59,9 +59,9 @@ class User < ActiveRecord::Base
     year.slice!(0..1)
     yesterday = month << '/' << day << '/' << year
     today = Date.today.strftime("%a").downcase
+    crunchalerts = Array.new
 
     User.all.each do |user|
-      crunchalerts = Array.new
       alerts = Alert.where(:user_id => user.id, :freq => true)
       alerts.each do |alert|
         content_url = alert.content.gsub(/[\s\.]/,'-')
@@ -120,6 +120,26 @@ class User < ActiveRecord::Base
       end
     end
 
+=begin
+    weeklies = Alert.all.where(:freq => false)
+    weeklies.each do |weekly|
+      content = weekly.content
+
+
+
+    end
+
+=end
+
+
+
+
+
+
+
+
+
+
     doc = Nokogiri::HTML(open('http://crunchbase.com'))
     news_alerts = Array.new
     acquisitions = Array.[]("<br /><b>Acquisitions</b>")
@@ -153,7 +173,7 @@ class User < ActiveRecord::Base
         id = news.user_id
         user = User.find_by_id(id)
         DailyMailer.deliver_news(user.email, news_alerts)
-      end  
+      end
     end
   end
 

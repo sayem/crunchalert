@@ -45,7 +45,7 @@ class Alert < ActiveRecord::Base
   end
 
   def self.remove(content, user)
-    delete_alert = Alert.where(:content => content, :user_id => user)
+    delete_alert = Alert.find_by_content_and_user_id(content, user)
     delete_alert.delete
   end
 end
