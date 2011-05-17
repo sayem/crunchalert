@@ -27,7 +27,7 @@ class Alert < ActiveRecord::Base
   end
 
   def self.edit(content, freq, news, user)
-    alert = Alert.where(:content => content, :user => user)
+    alert = Alert.find_by_content_and_user_id(content, user)
     alert.update_attributes(:freq => freq, :news => news)
 
     if freq == 'true'

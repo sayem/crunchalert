@@ -105,7 +105,7 @@ class User < ActiveRecord::Base
 
         weekly_alert = WeeklyAlert.find_by_content(alert.content)
         if weekly_alert
-          unless weekly_alert.send(today)   
+          unless weekly_alert.send(today)
             if crunchalerts.empty?
               crunchalerts = nil
             end
@@ -120,25 +120,62 @@ class User < ActiveRecord::Base
       end
     end
 
-=begin
-    weeklies = Alert.all.where(:freq => false)
-    weeklies.each do |weekly|
-      content = weekly.content
+    weeklies = WeeklyAlert.all.each do |weekly|
+      alerts = Alert.where(:content => weekly.content)
+      check_alerts = Array.new
+      alerts.each do |alert|
+        check_alerts.push(alert.freq)
+      end
+      check_alerts = check_alerts.uniq
+      if check_alerts.length == 1
+        input_weekly = Array.new
+        content_url = weekly.content.gsub(/[\s\.]/,'-')
+        content_type = Alert.find_by_content(weekly.content).content_type
+        doc = Nokogiri::HTML(open("http://crunchbase.com/#{content_type}/#{content_url}"))
+        alert_milestones = Array.new
+        milestones = doc.css('#milestones li').each do |milestone|
+          if milestone.text =~ /#{yesterday}/
+            text = milestone.at_css('.milestone_text').to_s.gsub(/\/company\//,'http://crunchbase.com/company/').gsub(/\/person\//,'http://crunchbase.com/person/').gsub(/\/financial-organization\//,'http://crunchbase.com/financial-organization/').gsub(/\/product\//,'http://crunchbase.com/product/').gsub(/\/service-provider\//,'http://crunchbase.com/service-provider/').gsub(/<div class="milestone_text">|<\/div>/,'')
+            alert_milestones.push(text)
+          end
+        end
 
+        unless weekly.content.split[1]
+          name = weekly.content.capitalize
+        else
+          name = Array.new
+          weekly.content.split.each do |x|
+            name.push(x.capitalize)
+          end
+          name = name.join(' ')
+        end
 
+        if !alert_milestones.empty?
+          alert_milestones.insert(0, "<br /><b>#{name}</b>")
+          input_weekly = input_weekly + alert_milestones
+        end
 
+        techcrunch = Date.today.prev_day.strftime("%Y/%m/%d")
+        techmeme = Date.today.prev_day.strftime("%y%m%d")
+        alert_news = Array.new
+        alertlinks = doc.css('.recently_link').each do |alertlink|
+          if alertlink.to_s =~ /#{techcrunch}|#{techmeme}/
+            links = alertlink.to_s.gsub(/<div class="recently_link">|<\/div>/,'')
+            alert_news.push(links)
+          end
+        end
+        if !alert_news.empty?
+          alert_news.insert(0, "<br /><b>#{name} News:</b>")
+          input_weekly = input_weekly + alert_news
+        end
+
+        if input_weekly.empty?
+          input_weekly = nil
+        end
+        weekly.send("#{today}=", input_weekly)
+        weekly.save
+      end
     end
-
-=end
-
-
-
-
-
-
-
-
-
 
     doc = Nokogiri::HTML(open('http://crunchbase.com'))
     news_alerts = Array.new
