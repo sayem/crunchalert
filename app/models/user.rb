@@ -224,7 +224,6 @@ class User < ActiveRecord::Base
 =begin
 
 -- need to input day of week 
--- need to double-check and acct for hyphens not registering on gsub on text for each milestone
 
 =end
 
@@ -264,8 +263,8 @@ class User < ActiveRecord::Base
         end
         if !weekly_total.empty? 
           weekly_total = weekly_total.flatten
-          weekly_total.collect! {|x| coder.decode(x)}   
-#          WeeklyMailer.deliver_alerts(user.email, weekly_total)
+          weekly_total.collect! {|x| coder.decode(x)}
+          WeeklyMailer.deliver_alerts(user.email, weekly_total)
         end
       end
 
@@ -273,12 +272,13 @@ class User < ActiveRecord::Base
         weekly_news = WeeklyNews.find_by_id('1')
         weekly_digest = days.collect {|day| weekly_news.send(day).to_s.split(/\"/)}
         weekly_digest = weekly_digest.compact
-        
+   
         if !weekly_digest.empty?
           weekly_digest = weekly_digest.flatten
           weekly_digest.collect! {|x| coder.decode(x)}
-          weekly_digest.collect! {|x| x.delete("\n-")}
-          weekly_digest.collect! {|x| x.gsub(/\\xE2\\x80\\x94/, '&mdash;')}
+          weekly_digest.collect! {|x| x.gsub(/--- /, '')}
+          weekly_digest.collect! {|x| x.gsub(/\n- /, '')}
+          weekly_digest.collect! {|x| x.gsub(/\\xE2\\x80\\x94/,'&mdash;')}
           WeeklyMailer.deliver_news(user.email, weekly_digest)
         end
       end
