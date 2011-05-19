@@ -2,6 +2,7 @@ require 'date'
 require 'mail'
 require 'nokogiri'
 require 'open-uri'
+require 'htmlentities'
 
 class User < ActiveRecord::Base
   validates_presence_of     :email
@@ -59,6 +60,7 @@ class User < ActiveRecord::Base
     year.slice!(0..1)
     yesterday = month << '/' << day << '/' << year
     today = Date.today.strftime("%a").downcase
+    coder = HTMLEntities.new
     crunchalerts = Array.new
 
     User.all.each do |user|
@@ -105,11 +107,21 @@ class User < ActiveRecord::Base
 
         weekly_alert = WeeklyAlert.find_by_content(alert.content)
         if weekly_alert
+          if !alert_milestones.empty?
+            alert_milestones.slice!(0)
+          end
+          if !alert_news.empty?
+            alert_news.slice!(0)
+          end
+          weekly_crunchalerts = Array.new
+          weekly_crunchalerts = alert_milestones + alert_news
+
           unless weekly_alert.send(today)
-            if crunchalerts.empty?
-              crunchalerts = nil
+            if weekly_crunchalerts.empty?
+              weekly_crunchalerts = nil
             end
-            weekly_alert.send("#{today}=", crunchalerts)
+            weekly_crunchalerts.collect! {|x| coder.encode(x.squish)}
+            weekly_alert.send("#{today}=", weekly_crunchalerts)
             weekly_alert.save
           end
         end
@@ -151,7 +163,6 @@ class User < ActiveRecord::Base
         end
 
         if !alert_milestones.empty?
-          alert_milestones.insert(0, "<br /><b>#{name}</b>")
           input_weekly = input_weekly + alert_milestones
         end
 
@@ -165,12 +176,13 @@ class User < ActiveRecord::Base
           end
         end
         if !alert_news.empty?
-          alert_news.insert(0, "<br /><b>#{name} News:</b>")
           input_weekly = input_weekly + alert_news
         end
 
         if input_weekly.empty?
           input_weekly = nil
+        else
+          input_weekly.collect! {|x| coder.encode(x.squish)}
         end
         weekly.send("#{today}=", input_weekly)
         weekly.save
@@ -201,6 +213,7 @@ class User < ActiveRecord::Base
     if !news_alerts.empty?
       weekly_news = WeeklyNews.find_by_id('1')
       unless weekly_news.send(today)
+        news_alerts.collect! {|x| coder.encode(x.squish)}
         weekly_news.send("#{today}=", news_alerts)
         weekly_news.save
       end
@@ -215,17 +228,35 @@ class User < ActiveRecord::Base
   end
 
   def self.weekly
+    coder = HTMLEntities.new
     User.all.each do |user|
       days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
       alerts = Alert.where(:user_id => user.id, :freq => false)
       if !alerts.empty?
         weekly_total = Array.new
         alerts.each do |alert|
-          weekly_alert = WeeklyAlert.find_by_content(alert.content) 
-          alert.content = days.collect {|day| weekly_alert.send(day)}
-          weekly_total.push(alert.content)
+          unless alert.content.split[1]
+            name = alert.content.capitalize
+          else
+            name = Array.new
+            alert.content.split.each do |x|
+              name.push(x.capitalize)
+            end
+            name = name.join(' ')
+          end
+
+          weekly_alert = WeeklyAlert.find_by_content(alert.content)
+          alert.content = days.collect {|day| weekly_alert.send(day).to_s.split(/\"/)[1]}
+          alert.content = alert.content.compact
+
+          if !alert.content.empty?
+            alert.content.insert(0, "<br /><b>#{name}</b>")
+            weekly_total.push(alert.content)
+          end
         end
-        if !weekly_total.empty?
+        if !weekly_total.empty? 
+          weekly_total = weekly_total.flatten
+          weekly_total.collect! {|x| coder.decode(x)}
           WeeklyMailer.deliver_alerts(user.email, weekly_total)
         end
       end
@@ -233,11 +264,22 @@ class User < ActiveRecord::Base
       if News.where(:user_id => user.id, :freq => false)
         weekly_news = WeeklyNews.find_by_id('1')
         weekly_digest = days.collect {|day| weekly_news.send(day)}
+        weekly_digest = weekly_digest.compact
+
+
+# figure out weekly news formatting
+
         if !weekly_digest.empty?
+          weekly_digest.collect! {|x| coder.decode(x)}
           WeeklyMailer.deliver_news(user.email, weekly_digest)
         end
       end
     end
+
+
+# clean up and delete stored weekly data for both alerts and news
+
+
   end
 
   private

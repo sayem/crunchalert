@@ -1,6 +1,6 @@
 
-link = "http://www.crunchbase.com/company/buddymedia"
 
+#link = "http://www.crunchbase.com/company/buddymedia"
 
 #name = link.scan(/\w+$/)[0]  .gsub(/\//, '')
 

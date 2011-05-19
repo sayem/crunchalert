@@ -29,16 +29,15 @@ class Alert < ActiveRecord::Base
   def self.edit(content, freq, news, user)
     alert = Alert.find_by_content_and_user_id(content, user)
     alert.update_attributes(:freq => freq, :news => news)
-
     if freq == 'true'
       check_weekly = Alert.where(:content => content, :freq => false)
-      weekly = WeeklyAlert.where(:content => content)
+      weekly = WeeklyAlert.find_by_content(content)
       if check_weekly.empty? && weekly
         weekly.delete
       end
     else
-      weekly_alert = WeeklyAlert.where(:content => content)
-      if weekly_alert.empty?
+      weekly_alert = WeeklyAlert.find_by_content(content)
+      if !weekly_alert
         WeeklyAlert.create(:content => content)
       end
     end
