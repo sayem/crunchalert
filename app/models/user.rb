@@ -147,7 +147,7 @@ class User < ActiveRecord::Base
         alert_milestones = Array.new
         milestones = doc.css('#milestones li').each do |milestone|
           if milestone.text =~ /#{yesterday}/
-            text = milestone.at_css('.milestone_text').to_s.gsub(/\/company\//,'http://crunchbase.com/company/').gsub(/\/person\//,'http://crunchbase.com/person/').gsub(/\/financial-organization\//,'http://crunchbase.com/financial\-organization/').gsub(/\/product\//,'http://crunchbase.com/product/').gsub(/\/service-provider\//,'http://crunchbase.com/service\-provider/').gsub(/<div class="milestone_text">|<\/div>/,'')
+            text = milestone.at_css('.milestone_text').to_s.gsub(/\/company\//,'http://crunchbase.com/company/').gsub(/\/person\//,'http://crunchbase.com/person/').gsub(/\/financial-organization\//,'http://crunchbase.com/financial-organization/').gsub(/\/product\//,'http://crunchbase.com/product/').gsub(/\/service-provider\//,'http://crunchbase.com/service-provider/').gsub(/<div class="milestone_text">|<\/div>/,'')
             alert_milestones.push(text)
           end
         end
@@ -197,7 +197,7 @@ class User < ActiveRecord::Base
 
     milestones = doc.css('#milestones li').each do |milestone|
       if milestone.text =~ /#{yesterday}/
-        text = milestone.at_css('.milestone_text').to_s.gsub(/\/company\//,'http://crunchbase.com/company/').gsub(/\/person\//,'http://crunchbase.com/person/').gsub(/\/financial-organization\//,'http://crunchbase.com/financial\-organization/').gsub(/\/product\//,'http://crunchbase.com/product/').gsub(/\/service-provider\//,'http://crunchbase.com/service\-provider/').gsub(/<div class="milestone_text">|<\/div>/,'')
+        text = milestone.at_css('.milestone_text').to_s.gsub(/\/company\//,'http://crunchbase.com/company/').gsub(/\/person\//,'http://crunchbase.com/person/').gsub(/\/financial-organization\//,'http://crunchbase.com/financial-organization/').gsub(/\/product\//,'http://crunchbase.com/product/').gsub(/\/service-provider\//,'http://crunchbase.com/service-provider/').gsub(/<div class="milestone_text">|<\/div>/,'')
         if milestone.to_s =~ /milestone_acquisition/
           acquisitions.push(text)
         elsif milestone.to_s =~ /milestone_funding_round/
@@ -221,14 +221,12 @@ class User < ActiveRecord::Base
       weekly_news = WeeklyNews.find_by_id('1')
       unless weekly_news.send(today)
 
-
 =begin
 
 -- need to input day of week 
 -- need to double-check and acct for hyphens not registering on gsub on text for each milestone
 
 =end
-
 
         news_alerts.collect! {|x| coder.encode(x.squish)}
         weekly_news.send("#{today}=", news_alerts)
@@ -280,15 +278,14 @@ class User < ActiveRecord::Base
           weekly_digest = weekly_digest.flatten
           weekly_digest.collect! {|x| coder.decode(x)}
           weekly_digest.collect! {|x| x.delete("\n-")}
+          weekly_digest.collect! {|x| x.gsub(/\\xE2\\x80\\x94/, '&mdash;')}
           WeeklyMailer.deliver_news(user.email, weekly_digest)
         end
       end
     end
 
 
-# set utf-8 and fix the em hyphen
 # clean up and delete stored weekly data for both alerts and news
-
 
 
   end
