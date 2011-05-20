@@ -208,7 +208,10 @@ class User < ActiveRecord::Base
       end
     end
 
-    news_alerts = acquisitions + fundings + procos
+    input = Array.new
+    input = [acquisitions, fundings, procos]
+    input.delete_if {|x| x.length == 1}
+    news_alerts = input.flatten
 
     if !news_alerts.empty?
       news = News.where(:news => true)
@@ -220,13 +223,9 @@ class User < ActiveRecord::Base
 
       weekly_news = WeeklyNews.find_by_id('1')
       unless weekly_news.send(today)
-
-=begin
-
--- need to input day of week 
-
-=end
-
+        time = Time.new
+        day = time.strftime("%A, %b #{time.day.ordinalize}")
+        news_alerts.insert(0, "<br /><u>#{day}</u>")
         news_alerts.collect! {|x| coder.encode(x.squish)}
         weekly_news.send("#{today}=", news_alerts)
         weekly_news.save
@@ -236,8 +235,8 @@ class User < ActiveRecord::Base
 
   def self.weekly
     coder = HTMLEntities.new
+    days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
     User.all.each do |user|
-      days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
       alerts = Alert.where(:user_id => user.id, :freq => false)
       if !alerts.empty?
         weekly_total = Array.new
@@ -276,15 +275,14 @@ class User < ActiveRecord::Base
         if !weekly_digest.empty?
           weekly_digest = weekly_digest.flatten
           weekly_digest.collect! {|x| coder.decode(x)}
-          weekly_digest.collect! {|x| x.gsub(/--- /, '')}
-          weekly_digest.collect! {|x| x.gsub(/\n- /, '')}
-          weekly_digest.collect! {|x| x.gsub(/\\xE2\\x80\\x94/,'&mdash;')}
+          weekly_digest.collect! {|x| x.gsub(/--- /, '').gsub(/\n- /, '').gsub(/\\xE2\\x80\\x94/,'&mdash;')}
           WeeklyMailer.deliver_news(user.email, weekly_digest)
         end
       end
     end
 
-
+#    weekly_news = WeeklyNews.find_by_id('1')    
+   
 # clean up and delete stored weekly data for both alerts and news
 
 
