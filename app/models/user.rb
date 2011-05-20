@@ -129,6 +129,7 @@ class User < ActiveRecord::Base
 
       if !crunchalerts.empty?
         DailyMailer.deliver_alerts(user.email, crunchalerts)
+        crunchalerts.clear
       end
     end
 
@@ -235,8 +236,8 @@ class User < ActiveRecord::Base
 
   def self.weekly
     coder = HTMLEntities.new
-    days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
     User.all.each do |user|
+      days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
       alerts = Alert.where(:user_id => user.id, :freq => false)
       if !alerts.empty?
         weekly_total = Array.new
@@ -281,11 +282,14 @@ class User < ActiveRecord::Base
       end
     end
 
-#    weekly_news = WeeklyNews.find_by_id('1')    
-   
-# clean up and delete stored weekly data for both alerts and news
+    WeeklyAlert.update_all(:sun => nil, :mon => nil, :tue => nil, :wed => nil, :thu => nil, :fri => nil, :sat => nil)
 
-
+    weekly_news = WeeklyNews.find_by_id('1')    
+    yesterday = Date.today.prev_day.strftime("%a").downcase
+    yesterday_news = weekly_news.send(yesterday)
+    WeeklyNews.update_all(:sun => nil, :mon => nil, :tue => nil, :wed => nil, :thu => nil, :fri => nil, :sat => nil)
+    weekly_news.send("#{yesterday}=", yesterday_news)
+    weekly_news.save
   end
 
   private
