@@ -14,7 +14,7 @@
 <br />
 
 <% @alerts.each do |alert| %>
-<div class="crunchalert" id="<%= alert.content %>">
+<div class="crunchalert" id="<%= alert.content.delete(' ') %>">
   <%= image_tag(Picture.find_by_content(alert.content)[:url]) %>
 
   <% unless alert.content.split[1] %>
