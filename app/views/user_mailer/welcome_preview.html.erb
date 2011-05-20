@@ -4,8 +4,15 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
   </head>
   <body>
+    <p>
+      This is a preview of the daily news digest CrunchAlert users could opt in to receive. Listed below are all the <a href="http://crunchbase.com">CrunchBase</a> updates from yesterday.
+    </p>
+    <br />
+    <hr color="#333333"/>
 
-    <%= raw("<p>#{@news}</p>") %>
+    <% @welcome_news.each do |news| %>
+    <%= raw("<p>#{news}</p>") %>
+    <% end %>
 
     <br />
     <hr color="#333333"/>

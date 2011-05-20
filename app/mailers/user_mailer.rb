@@ -9,10 +9,16 @@ class UserMailer < ActionMailer::Base
   end
 
   def welcome_preview(user)
-    require 'date'
-    yesterday = Date.today.prev_day.strftime("%a").downcase
     @user = user
-    @news = WeeklyNews.find_by_id('1').send(yesterday)
+    require 'date'
+    require 'htmlentities'
+    coder = HTMLEntities.new
+    yesterday = Date.today.prev_day.strftime("%a").downcase    
+    news = WeeklyNews.find_by_id('1').send(yesterday).to_s.split(/\"/)
+    news.collect! {|x| coder.decode(x)}
+    news.collect! {|x| x.gsub(/--- /, '').gsub(/\n- /, '').gsub(/\\xE2\\x80\\x94/,'&mdash;')}
+    @welcome_news = news
+
     mail(:to => user.email,
          :subject => "CrunchAlert | News Sample")
   end
