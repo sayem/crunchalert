@@ -1,73 +1,32 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-  <title>CrunchAlert - Email Alerts on CrunchBase Updates</title>
-  <meta name="description" content="email alerts on CrunchBase updates from your favorite tech companies and people" />
-  <%= favicon_link_tag 'favicon.ico' %>
-  <%= stylesheet_link_tag 'blueprint/screen', :media => 'screen' %>
-  <%= stylesheet_link_tag 'main' %>
-  <%= javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js', 'rails', 'jquery.hint', 'jquery.form', 'application' %>
-  <%= csrf_meta_tag %>
-</head>
+<%= render 'shared/head' -%>
 <body>
 <div class="container">
-
-
-
-
-
-
-
-
-  <div id="header">
-    <a href="/"><%= image_tag("crunchalert_logo.png", :alt => "crunchalert") %></a>
-    <b>email alerts on CrunchBase updates from your favorite tech companies and people</b>
-
-    <div class="login">
-
-      <% if !signed_in? %>
-      <%= link_to "Register", signup_path %>
-      <%= link_to "Login", login_path %>
-      <% else %>
-      <%= link_to "Account", edit_user_path(current_user) %>
-      <%= link_to "Logout", logout_path, :method => :delete %>
-      <% end %>
-
-    </div>
-  </div>
-
-
-
-
+<%= render 'shared/header' -%>
 <div class="center-container">
 
 
+
+
 <ul class="blurb">
+
+
+
 
 </ul>
 
 <hr />
 
-<%= yield %>
+
+<%= yield -%>
+
+
+
+
+
+
 
 </div>
-
-
-
-
-<div class="footer">
-&copy; 2011 CrunchAlert | <a href="mailto:contact@crunchalert.com">contact@crunchalert.com</a>
-</div>
-
-
-
-
-
-
-
-
-
+<%= render 'shared/footer' -%>
 </div>
 </body>
 </html>
