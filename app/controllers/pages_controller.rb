@@ -10,11 +10,11 @@ class PagesController < ApplicationController
     @news = news
 
     alert_count = Alert.group('content').count
-    popular = alert_count.sort {|a,b| -1*(a[1]<=>b[1]) }
+    popular = alert_count.sort {|a,b| -1*(a[1]<=>b[1])}
     popular.slice!(5..-1)
     @popular = popular
- 
-    @recent = Alert.order('created_at').limit('10')
+
+    @recent = Alert.group('content').order('created_at').limit('10')
 
     if signed_in?
       @alerts = Alert.where(:user_id => current_user[:id])

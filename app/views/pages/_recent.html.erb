@@ -1,7 +1,20 @@
 
 <br />
 <br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+
+
+
 <% @recent.each do |alert| %>
-<%= alert.content %>
+<% name = alert.content.gsub(/[\s\.]/,'-') %>
+<a href=<%= "http://crunchbase.com/#{alert.content_type}/#{name}" %>><img src=<%= Picture.find_by_content(alert.content).url %>></a>
 <br />
 <% end %>

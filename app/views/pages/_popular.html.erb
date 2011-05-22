@@ -1,5 +1,10 @@
 
-<% @popular.each do |alert| %>
-<%= alert[0] %>
+<% @popular.each do |popular| %>
+<% alert = Alert.find_by_content(popular[0]) %>
+<% name = alert.content.gsub(/[\s\.]/,'-') %>
+<a href=<%= "http://crunchbase.com/#{alert.content_type}/#{name}" %>><img src=<%= Picture.find_by_content(alert.content).url %>></a>
 <br />
 <% end%>
+
+
+
