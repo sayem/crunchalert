@@ -30,7 +30,6 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       sign_in @user
-      flash[:success] = "Welcome to the Sample App!"
       redirect_to root_path
       UserMailer.welcome_email(@user).deliver
       UserMailer.welcome_preview(@user).deliver

@@ -63,7 +63,7 @@ class User < ActiveRecord::Base
     coder = HTMLEntities.new
     crunchalerts = Array.new
 
-    User.all.each do |user|
+    User.find_each do |user|
       alerts = Alert.where(:user_id => user.id, :freq => true)
       alerts.each do |alert|
         content_url = alert.content.gsub(/[\s\.]/,'-')
@@ -101,7 +101,7 @@ class User < ActiveRecord::Base
           end
         end
         if !alert_news.empty?
-          alert_news.insert(0, "<br /><b>#{name} News:</b>")
+          alert_news.insert(0, "<br /><b>#{name} News</b>")
           crunchalerts = crunchalerts + alert_news
         end
 
@@ -133,7 +133,7 @@ class User < ActiveRecord::Base
       end
     end
 
-    weeklies = WeeklyAlert.all.each do |weekly|
+    weeklies = WeeklyAlert.find_each do |weekly|
       alerts = Alert.where(:content => weekly.content)
       check_alerts = Array.new
       alerts.each do |alert|
@@ -236,7 +236,7 @@ class User < ActiveRecord::Base
 
   def self.weekly
     coder = HTMLEntities.new
-    User.all.each do |user|
+    User.find_each do |user|
       days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
       alerts = Alert.where(:user_id => user.id, :freq => false)
       if !alerts.empty?

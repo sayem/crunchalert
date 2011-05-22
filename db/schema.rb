@@ -63,7 +63,6 @@ ActiveRecord::Schema.define(:version => 20110507023235) do
   end
 
   create_table "weekly_news", :force => true do |t|
-    t.text     "weekly_data"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "sun"

@@ -46,5 +46,17 @@ class Alert < ActiveRecord::Base
   def self.remove(content, user)
     delete_alert = Alert.find_by_content_and_user_id(content, user)
     delete_alert.delete
+
+    check_alert = Alert.where(:content => content)
+    weekly_alert = WeeklyAlert.find_by_content(content)
+    alert_pic = Picture.find_by_content(content)
+    if check_alert.empty? 
+      if weekly_alert
+        weekly_alert.delete
+      end
+      if alert_pic
+        alert_pic.delete
+      end
+    end
   end
 end
