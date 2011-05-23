@@ -1,5 +1,17 @@
 $(document).ready(function() {
+
     $('a[href*="crunchbase.com"]').attr('target','_blank');
+
+    // hover icons
+
+    $('.icons li').hover(
+	function() { $(this).addClass('ui-state-hover'); },
+	function() { $(this).removeClass('ui-state-hover'); }
+    );
+
+    $('.edit_button').button();
+
+
     $('#form-crunchbase').ajaxForm({ url: '/crunchbase', success: switch_form });
     $('#form-crunchnews').ajaxForm({ url: '/news' });
     $('.edit_alert').click(function() {
