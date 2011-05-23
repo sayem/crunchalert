@@ -1,11 +1,34 @@
 
-<%= render 'popular' %>
+<div id="alert_sidebar">
 
+<%= render 'popular' %>
 <%= render 'recent' %>
 
+</div>
+
+
 <% if !signed_in? %>
-<%= render 'yesterday_news' %>
+
+<div id="intro"> 
+
+Sign up to receive updates on your favorite tech companies and people. <br /><br />
+
+Once you register, you'll be able to receive email updates on any CrunchBase profile you want to track. You can also sign up to get a round-up of the latest tech news and deals too in your in inbox.
+
+</div>
+
 <% end %>
+
+
+<% if !signed_in? %>
+
+<div id="yesterday_news">
+<%= render 'yesterday_news' %>
+</div>
+
+<% end %>
+
+
 
 <% if signed_in? %>
 
@@ -21,6 +44,9 @@
 <br />
 <br />
 
+
+<div id="alert_list">
+
 <% @alerts.each do |alert| %>
 
 <div class="crunchalert" id="<%= alert.content.delete(' ') %>">
@@ -30,5 +56,7 @@
 </div>
 
 <% end %>
+
+</div>
 
 <% end %>

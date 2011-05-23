@@ -1,4 +1,8 @@
 
+<div id="popular">
+
+<b>Popular CrunchAlerts</b>
+
 <% @popular.each do |popular| %>
 <% alert = Alert.find_by_content(popular[0]) %>
 <% name = alert.content.gsub(/[\s\.]/,'-') %>
@@ -6,5 +10,4 @@
 <br />
 <% end%>
 
-
-
+</div>
