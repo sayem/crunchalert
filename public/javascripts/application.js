@@ -1,18 +1,17 @@
 $(document).ready(function() {
-
+    $('input[title!=""]').hint();
     $('a[href*="crunchbase.com"]').attr('target','_blank');
-
-    // hover icons
-
     $('.icons li').hover(
 	function() { $(this).addClass('ui-state-hover'); },
 	function() { $(this).removeClass('ui-state-hover'); }
     );
-
     $('.edit_button').button();
 
 
+       
     $('#form-crunchbase').ajaxForm({ url: '/crunchbase', success: switch_form });
+
+
     $('#form-crunchnews').ajaxForm({ url: '/news' });
     $('.edit_alert').click(function() {
 	$(this).text('');
@@ -52,7 +51,7 @@ $(document).ready(function() {
 	});
     });
 
-    $(".crunchalert").click(function(e){     // need to check/define crunchalert width and spacing
+    $(".crunchalert").click(function(e){   
 	e.stopPropagation();
     });
 
