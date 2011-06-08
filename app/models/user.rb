@@ -215,7 +215,7 @@ class User < ActiveRecord::Base
     news_alerts = input.flatten
 
     if !news_alerts.empty?
-      news = News.where(:news => true)
+      news = News.where(:news => true, :freq => true)
       news.each do |news|
         id = news.user_id
         user = User.find_by_id(id)
@@ -268,7 +268,7 @@ class User < ActiveRecord::Base
         end
       end
 
-      if News.where(:user_id => user.id, :freq => false)
+      if News.find_by_user_id_and_freq(user.id, false)
         weekly_news = WeeklyNews.find_by_id('1')
         weekly_digest = days.collect {|day| weekly_news.send(day).to_s.split(/\"/)}
         weekly_digest = weekly_digest.compact
