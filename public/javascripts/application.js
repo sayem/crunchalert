@@ -6,11 +6,8 @@ $(document).ready(function() {
 	function() { $(this).removeClass('ui-state-hover'); }
     );
     $('.edit_button').button();
-
-
-       
+  
     $('#form-crunchbase').ajaxForm({ url: '/crunchbase', success: switch_form });
-
 
     $('#form-crunchnews').ajaxForm({ url: '/news' });
     $('.edit_alert').click(function() {
@@ -91,11 +88,24 @@ function switch_form(data) {
 	$('#input').append(new_form);
 	$('#form-alert').submit(function() {
 	    var prefs = $('#form-alert *').fieldValue();
+	    content = content.replace(/\s/g,'-');
 	    $.ajax({
 		url: '/crunchalert',
 		type: 'post', 
 		data: { content: content, type: type, freq: prefs[0], news: prefs[1], pic: picurl },
-		async: false
+		async: false,
+
+
+
+
+
+		error: function(xhr, status, error) {
+		    alert(xhr.responseText);
+		}
+
+
+
+
 	    });
 	});
     }

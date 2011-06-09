@@ -30,7 +30,6 @@ Once you register, you'll be able to receive email updates on any CrunchBase pro
 <% end %>
 
 
-
 <% if signed_in? %>
 
 <%= render 'crunchbase_form' %>
@@ -46,12 +45,11 @@ Once you register, you'll be able to receive email updates on any CrunchBase pro
 <br />
 
 
-
 <div id="alert_list">
 
 <% @alerts.each do |alert| %>
 
-<div class="crunchalert" id="<%= alert.content.delete(' ') %>">
+<div class="crunchalert" id="<%= alert.content %>">
   <% name = alert.content.gsub(/[\s\.]/,'-') %>
   <a href=<%= "http://crunchbase.com/#{alert.content_type}/#{name}" %>><%= image_tag(Picture.find_by_content(alert.content).url) %></a>
   <span class="edit_alert">Edit</span>

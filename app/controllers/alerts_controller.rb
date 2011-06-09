@@ -79,14 +79,17 @@ class AlertsController < ApplicationController
   def crunchalert
     Alert.crunchalert(params[:content].downcase, params[:type], params[:news], params[:freq], current_user[:id])
     Picture.update(params[:content].downcase, params[:pic])
+    redirect_to root_path
   end
 
   def edit
     Alert.edit(params[:content].downcase, params[:freq], params[:news], current_user[:id])
+    redirect_to root_path
   end
 
   def remove
     Alert.remove(params[:content].downcase, current_user[:id])
+    redirect_to root_path
   end
 
   private
