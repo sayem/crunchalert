@@ -14,27 +14,6 @@ class Alert < ActiveRecord::Base
 
   default_scope :order => 'alerts.created_at DESC'
 
-  def self.crunchalert(content, type, news, freq, user)
-    alert = Alert.where(:content => content)
-    unless alert
-      if freq == 'false'
-        if !WeeklyAlert.where(:content => content).exists?
-          WeeklyAlert.create(:content => content)
-        end
-      end
-    end
-    add_alert = Alert.new(:content => content, :content_type => type, :user_id => user, :news => news, :freq => freq)
-    if add_alert.save
-      Alert.create(:content => content, :content_type => type, :user_id => user, :news => news, :freq => freq)   
-    else
-
-
-      format.json { render :json => add_alert.errors } # 
-
-      
-    end
-  end
-
   def self.edit(content, freq, news, user)
     alert = Alert.find_by_content_and_user_id(content, user)
     alert.update_attributes(:freq => freq, :news => news)

@@ -77,16 +77,23 @@ class AlertsController < ApplicationController
   end
 
   def crunchalert
-    Alert.crunchalert(params[:content].downcase, params[:type], params[:news], params[:freq], current_user[:id])
-    Picture.update(params[:content].downcase, params[:pic])
-
-=begin
-    respond_to do |format|
-      format.json { render :json => Alert.errors, :status => :unprocessable_entity }
+    content = params[:content].downcase
+    alert = Alert.where(:content => content)
+    unless alert
+      if params[:freq] == 'false'
+        if !WeeklyAlert.where(:content => content).exists?
+          WeeklyAlert.create(:content => content)
+        end
+      end
     end
-=end
 
-    redirect_to root_path
+    add_alert = Alert.new(:content => content, :content_type => params[:type], :user_id => current_user[:id], :news => params[:news], :freq => params[:freq])
+    if add_alert.save
+      Picture.update(content, params[:pic])
+      render :text => 'added!'
+    else
+      render :json => add_alert.errors[:content]
+    end
   end
 
   def edit

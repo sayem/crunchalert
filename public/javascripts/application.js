@@ -6,7 +6,7 @@ $(document).ready(function() {
 	function() { $(this).removeClass('ui-state-hover'); }
     );
     $('.edit_button').button();
-  
+
     $('#form-crunchbase').ajaxForm({ url: '/crunchbase', success: switch_form });
 
     $('#form-crunchnews').ajaxForm({ url: '/news' });
@@ -97,13 +97,11 @@ function switch_form(data) {
 
 
 
+		success: function(data) {
 
-
-		error: function(xhr, status, error) {
-		    alert(xhr.responseText);
-		}
-
-
+		    var notification = "<p>shit</p>";
+		    $('#notification').append(notification);
+		} 
 
 
 
