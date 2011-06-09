@@ -23,11 +23,15 @@ class Alert < ActiveRecord::Base
         end
       end
     end
-    add_alert = Alert.new(:content => content, :content_type => type, :user_id => user, :news => news, :freq => freq)   
+    add_alert = Alert.new(:content => content, :content_type => type, :user_id => user, :news => news, :freq => freq)
     if add_alert.save
       Alert.create(:content => content, :content_type => type, :user_id => user, :news => news, :freq => freq)   
     else
-      format.json { render :json => add_alert.errors }     #
+
+
+      format.json { render :json => add_alert.errors } # 
+
+      
     end
   end
 
