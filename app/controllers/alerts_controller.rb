@@ -79,6 +79,13 @@ class AlertsController < ApplicationController
   def crunchalert
     Alert.crunchalert(params[:content].downcase, params[:type], params[:news], params[:freq], current_user[:id])
     Picture.update(params[:content].downcase, params[:pic])
+
+=begin
+    respond_to do |format|
+      format.json { render :json => Alert.errors, :status => :unprocessable_entity }
+    end
+=end
+
     redirect_to root_path
   end
 

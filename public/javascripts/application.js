@@ -106,6 +106,7 @@ function switch_form(data) {
 
 
 
+
 	    });
 	});
     }
