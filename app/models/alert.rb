@@ -7,7 +7,7 @@ class Alert < ActiveRecord::Base
 
   validates :user_id, :presence   => true
 
-  validates_uniqueness_of :content, :scope => :user_id
+  validates_uniqueness_of :content, :scope => :user_id, :message => 'already added'
 
   validates :content, :presence   => true,
                       :format     => { :with => content_regex }

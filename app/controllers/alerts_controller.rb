@@ -90,9 +90,9 @@ class AlertsController < ApplicationController
     add_alert = Alert.new(:content => content, :content_type => params[:type], :user_id => current_user[:id], :news => params[:news], :freq => params[:freq])
     if add_alert.save
       Picture.update(content, params[:pic])
-      render :text => 'added!'
+      redirect_to root_path
     else
-      render :json => add_alert.errors[:content]
+      render :text => add_alert.errors[:content]
     end
   end
 

@@ -8,6 +8,18 @@
 
 
 
+
+<div id="notification">
+
+<% if flash[:notice] -%>
+<%= flash[:notice] %>
+<% end -%>
+
+</div>
+
+
+
+
 <%= yield -%>
 
 

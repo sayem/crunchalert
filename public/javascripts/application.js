@@ -91,21 +91,21 @@ function switch_form(data) {
 	    content = content.replace(/\s/g,'-');
 	    $.ajax({
 		url: '/crunchalert',
-		type: 'post', 
+		type: 'post',
 		data: { content: content, type: type, freq: prefs[0], news: prefs[1], pic: picurl },
 		async: false,
-
-
-
 		success: function(data) {
-
-		    var notification = "<p>shit</p>";
-		    $('#notification').append(notification);
-		} 
-
-
-
+		    var message = data.split("\"")[1];
+		    if (message != 'already added')
+			window.location.reload();
+		    else {
+			$('#form-crunchnews').append(message);
+			$('#input').remove(); 
+			setTimeout("window.location.reload()", 2500);
+		    }
+		}
 	    });
+	    return false;
 	});
     }
 };
