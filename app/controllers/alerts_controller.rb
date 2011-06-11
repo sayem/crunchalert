@@ -96,6 +96,14 @@ class AlertsController < ApplicationController
     end
   end
 
+  def prefs
+    prefs = Alert.find_by_user_id_and_content(current_user[:id], params[:content])
+    freq = prefs.freq
+    news = prefs.news
+    alert_prefs = [freq, news]
+    render :json => alert_prefs
+  end
+
   def edit
     Alert.edit(params[:content].downcase, params[:freq], params[:news], current_user[:id])
     redirect_to root_path

@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
     $('input[title!=""]').hint();
     $('a[href*="crunchbase.com"]').attr('target','_blank');
@@ -10,11 +11,30 @@ $(document).ready(function() {
     $('#form-crunchbase').ajaxForm({ url: '/crunchbase', success: switch_form });
 
     $('#form-crunchnews').ajaxForm({ url: '/news' });
+
     $('.edit_alert').click(function() {
 	$(this).text('');
-	var update_alert = "<form class='form-update' method='post' name='alert'><select id='freq' name='freq'><option value='true'>Daily</option><option value='false'>Weekly</option></select><input id='news' name='news' type='checkbox' check value='true' /><input name='news' type='hidden' value='false' /><label for='news'>Include TechCrunch &amp; TechMeme news updates</label><div class='actions'><input id='alert_submit' type='submit' value='Submit' /></div></form>";
-	$(this).parent().append(update_alert);
 	var content = $(this).parent().attr('id');
+	$.ajax({
+	    url: '/prefs',
+	    type: 'post',
+	    data: { content: content },
+	    success: function(data) {
+		if (data[0])
+		    var freq = "<form class='form-update' method='post' name='alert'><input type='radio' name='freq' value='true' checked>Daily<br><input type='radio' name='freq' value='false'>Weekly<br>"
+		else
+		    var freq = "<form class='form-update' method='post' name='alert'><input type='radio' name='freq' value='true'>Daily<br><input type='radio' name='freq' value='false' checked>Weekly<br>"
+		if (data[1])
+		    var news = "<input id='news' name='news' type='checkbox' check value='true' checked/><input name='news' type='hidden' value='false'/><label for='news'>Include TechCrunch &amp; TechMeme news updates</label><div class='actions'><input id='alert_submit' type='submit' value='Submit' /></div></form>";
+		else
+		    var news = "<input id='news' name='news' type='checkbox' check value='true'/><input name='news' type='hidden' value='false'/><label for='news'>Include TechCrunch &amp; TechMeme news updates</label><div class='actions'><input id='alert_submit' type='submit' value='Submit' /></div></form>";
+
+		var update_alert = freq + news;
+		var id = '#' + content;
+		$(id).append(update_alert);
+	    }
+	});
+
 	var alert_class = '.' + content;
 	$(this).parent().find('form').addClass(content);
 
@@ -58,6 +78,7 @@ $(document).ready(function() {
     });
 });
 
+
 function switch_form(data) {
     if (data == 'not there') {
 	$('#form-crunchbase').remove();
@@ -100,7 +121,7 @@ function switch_form(data) {
 			window.location.reload();
 		    else {
 			$('#form-crunchnews').append(message);
-			$('#input').remove(); 
+			$('#input').remove();
 			setTimeout("window.location.reload()", 2500);
 		    }
 		}

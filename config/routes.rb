@@ -14,6 +14,7 @@ Crunchalert::Application.routes.draw do
   match '/crunchalert', :to => 'alerts#crunchalert'
   match '/editalert', :to => 'alerts#edit'
   match '/removealert', :to => 'alerts#remove'
+  match '/prefs', :to => 'alerts#prefs'
 
   match '/news', :to => 'news#update'
 

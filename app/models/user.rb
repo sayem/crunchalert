@@ -91,6 +91,8 @@ class User < ActiveRecord::Base
           crunchalerts = crunchalerts + alert_milestones
         end
 
+# need to acct for users with news false too both on daily and weekly
+
         techcrunch = Date.today.prev_day.strftime("%Y/%m/%d")
         techmeme = Date.today.prev_day.strftime("%y%m%d")
         alert_news = Array.new
@@ -104,6 +106,8 @@ class User < ActiveRecord::Base
           alert_news.insert(0, "<br /><b>#{name} News</b>")
           crunchalerts = crunchalerts + alert_news
         end
+
+
 
         weekly_alert = WeeklyAlert.find_by_content(alert.content)
         if weekly_alert
