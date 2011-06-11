@@ -8,12 +8,11 @@ $(document).ready(function() {
     );
     $('.edit_button').button();
 
-    $('#form-crunchbase').ajaxForm({ url: '/crunchbase', success: switch_form });
+    $('#form-crunchbase').ajaxForm({ url: '/crunchbase', beforeSend: function() { $('#wait').css('visibility', 'visible') }, complete: function() { $('#wait').css('visibility', 'hidden') }, success: switch_form });
 
     $('#form-crunchnews').ajaxForm({ url: '/news' });
 
     $('.edit_alert').click(function() {
-	$(this).text('');
 	var content = $(this).parent().attr('id');
 	$.ajax({
 	    url: '/prefs',
@@ -37,11 +36,11 @@ $(document).ready(function() {
 
 	var alert_class = '.' + content;
 	$(this).parent().find('form').addClass(content);
-
 	var delete_button = "<br /><div id='delete_button'>delete button</div><br />";
 	var cancel_button = "<br /><div id='cancel_button'>cancel button</div><br />";
 	$(alert_class).append(delete_button);
 	$(alert_class).append(cancel_button);
+	$(this).text('');
 
 	$(alert_class).submit(function() {
 	    var prefs = $(alert_class + ' *').fieldValue();

@@ -33,6 +33,8 @@ Once you register, you'll be able to receive email updates on any CrunchBase pro
 
 <% if signed_in? %>
 
+<div id="wait"><%= image_tag("loader.gif", :alt => "loader") %></div>
+
 <%= render 'crunchbase_form' %>
 <%= render 'news_form' %>
 
@@ -52,7 +54,7 @@ Once you register, you'll be able to receive email updates on any CrunchBase pro
 
 <div class="crunchalert" id="<%= alert.content %>">
   <% name = alert.content.gsub(/[\s\.]/,'-') %>
-  <a href=<%= "http://crunchbase.com/#{alert.content_type}/#{name}" %>><%= image_tag(Picture.find_by_content(alert.content).url) %></a>
+  <a href=<%= "http://crunchbase.com/#{alert.content_type}/#{name}" %> title=<%= alert.content %>><%= image_tag(Picture.find_by_content(alert.content).url, :alt => alert.content) %>  </a>
   <span class="edit_alert">Edit</span>
 </div>
 

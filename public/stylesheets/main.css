@@ -1,4 +1,6 @@
 
+#wait { visibility: hidden }
+
 .container { position: relative; height: 1600px; }
 
 #header { margin-top: 40px; }
