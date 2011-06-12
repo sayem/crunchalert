@@ -20,9 +20,9 @@ $(document).ready(function() {
 	    data: { content: content },
 	    success: function(data) {
 		if (data[0])
-		    var freq = "<form class='form-update' method='post' name='alert'><input type='radio' name='freq' value='true' checked>Daily<br><input type='radio' name='freq' value='false'>Weekly<br>"
+		    var freq = "<form class='form-update' id='" + content + "' method='post' name='alert'><input type='radio' name='freq' value='true' checked>Daily<br><input type='radio' name='freq' value='false'>Weekly<br>"
 		else
-		    var freq = "<form class='form-update' method='post' name='alert'><input type='radio' name='freq' value='true'>Daily<br><input type='radio' name='freq' value='false' checked>Weekly<br>"
+		    var freq = "<form class='form-update' id='" + content + "' method='post' name='alert'><input type='radio' name='freq' value='true'>Daily<br><input type='radio' name='freq' value='false' checked>Weekly<br>"
 		if (data[1])
 		    var news = "<input id='news' name='news' type='checkbox' check value='true' checked/><input name='news' type='hidden' value='false'/><label for='news'>Include TechCrunch &amp; TechMeme news updates</label><div class='actions'><input id='alert_submit' type='submit' value='Submit' /></div></form>";
 		else
@@ -34,8 +34,14 @@ $(document).ready(function() {
 	    }
 	});
 
-	var alert_class = '.' + content;
-	$(this).parent().find('form').addClass(content);
+	var alert_class = '#' + content;
+
+
+// fix delete/cancel appending and also edit form updating
+
+// $(this).parent().find('form').addClass(content);
+
+
 	var delete_button = "<br /><div id='delete_button'>delete button</div><br />";
 	var cancel_button = "<br /><div id='cancel_button'>cancel button</div><br />";
 	$(alert_class).append(delete_button);

@@ -91,24 +91,22 @@ class User < ActiveRecord::Base
           crunchalerts = crunchalerts + alert_milestones
         end
 
-# need to acct for users with news false too both on daily and weekly
-
-        techcrunch = Date.today.prev_day.strftime("%Y/%m/%d")
-        techmeme = Date.today.prev_day.strftime("%y%m%d")
         alert_news = Array.new
-        alertlinks = doc.css('.recently_link').each do |alertlink|
-          if alertlink.to_s =~ /#{techcrunch}|#{techmeme}/
-            links = alertlink.to_s.gsub(/<div class="recently_link">|<\/div>/,'')
-            alert_news.push(links)
+        if alert.news
+          techcrunch = Date.today.prev_day.strftime("%Y/%m/%d")
+          techmeme = Date.today.prev_day.strftime("%y%m%d")
+          alertlinks = doc.css('.recently_link').each do |alertlink|
+            if alertlink.to_s =~ /#{techcrunch}|#{techmeme}/
+              links = alertlink.to_s.gsub(/<div class="recently_link">|<\/div>/,'')
+              alert_news.push(links)
+            end
+          end
+          if !alert_news.empty?
+            alert_news.insert(0, "<br /><b>#{name} News</b>")
+            crunchalerts = crunchalerts + alert_news
           end
         end
-        if !alert_news.empty?
-          alert_news.insert(0, "<br /><b>#{name} News</b>")
-          crunchalerts = crunchalerts + alert_news
-        end
-
-
-
+        
         weekly_alert = WeeklyAlert.find_by_content(alert.content)
         if weekly_alert
           if !alert_milestones.empty?
@@ -145,7 +143,6 @@ class User < ActiveRecord::Base
       end
       check_alerts = check_alerts.uniq
       if check_alerts.length == 1
-        input_weekly = Array.new
         content_url = weekly.content.gsub(/[\s\.]/,'-')
         content_type = Alert.find_by_content(weekly.content).content_type
         doc = Nokogiri::HTML(open("http://crunchbase.com/#{content_type}/#{content_url}"))
@@ -157,20 +154,6 @@ class User < ActiveRecord::Base
           end
         end
 
-        unless weekly.content.split[1]
-          name = weekly.content.capitalize
-        else
-          name = Array.new
-          weekly.content.split.each do |x|
-            name.push(x.capitalize)
-          end
-          name = name.join(' ')
-        end
-
-        if !alert_milestones.empty?
-          input_weekly = input_weekly + alert_milestones
-        end
-
         techcrunch = Date.today.prev_day.strftime("%Y/%m/%d")
         techmeme = Date.today.prev_day.strftime("%y%m%d")
         alert_news = Array.new
@@ -180,15 +163,19 @@ class User < ActiveRecord::Base
             alert_news.push(links)
           end
         end
-        if !alert_news.empty?
-          input_weekly = input_weekly + alert_news
+
+        if alert_milestones.empty?
+          alert_milestones = nil
+        else 
+          alert_milestones.collect! {|x| coder.encode(x.squish)}
+        end
+        if alert_news.empty?
+          alert_news = nil
+        else
+          alert_news.collect! {|x| coder.encode(x.squish)}
         end
 
-        if input_weekly.empty?
-          input_weekly = nil
-        else
-          input_weekly.collect! {|x| coder.encode(x.squish)}
-        end
+        input_weekly = [alert_milestones, alert_news]
         weekly.send("#{today}=", input_weekly)
         weekly.save
       end
@@ -255,6 +242,10 @@ class User < ActiveRecord::Base
             end
             name = name.join(' ')
           end
+
+
+# get news [1] in day array depending on user news pref and test it out
+
 
           weekly_alert = WeeklyAlert.find_by_content(alert.content)
           alert.content = days.collect {|day| weekly_alert.send(day).to_s.split(/\"/)[1]}
