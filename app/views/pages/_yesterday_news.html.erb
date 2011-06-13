@@ -1,9 +1,6 @@
-
-<div id="yesterday_news">
-Recent News
 <div id="yesterday-news">
-  <% @news.each do |daily| %>
-  <%= raw("<p>#{daily}</p>") %>
-  <% end %>
-</div>
+  <span class="alert-header">Recent News</span>
+    <% @news.each do |daily| %>
+    <%= raw("<p>#{daily}</p>") %>
+    <% end %>
 </div>
