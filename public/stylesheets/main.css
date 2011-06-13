@@ -3,10 +3,6 @@ body { font-family: Helvetica Neue, arial, helvetica, sans-serif; color: #333333
 .container { position: relative; }
 
 
-/* look into container, center-container height, and recent news height ---- need to adjust to it  */
-
-
-
 /* header */
 
 #header { position: relative; margin-top: 40px; height: 85px; }
@@ -23,13 +19,13 @@ body { font-family: Helvetica Neue, arial, helvetica, sans-serif; color: #333333
 
 /* center-container */
 
-.center-container { height: 800px; }
+.center-container { position: relative; width: auto; }   /* look into width here */
 
 #intro { position: relative; top: 35px; left: 35px; width: 650px; font-size: 1.25em; line-height: 1.75em; }
 
 #center-alerts { position: relative; top: 50px; }
 .alert-header { position: relative; top: 17px; font-size: 1.4em; color: #DB0C09; font-weight: bold; }
-#yesterday-news { position: absolute; width: 600px; }
+#yesterday-news { position: absolute; width: 600px; padding-bottom: 50px; }
 
 #alert_sidebar { position: absolute; right: 0px; height: 1375px; width: 260px; text-align: center; }
 
@@ -44,9 +40,22 @@ body { font-family: Helvetica Neue, arial, helvetica, sans-serif; color: #333333
 
 /* footer */
 
-.footer { position: absolute; bottom: 0px; left: 0px; padding-bottom: 35px; }
+#home-footer { padding-top: 40px; margin-top: 40px; }
+#page-footer { position: absolute; left: 0px; width: 500px; }
+
+.footer { position: absolute; bottom: 0px; left: 0px; padding-bottom: 45px; }
 .footer a:link { text-decoration: none; color: red } 
 .footer a:hover { text-decoration: underline; } 
+
+
+/* about page */
+
+#about { font-size: 1.8em; width: 650px; margin: 0 auto; padding-top: 45px; padding-bottom: 85px; }
+#about a:link { text-decoration: none; }
+#about a:hover { text-decoration: underline; } 
+
+
+/* register/login page */
 
 
 
