@@ -5,7 +5,7 @@
     Email alerts on <a href="http://crunchbase.com" title="crunchbase.com" id="crunchbase-pic"><%= image_tag("crunchbase.png", :alt => "crunchbase") %></a> updates. <span class="sign-up"><%= link_to "Sign up", signup_path %></span> to keep tabs on your favorite tech companies and people
   </div>
   <div class="login">
-    <%= link_to "Register", signup_path %> | <%= link_to "Login", login_path %>
+    <%= link_to "Register", signup_path, :class => 'register-link' %> | <%= link_to "Login", login_path, :class => 'login-link' %>
   </div>
 <% else %>
   <div class="user-account">

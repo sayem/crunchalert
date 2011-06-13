@@ -1,32 +1,27 @@
-
-<% form_for(@user) do |f| %>
-
+<style type="text/css">
+  .register-link { color: #333333; }
+</style>
+<div id="register">
+  <% form_for(@user) do |f| %>
   <%= render 'shared/error_messages' %>
-
-  <fieldset>
-  <legend>Enter User Detail</legend>
-
-  <div>
-    <%= f.label :email %>
-    <%= f.text_field :email, :size => 40 %>
-  </div>
-
-  <div>
-    <%= f.label :password, 'Password' %>
-    <%= f.password_field :password, :size => 40 %>
-  </div>
-
-  <div>
-    <%= f.label :password_confirmation, 'Confirm' %>
-    <%= f.password_field :password_confirmation, :size => 40 %>
-  </div>
-
-  <div>
-    <%= f.submit "Add User", :class => "submit" %>
-  </div>
-
+  <fieldset class="user">
+    <legend>Sign up to CrunchAlert</legend>
+    <div>
+      <%= f.label :email %>
+      <%= f.text_field :email, :title => 'enter your email address' %>
+    </div>
+    <div>
+      <%= f.label :password, 'Password' %>
+      <%= f.password_field :password  %>
+    </div>
+    <div>
+      <%= f.label :password_confirmation, 'Confirm' %>
+      <%= f.password_field :password_confirmation %>
+    </div>
+    <div>
+      <%= f.submit "Register", :class => "submit" %>
+    </div>
   </fieldset>
-
-<% end %>
-
-
+  <% end %>
+</div>
+<div class="page-footer"><%= render 'shared/footer' %></div>

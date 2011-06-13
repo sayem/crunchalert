@@ -41,7 +41,7 @@ body { font-family: Helvetica Neue, arial, helvetica, sans-serif; color: #333333
 /* footer */
 
 #home-footer { padding-top: 40px; margin-top: 40px; }
-#page-footer { position: absolute; left: 0px; width: 500px; }
+.page-footer { position: absolute; left: 0px; width: 500px; }
 
 .footer { position: absolute; bottom: 0px; left: 0px; padding-bottom: 45px; }
 .footer a:link { text-decoration: none; color: red } 
@@ -50,14 +50,30 @@ body { font-family: Helvetica Neue, arial, helvetica, sans-serif; color: #333333
 
 /* about page */
 
-#about { font-size: 1.8em; width: 650px; margin: 0 auto; padding-top: 45px; padding-bottom: 85px; }
+#about { font-size: 1.6em; width: 650px; margin: 0 auto; padding-top: 45px; padding-bottom: 85px; }
 #about a:link { text-decoration: none; }
 #about a:hover { text-decoration: underline; } 
 
 
-/* register/login page */
+/* register/login/forgot-password page */
 
+#register { margin-top: 30px; font-size: 1.3em; padding-bottom: 55px; }
+legend { color: #DB0C09; margin-left: 15px; }
+fieldset { border: none; text-align: right; width: 450px; }
+.user input { height: 27px; margin-left: 10px; margin-bottom: 15px; }
+.user input[type=text] { border:1px solid #ccc; color:gray; text-align: center; font-size: 18px; width: 340px; }
+.user input[type=password] { border:1px solid #ccc; color:gray; font-size: 18px; width: 340px; }
 
+#sign-in  { margin-top: 30px; font-size: 1.3em; padding-bottom: 55px; }
+#sign-in legend { margin-left: 50px; }
+#sign-in a:hover { text-decoration: underline; color: #333333; }
+.sign-in input { height: 27px; margin-left: 10px; margin-bottom: 15px; }
+.forget { text-decoration: none; color: #999999; font-size: 0.9em; }
+
+#forget { margin-top: 50px; margin-bottom: 100px; }
+#forget input[type=text] { margin-left: 20px; }
+#new-pass { font-size: 1.5em; margin-bottom: 20px; }
+#password-footer { position: relative; top: 35px; }
 
 
 /*

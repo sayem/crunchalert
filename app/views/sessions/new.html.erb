@@ -1,18 +1,23 @@
-<h1>Sign in</h1>
-
-<%= form_for(:session, :url => sessions_path) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password %>
-  </div>
-  <div class="actions">
-    <%= f.submit "Sign in" %>
-  </div>
-<% end %>
-
-<p>New user? <%= link_to "Sign up now!", signup_path %></p>
-<%= link_to 'Forgot my password', forgot_password_path %>
+<style type="text/css">
+  .login-link { color: #333333; }
+</style>
+<div id="sign-in">
+  <%= form_for(:session, :url => sessions_path) do |f| %>
+  <fieldset class="user">
+    <legend>Sign In</legend>
+    <div class="field">
+      <%= f.label :email %>
+      <%= f.text_field :email, :title => 'enter your email address' %>
+    </div>
+    <div class="field">
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+    </div>
+    <div class="actions">
+      <%= f.submit "Sign In" %>
+    </div>
+    <%= link_to 'Forget your password?', forgot_password_path, :class => 'forget' %>
+  </fieldset>
+  <% end %>
+</div>
+<div class="page-footer"><%= render 'shared/footer' %></div>
