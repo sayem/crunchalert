@@ -8,6 +8,7 @@ Crunchalert::Application.routes.draw do
   match '/login', :to => 'sessions#new'
   match '/logout', :to => 'sessions#destroy'
   match '/forgot_password', :to => 'users#forgot_password'
+  match '/about', :to => 'pages#about' 
 
   match '/crunchbase', :to => 'alerts#crunchbase'
   match '/crunchbaseurl', :to => 'alerts#crunchbaseurl'

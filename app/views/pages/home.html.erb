@@ -16,24 +16,14 @@ Register to receive updates on any CrunchBase profile (company, person, or fund)
 </div>
 
 
-
-
 <% if signed_in? %>
 
 <div id="wait"><%= image_tag("loader.gif", :alt => "loader") %></div>
-
 <%= render 'crunchbase_form' %>
 <%= render 'news_form' %>
 
-<br />
-<br />
-
 <div id="input">
 </div>
-
-<br />
-<br />
-
 
 <div id="alert_list">
 

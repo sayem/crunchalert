@@ -15,10 +15,13 @@ class PagesController < ApplicationController
     popular.slice!(5..-1)
     @popular = popular
 
-    @recent = Alert.group('content').order('created_at').limit('10')
+    @recent = Alert.group('content').order('created_at').limit('5')
 
     if signed_in?
       @alerts = Alert.where(:user_id => current_user[:id])
     end
+  end
+
+  def about
   end
 end

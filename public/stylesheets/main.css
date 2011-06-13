@@ -1,6 +1,10 @@
 
 body { font-family: Helvetica Neue, arial, helvetica, sans-serif; color: #333333; }
-.container { position: relative; height: 1300px; }
+.container { position: relative; }
+
+
+/* look into container, center-container height, and recent news height ---- need to adjust to it  */
+
 
 
 /* header */
@@ -19,35 +23,35 @@ body { font-family: Helvetica Neue, arial, helvetica, sans-serif; color: #333333
 
 /* center-container */
 
-.center-container { height: 100%; }
+.center-container { height: 800px; }
 
 #intro { position: relative; top: 35px; left: 35px; width: 650px; font-size: 1.25em; line-height: 1.75em; }
 
 #center-alerts { position: relative; top: 50px; }
-.alert-header { position: relative; top: 17px; font-size: 1.5em; color: #DB0C09; font-weight: bold; }
+.alert-header { position: relative; top: 17px; font-size: 1.4em; color: #DB0C09; font-weight: bold; }
 #yesterday-news { position: absolute; width: 600px; }
 
-#alert_sidebar { position: absolute; right: 0px; height: 2000px; width: 260px; }  
+#alert_sidebar { position: absolute; right: 0px; height: 1375px; width: 260px; text-align: center; }
 
 #popular { position: absolute; right: 0px; }
 #popular-alerts { margin-top: 40px; }
-.popular { margin-bottom: 30px; }
+.popular { margin-bottom: 30px; max-height: 100px; max-width: 250px; }
 
-#recent { position:absolute; right: 0px; bottom: 0px; }
+#recent { position:absolute; right: 0px; bottom: 0px; margin-bottom: 40px; }
 #recent-alerts { margin-top: 40px; }
-.recent { margin-bottom: 30px; }
+.recent { margin-bottom: 30px; max-height: 100px; max-width: 250px; }
+
+
+/* footer */
+
+.footer { position: absolute; bottom: 0px; left: 0px; padding-bottom: 35px; }
+.footer a:link { text-decoration: none; color: red } 
+.footer a:hover { text-decoration: underline; } 
 
 
 
 
-
-
-
-
-
-
-
-
+/*
 
 #wait { visibility: hidden }
 
@@ -59,4 +63,4 @@ body { font-family: Helvetica Neue, arial, helvetica, sans-serif; color: #333333
 .icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left; list-style: none;}
 .icons span.ui-icon {float: left; margin: 0 4px;}
 
-.footer { text-align: center; position: absolute; bottom: 0px; left: 300px; padding-bottom: 35px; }
+*/
