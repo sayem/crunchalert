@@ -1,17 +1,32 @@
 
-#wait { visibility: hidden }
-
 .container { position: relative; height: 1600px; }
 
-#header { margin-top: 40px; }
+/* header */
 
-.login { position: absolute; right: 0px; top: 63px; font-weight: bold; font-style: none; }
+#header { position: relative; margin-top: 40px; height: 85px; }
+.blurb { width: 650px; position: absolute; right: 25px; top: 0px; font-size: 1.8em; font-weight: bold; color: #888888; line-height: 1.5em; font-family: Helvetica Neue, arial, helvetica, sans-serif; border-width: 0px 0px 0px 10px; border-style: solid; border-color: red; padding-left: 16px; }
+#crunchalert-pic { position: relative; top: 10px; left: 7px; }
+#crunchbase-pic { position: relative; top: 2px; }
+.sign-up a:link { text-decoration: none; color: #555555; }
+.sign-up a:hover { text-decoration: underline; }
 
+.login { position: absolute; right: 0px; bottom: 0px; font-weight: bold; font-style: none; font-size: 1.3em; }
 .login a:link { text-decoration: none; }
+.login a:hover { text-decoration: underline; }
 
-.blurb { position: absolute; right: 0px; top: 10px; }
 
 
+.center-container {   }
+
+
+
+
+
+
+
+
+
+#wait { visibility: hidden }
 
 
 #alert_sidebar { position:absolute; right: 0px; top: 145px; height: 1400px; width: 300px; }
@@ -47,4 +62,4 @@
 
 .footer { text-align: center; position: absolute; bottom: 0px; left: 300px; padding-bottom: 35px; }
 
-hr { position: absolute; top: 100px; height: 25px; width: 100%; }
+

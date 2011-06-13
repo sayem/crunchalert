@@ -7,6 +7,7 @@ class PagesController < ApplicationController
     news = WeeklyNews.find_by_id('1').send(yesterday).to_s.split(/\"/)
     news.collect! {|x| coder.decode(x)}
     news.collect! {|x| x.gsub(/--- /, '').gsub(/\n- /, '').gsub(/\\xE2\\x80\\x94/,'&mdash;')}
+    news.slice!(0..1)
     @news = news
 
     alert_count = Alert.group('content').count
