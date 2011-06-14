@@ -29,7 +29,7 @@ Register to receive updates on any CrunchBase profile (company, person, or fund)
 <% @alerts.each do |alert| %>
 <div class="crunchalert" id="<%= alert.content %>">
   <% name = alert.content.gsub(/[\s\.]/,'-') %>
-  <a href=<%= "http://crunchbase.com/#{alert.content_type}/#{name}" %> title=<%= alert.content %>><%= image_tag(Picture.find_by_content(alert.content).url, :alt => alert.content) %></a>
+  <a href=<%= "http://crunchbase.com/#{alert.content_type}/#{name}" %> title=<%= alert.content %>><%= image_tag(Picture.find_by_content(alert.content).url, :alt => alert.content, :class => "crunchalert-list") %></a>
   <span class="edit_alert">Edit</span>
 </div>
 <% end %>

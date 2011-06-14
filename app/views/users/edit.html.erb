@@ -1,26 +1,27 @@
-<h1>Account Settings</h1>
-
-<%= form_for(@user) do |f| %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password %>
-  </div>
-  <div class="field">
-    <%= f.label :password_confirmation, "Confirmation" %><br />
-    <%= f.password_field :password_confirmation %>
-  </div>
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-
-
-
-<%= link_to 'Delete', @user, :method => :delete %>
-
-
-<% end %>
+<style type="text/css">
+  .account-link { color: #333333; }
+</style>
+<div id="settings">
+  <%= form_for(@user) do |f| %>
+  <fieldset class="user settings">
+    <legend>Account Settings</legend>
+    <div class="field">
+      <%= f.label :email, "Current Email" %>
+      <%= f.text_field :email %>
+    </div>
+    <div class="field">
+      <%= f.label :password, "New Password" %>
+      <%= f.password_field :password %>
+    </div>
+    <div class="field">
+      <%= f.label :password_confirmation, "Confirm Password" %>
+      <%= f.password_field :password_confirmation %>
+    </div>
+    <div class="actions">
+      <%= f.submit "Update" %>
+    </div>
+    <%= link_to 'Delete my account', @user, :method => :delete, :class => 'delete-account' %>
+  </fieldset>
+  <% end %>
+</div>
+<div class="page-footer"><%= render 'shared/footer' %></div>

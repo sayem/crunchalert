@@ -3,7 +3,7 @@
   <div id="recent-alerts">
     <% @recent.each do |alert| %>
     <% name = alert.content.gsub(/[\s\.]/,'-') %>
-    <a href=<%= "http://crunchbase.com/#{alert.content_type}/#{name}" %> title=<%= alert.content %>><%= image_tag(Picture.find_by_content(alert.content).url, :alt => alert.content, :class => "recent") %></a>
+    <a href=<%= "http://crunchbase.com/#{alert.content_type}/#{name}" %> title=<%= alert.content %>><%= image_tag(Picture.find_by_content(alert.content).url, :alt => alert.content, :class => "crunchalert-list") %></a>
     <% end %>
   </div>
 </div>
