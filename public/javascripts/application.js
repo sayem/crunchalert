@@ -6,7 +6,7 @@ $(document).ready(function() {
 	function() { $(this).addClass('ui-state-hover'); },
 	function() { $(this).removeClass('ui-state-hover'); }
     );
-    $('.edit_button').button();
+    $('.edit_alert').button();
 
     $('#form-crunchbase').ajaxForm({ url: '/crunchbase', beforeSend: function() { $('#wait').css('visibility', 'visible') }, complete: function() { $('#wait').css('visibility', 'hidden') }, success: switch_form });
 

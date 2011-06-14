@@ -1,7 +1,7 @@
 
 <% if !signed_in? %>
 <div id="intro">
-Register to receive updates on any CrunchBase profile (company, person, or fund) you want to track. CrunchAlert will send you daily or weekly email alerts whenever there's updated information on their profile. <br /><br />You could sign up to get a round-up of the latest tech news and deals<br /> in your inbox too (see below).
+Register to receive updates on any CrunchBase profile (company, person, or fund) you want to track. CrunchAlert will send you daily or weekly email alerts whenever there's updated information on their profile. <br /><br />You could sign up to get a round-up of the latest tech news and deals in your inbox too (see below).
 </div>
 <% end %>
 
@@ -15,24 +15,24 @@ Register to receive updates on any CrunchBase profile (company, person, or fund)
   </div>
 </div>
 
-
 <% if signed_in? %>
-
 <div id="wait"><%= image_tag("loader.gif", :alt => "loader") %></div>
-<%= render 'crunchbase_form' %>
 <%= render 'news_form' %>
+<%= render 'crunchbase_form' %>
 
 <div id="input">
 </div>
 
-<div id="alert_list">
-<% @alerts.each do |alert| %>
-<div class="crunchalert" id="<%= alert.content %>">
-  <% name = alert.content.gsub(/[\s\.]/,'-') %>
-  <a href=<%= "http://crunchbase.com/#{alert.content_type}/#{name}" %> title=<%= alert.content %>><%= image_tag(Picture.find_by_content(alert.content).url, :alt => alert.content, :class => "crunchalert-list") %></a>
-  <span class="edit_alert">Edit</span>
+<div id="alert-list">
+  <span class="alert-header" id="alertlist-header">Your CrunchAlerts</span>
+  <div class="alert-list">
+    <% @alerts.each do |alert| %>
+    <div class="crunchalert" id="<%= alert.content %>">
+      <% name = alert.content.gsub(/[\s\.]/,'-') %>
+      <a href=<%= "http://crunchbase.com/#{alert.content_type}/#{name}" %> title=<%= alert.content %>><%= image_tag(Picture.find_by_content(alert.content).url, :alt => alert.content, :class => "crunchalert-list") %></a>
+      <div class="edit_alert"><b>Edit</b></div>
+    </div>
+    <% end %>
+  </div>
 </div>
-<% end %>
-</div>
-
 <% end %>

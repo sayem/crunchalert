@@ -1,20 +1,15 @@
-
-<div id="loader"></div>
-
-
-<form id="form-crunchbase" method="post" name="crunchbase">
-  <input id='crunchbase' type='text' title='add a crunchbase profile' name='crunchbase' />
-
-  <br>
-
-  <input type="radio" name="cbase" value="company">Company<br>
-  <input type="radio" name="cbase" value="person">Person<br>
-  <input type="radio" name="cbase" value="financial-organization">Venture Fund<br>
-
-  <br>
-
-  <input type="submit" id="search-crunchbase" value="Add CrunchAlert">
-</form>
-
-
-
+<div id="crunchbase-search">
+  <form id="form-crunchbase" method="post" name="crunchbase">
+    <div id="loader"></div>
+    <div id="crunchbase-name">
+      <span style="font-weight: bold">CrunchBase name:</span> <input id='crunchbase' type='text' title='enter a crunchbase profile name' name='crunchbase' />
+    </div>
+    <div id="cbase-type">
+      <span style="font-weight:bold">Type:</span>
+      <input type="radio" name="cbase" value="company">Company
+      <input type="radio" name="cbase" value="person">Person
+      <input type="radio" name="cbase" value="financial-organization">Venture Fund
+      <input type="submit" value="Submit">
+    </div>
+  </form>
+</div>

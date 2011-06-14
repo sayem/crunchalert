@@ -25,7 +25,7 @@ body { font-family: Helvetica Neue, arial, helvetica, sans-serif; color: #333333
 
 .center-container { position: relative; width: auto; }   /* look into width here */
 
-#intro { position: relative; top: 35px; left: 35px; width: 650px; font-size: 1.25em; line-height: 1.75em; }
+#intro { position: relative; top: 35px; left: 35px; width: 550px; font-size: 1.25em; line-height: 1.75em; }
 
 #center-alerts { position: relative; top: 50px; }
 .alert-header { position: relative; top: 17px; font-size: 1.4em; color: #DB0C09; font-weight: bold; }
@@ -58,7 +58,7 @@ body { font-family: Helvetica Neue, arial, helvetica, sans-serif; color: #333333
 #about a:hover { text-decoration: underline; } 
 
 
-/* register/login/forgot-password/account-settings page */
+/* register, login, forgot password, account settings page */
 
 #register { margin-top: 30px; font-size: 1.3em; padding-bottom: 55px; }
 legend { color: #DB0C09; margin-left: 15px; }
@@ -85,19 +85,31 @@ fieldset { border: none; text-align: right; width: 450px; }
 #settings a:hover { text-decoration: underline; color: #333333; }
 
 
-/* user home page */
+/* user homepage */
+
+#crunchnews { margin-top: 20px; height: 100px; width: 400px; border: solid 1px #C9C9C9; padding: 15px 0px 5px 15px; }
+#news-check { font-size: 1.2em; }
+#news-check label { margin-left: 9px; position: relative; bottom: 2px; }
+#news-freq { font-size: 1.2em; position: relative; top: 17px; }
+#submit-crunchnews { position: relative; left: 17px;   }
+
+#crunchbase-search { margin-top: 35px; height: 100px; width: 500px; border: solid 1px #C9C9C9; padding: 15px 0px 15px 15px; }
+#form-crunchbase { font-size: 1.2em; font-weight: normal; }
+#crunchbase-name input { border:1px solid #ccc; color:gray; text-align: center; font-size: 18px; width: 325px; margin-left: 5px; }
+#cbase-type { margin-top: 15px; }
+#cbase-type input[type=submit] { margin-left: 15px; }
 
 
 
-
+#wait { visibility: hidden; }
+#alert-list { width: 260px; text-align: center; margin-top: 25px; margin-left: 25px; }
+.alert-list { margin-top: 40px; }
 
 
 
 
 
 /*
-
-#wait { visibility: hidden }
 
 #form-crunchbase { position: relative; top: 100px; }
 #form-crunchnews { position: relative; top: 100px; }

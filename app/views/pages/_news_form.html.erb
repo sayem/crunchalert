@@ -1,14 +1,11 @@
-
-<form id="form-crunchnews" method="post" name="crunchbase">
-
-  <input type="radio" name="news" value="true">yup<br>
-  <input type="radio" name="news" value="false">nope<br>
-
-  <input type="submit" id="search-crunchbase" value="Submit">
-
-  <select id='freq' name='freq'>
-    <option value='true'>Daily</option>
-    <option value='false'>Weekly</option>
-  </select>
-
-</form>
+<div id="crunchnews">
+  <form id="form-crunchnews" method="post" name="crunchbase">
+    <div id="news-check">
+      <input id='news' name='news' type='checkbox' check value='true' /><input name='news' type='hidden' value='false'/><label for='news'>Receive our news digest with the latest tech news<br /> and deals from CrunchBase</label>
+    </div>
+    <div id="news-freq">
+      <span style="font-weight:bold">Frequency:</span> <input type="radio" name="freq" value="true">Daily<input type="radio" name="freq" value="false">Weekly
+      <input type="submit" id="submit-crunchnews" value="Submit">
+    </div>
+  </form>
+</div>
