@@ -89,6 +89,7 @@ fieldset { border: none; text-align: right; width: 450px; }
 
 #crunchnews { margin-top: 20px; height: 135px; width: 400px; border: solid 1px #C9C9C9; padding: 15px 0px 5px 15px; }
 #news-check { font-size: 1.2em; margin-top: 12px; }
+                                                         /* style fancy checkbox and radio buttons too */
 #news-check label { margin-left: 9px; position: relative; bottom: 2px; }
 #news-freq { font-size: 1.2em; position: relative; top: 17px; }
 #submit-crunchnews { position: relative; left: 17px;   }

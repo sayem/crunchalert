@@ -106,29 +106,34 @@ class User < ActiveRecord::Base
             crunchalerts = crunchalerts + alert_news
           end
         end
-        
+             
         weekly_alert = WeeklyAlert.find_by_content(alert.content)
         if weekly_alert
-          if !alert_milestones.empty?
-            alert_milestones.slice!(0)
-          end
-          if !alert_news.empty?
-            alert_news.slice!(0)
-          end
+          weekly_milestones = alert_milestones
+          weekly_news = alert_news
           weekly_crunchalerts = Array.new
-          weekly_crunchalerts = alert_milestones + alert_news
 
           unless weekly_alert.send(today)
-            if weekly_crunchalerts.empty?
-              weekly_crunchalerts = nil
+            if weekly_milestones.empty?
+              weekly_milestones = nil
+            else
+              weekly_milestones.slice!(0)
+              weekly_milestones.collect! {|x| coder.encode(x.squish)}
             end
-            weekly_crunchalerts.collect! {|x| coder.encode(x.squish)}
-            weekly_alert.send("#{today}=", weekly_crunchalerts)
+            if weekly_news.empty?
+              weekly_news = nil
+            else
+              weekly_news.slice!(0)
+              weekly_news.collect! {|x| coder.encode(x.squish)}
+            end
+  
+            input_weely = Array.new;
+            input_weekly = [weekly_milestones, weekly_news];
+            weekly_alert.send("#{today}=", input_weekly)
             weekly_alert.save
           end
         end
       end
-
       if !crunchalerts.empty?
         DailyMailer.deliver_alerts(user.email, crunchalerts)
         crunchalerts.clear
