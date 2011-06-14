@@ -38,7 +38,6 @@ $(document).ready(function() {
 	var cancel_button = "<div id='cancel_button' class='form-update'>cancel button</div>";
 	$(content_id).append(delete_button);
 	$(content_id).append(cancel_button);
-	$(this).text('');
 
 	$(content_id).submit(function() {
 	    var prefs = $('.form-update *').fieldValue();
@@ -62,7 +61,6 @@ $(document).ready(function() {
 
 	$('#cancel_button').click(function() {
 	    $(".form-update").remove();
-	    $(".edit_alert").text('Edit');
 	});
     });
 
@@ -72,7 +70,6 @@ $(document).ready(function() {
 
     $(document).click(function(){
 	$(".form-update").remove();
-	$(".edit_alert").text('Edit');
     });
 });
 

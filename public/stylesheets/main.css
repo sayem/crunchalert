@@ -87,26 +87,27 @@ fieldset { border: none; text-align: right; width: 450px; }
 
 /* user homepage */
 
-#crunchnews { margin-top: 20px; height: 100px; width: 400px; border: solid 1px #C9C9C9; padding: 15px 0px 5px 15px; }
-#news-check { font-size: 1.2em; }
+#crunchnews { margin-top: 20px; height: 135px; width: 400px; border: solid 1px #C9C9C9; padding: 15px 0px 5px 15px; }
+#news-check { font-size: 1.2em; margin-top: 12px; }
 #news-check label { margin-left: 9px; position: relative; bottom: 2px; }
 #news-freq { font-size: 1.2em; position: relative; top: 17px; }
 #submit-crunchnews { position: relative; left: 17px;   }
 
-#crunchbase-search { margin-top: 35px; height: 100px; width: 500px; border: solid 1px #C9C9C9; padding: 15px 0px 15px 15px; }
-#form-crunchbase { font-size: 1.2em; font-weight: normal; }
+#crunchbase-search { margin-top: 35px; height: 120px; width: 500px; border: solid 1px #C9C9C9; padding: 15px 0px 15px 15px; }
+#form-crunchbase { font-size: 1.2em; font-weight: normal; margin-top: 5px; }
 #crunchbase-name input { border:1px solid #ccc; color:gray; text-align: center; font-size: 18px; width: 325px; margin-left: 5px; }
 #cbase-type { margin-top: 15px; }
 #cbase-type input[type=submit] { margin-left: 15px; }
+.user-header { font-size: 1.4em; color: #DB0C09; font-weight: bold; }
+
+
+
 
 
 
 #wait { visibility: hidden; }
 #alert-list { width: 260px; text-align: center; margin-top: 25px; margin-left: 25px; }
 .alert-list { margin-top: 40px; }
-
-
-
 
 
 /*
