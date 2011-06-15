@@ -77,15 +77,15 @@ $(document).ready(function() {
 function switch_form(data) {
     if (data == 'not there') {
 	$('#form-crunchbase').remove();
-	var submit_url = "Couldn't find the profile. Please enter the CrunchBase profile URL here:<form id='form-submit_url' method='post' name='url'><input id='url' name='url' type='text' title='crunchbase url' /><input id='url_submit' type='submit' value='Submit' /></form>";
-	$('#input').append(submit_url);
-
-	var cancel_button = "<br /><div id='cancel_button'>cancel button</div><br />";
-	$('#form-submit_url').append(cancel_button);
-	$('#cancel_button').click(function() {
+	var submit_url = "<div id='submit-url'>Sorry, we\'re having trouble finding that. Please enter that profile's CrunchBase URL below to add it as an alert:<form id='form-submit-url' method='post' name='url'><input id='url' name='url' type='text' value='crunchbase.com url' /><div id='url-buttons'><span id='url-cancel'>cancel button</span><input id='url-submit' type='submit' value='Submit' /></div></form></div>";
+	$('#crunchbase-search').append(submit_url);
+	$('#url').click(function() {
+	    $(this).attr('value','');
+	})
+	$('#url-cancel').click(function() {
 	    window.location.reload();
 	});
-	$('#form-submit_url').ajaxForm({ url: '/crunchbaseurl', success: switch_form });
+	$('#form-submit-url').ajaxForm({ url: '/crunchbaseurl', success: switch_form });
     }
     else {
 	if (data[3]) {
@@ -95,13 +95,13 @@ function switch_form(data) {
 	else {
 	    var content = $('#form-crunchbase *').fieldValue()[0];
 	    var type = $('#form-crunchbase *').fieldValue()[1];
-	    $('#input').append(data[2]);
 	}
 	var picurl = data[0];
 	$('#form-crunchbase').remove();
-	$('#input').append(data[1]);
-	var new_form = "<form id='form-alert' method='post' name='alert'><select id='freq' name='freq'><option value='true'>Daily</option><option value='false'>Weekly</option></select><input id='news' name='news' type='checkbox' check value='true' /><input name='news' type='hidden' value='false' /><label for='news'>Include TechCrunch &amp; TechMeme news updates</label><div class='actions'><input id='alert_submit' type='submit' value='Submit' /></div></form>";
-	$('#input').append(new_form);
+	$('#submit-url').remove();
+	$('#crunchbase-search').append(data[1]);
+	var new_form = "<form id='form-alert' method='post' name='alert'><div id='form-check'><label for='news'>Include TechCrunch &amp; TechMeme news updates</label><input id='news' name='news' type='checkbox' check value='true' /><input name='news' type='hidden' value='false' /></div><div id='form-freq'><span style='font-weight:bold'>Frequency: </span><input type='radio' name='freq' value='true'>Daily<input type='radio' name='freq' value='false'>Weekly</div><div class='actions'><input id='form-submit' type='submit' value='Add' /></div></form>";
+	$('#crunchbase-search').append(new_form);
 	$('#form-alert').submit(function() {
 	    var prefs = $('#form-alert *').fieldValue();
 	    content = content.replace(/\s/g,'-');
@@ -116,7 +116,7 @@ function switch_form(data) {
 			window.location.reload();
 		    else {
 			$('#form-crunchnews').append(message);
-			$('#input').remove();
+//			$('#input').remove(); //
 			setTimeout("window.location.reload()", 2500);
 		    }
 		}

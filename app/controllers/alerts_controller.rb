@@ -18,7 +18,7 @@ class AlertsController < ApplicationController
         if milestones
           check = "exists"
           picurl = pic[1]
-          picture = "<img src=#{picurl}></img>"
+          picture = "<img src=#{picurl} id='form-img' />"
           link = "<a href=http://crunchbase.com/#{type}/#{content} target=_blank>#{params[:crunchbase]}</a>"
           profile = [picurl, picture, link]
           render :json => profile
@@ -51,7 +51,7 @@ class AlertsController < ApplicationController
         if milestones
           check = "exists"
           picurl = pic[1]
-          picture = "<img src=#{picurl}></img>"
+          picture = "<img src=#{picurl} id='form-img' />"
           if url.slice(-1) == '/'
             url.slice!(-1)
           end
