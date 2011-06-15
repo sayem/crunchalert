@@ -112,10 +112,10 @@ fieldset { border: none; text-align: right; width: 450px; }
 #url-buttons { margin-top: 10px; position: absolute; right: 0px; }
 #url-cancel { margin-right: 25px; }
 
-
-
+.edit_alert { position: absolute; bottom: 50px; right: 0px; }   /* EDIT and FIX THIS */
 #wait { visibility: hidden; }
-#alert-list { width: 260px; text-align: center; margin-top: 25px; margin-left: 25px; }
+.crunchalert { width: 350px; position: relative; }
+#alert-list { width: 350px; text-align: center; margin-top: 25px; }
 .alert-list { margin-top: 40px; }
 
 

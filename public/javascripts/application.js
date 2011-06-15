@@ -6,12 +6,9 @@ $(document).ready(function() {
 	function() { $(this).addClass('ui-state-hover'); },
 	function() { $(this).removeClass('ui-state-hover'); }
     );
-    $('.edit_alert').button();
-
+    $('.edit_alert').button().css('font-weight', 'bold');
     $('#form-crunchbase').ajaxForm({ url: '/crunchbase', beforeSend: function() { $('#wait').css('visibility', 'visible') }, complete: function() { $('#wait').css('visibility', 'hidden') }, success: switch_form });
-
     $('#form-crunchnews').ajaxForm({ url: '/news' });
-
     $('.edit_alert').click(function() {
 	var content = $(this).parent().attr('id');
 	var content_id = '#' + content;
