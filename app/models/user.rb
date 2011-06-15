@@ -248,13 +248,20 @@ class User < ActiveRecord::Base
             name = name.join(' ')
           end
 
-
-# get news [1] in day array depending on user news pref and test it out
-
-
           weekly_alert = WeeklyAlert.find_by_content(alert.content)
-          alert.content = days.collect {|day| weekly_alert.send(day).to_s.split(/\"/)[1]}
-          alert.content = alert.content.compact
+          alert.content = days.collect {|day| weekly_alert.send(day)}
+          alert.content = alert.content.flatten
+              
+          if alert.news
+            alert.content = alert.content.compact
+          else 
+            alert.content.each_index {|x|
+              if x%2 != 0
+                alert.content[x] = nil
+              end
+            }
+            alert.content = alert.content.compact
+          end
 
           if !alert.content.empty?
             alert.content.insert(0, "<br /><b>#{name}</b>")
