@@ -112,21 +112,22 @@ fieldset { border: none; text-align: right; width: 450px; }
 #url-buttons { margin-top: 10px; position: absolute; right: 0px; }
 #url-cancel { margin-right: 25px; }
 
-.edit_alert { position: absolute; bottom: 50px; right: 0px; }   /* EDIT and FIX THIS */
 #wait { visibility: hidden; }
-.crunchalert { width: 350px; position: relative; }
-#alert-list { width: 350px; text-align: center; margin-top: 25px; }
-.alert-list { margin-top: 40px; }
+#alert-list { width: 625px; margin-top: 25px; }
+#alertlist-header { position: relative; left: 50px; }
+.alert-list { margin-top: 20px; }
+.crunchalert { position: relative; height: 120px; margin-bottom: 25px; }
+.crunchalert-user { max-height: 100px; max-width: 250px; position: absolute; top: 30px; }
+.edit_alert { position: absolute; top: 50%; left: 275px; }   
+.edit-prefs { position: absolute; right: 0px; height: 150px; width: 300px; }
 
+.form-update { font-size: 1.2em; position: relative; }
+.edit-news { position: absolute; top: 30px; left: 20px; margin-top: 5px; }
+.edit-news label { font-weight: normal; margin-left: 5px; }
+.edit-freq { position: absolute; top: 60px; left: 43px; }
+.alert-submit { position: absolute; top: 95px; left: 25px; }
+.delete-alert { position: absolute; top: 95px; right: 0px; text-decoration: underline; color: red; }
 
-/*
-
-#form-crunchbase { position: relative; top: 100px; }
-#form-crunchnews { position: relative; top: 100px; }
-#alert_list { position: relative; top: 100px; width: 300px; }
-
-.icons {margin: 0; padding: 0; position: absolute; right: 0px; top: 11px;}
+.icons {margin: 0; padding: 0; position: absolute; right: 0px; top: 0px; }
 .icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left; list-style: none;}
 .icons span.ui-icon {float: left; margin: 0 4px;}
-
-*/

@@ -25,12 +25,10 @@
   <div class="alert-list">
     <% @alerts.each do |alert| %>
     <div class="crunchalert" id="<%= alert.content %>">
-
       <% name = alert.content.gsub(/[\s\.]/,'-') %>
-      <a href=<%= "http://crunchbase.com/#{alert.content_type}/#{name}" %> title=<%= alert.content %>><%= image_tag(Picture.find_by_content(alert.content).url, :alt => alert.content, :class => "crunchalert-list") %></a>
-
+      <a href=<%= "http://crunchbase.com/#{alert.content_type}/#{name}" %> title=<%= alert.content %>><%= image_tag(Picture.find_by_content(alert.content).url, :alt => alert.content, :class => "crunchalert-user") %></a>
       <div class="edit_alert">Edit</div>
-
+      <div id="<%= 'edit-' + alert.content %>" class="edit-prefs"></div>
     </div>
     <% end %>
   </div>

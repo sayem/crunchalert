@@ -6,11 +6,12 @@ $(document).ready(function() {
 	function() { $(this).addClass('ui-state-hover'); },
 	function() { $(this).removeClass('ui-state-hover'); }
     );
-    $('.edit_alert').button().css('font-weight', 'bold');
+    $('.edit_alert').button().css('font-weight','bold');
     $('#form-crunchbase').ajaxForm({ url: '/crunchbase', beforeSend: function() { $('#wait').css('visibility', 'visible') }, complete: function() { $('#wait').css('visibility', 'hidden') }, success: switch_form });
     $('#form-crunchnews').ajaxForm({ url: '/news' });
     $('.edit_alert').click(function() {
 	var content = $(this).parent().attr('id');
+	var edit = '#edit-' + content;
 	var content_id = '#' + content;
 	$.ajax({
 	    url: '/prefs',
@@ -18,25 +19,27 @@ $(document).ready(function() {
 	    data: { content: content },
 	    success: function(data) {
 		if (data[0])
-		    var freq = "<form class='form-update' method='post' name='alert'><input type='radio' name='freq' value='true' checked>Daily<br><input type='radio' name='freq' value='false'>Weekly<br>"
+		    var freq = "<div class='edit-freq'>Frequency: <input type='radio' name='freq' value='true' checked>Daily<input type='radio' name='freq' value='false'>Weekly</div><input class='alert-submit' type='submit' value='Update' /></form><div class='delete-alert'>Delete CrunchAlert</div><div class='button ui-widget ui-helper-clearfix icons'><li class='ui-state-default ui-corner-all'><span class='ui-icon ui-icon-close'></span></li></div>";
 		else
-		    var freq = "<form class='form-update' method='post' name='alert'><input type='radio' name='freq' value='true'>Daily<br><input type='radio' name='freq' value='false' checked>Weekly<br>"
+		    var freq = "<div class='edit-freq'>Frequency: <input type='radio' name='freq' value='true'>Daily<input type='radio' name='freq' value='false' checked>Weekly</div><input class='alert-submit' type='submit' value='Update' /></form><div class='delete-alert'>Delete CrunchAlert</div><div class='button ui-widget ui-helper-clearfix icons'><li class='ui-state-default ui-corner-all'><span class='ui-icon ui-icon-close'></span></li></div>";
 		if (data[1])
-		    var news = "<input id='news' name='news' type='checkbox' check value='true' checked/><input name='news' type='hidden' value='false'/><label for='news'>Include TechCrunch &amp; TechMeme news updates</label><div class='actions'><input id='alert_submit' type='submit' value='Submit' /></div></form>";
+		    var news = "<form class='form-update' method='post' name='alert'><div class='edit-news'><input id='news' name='news' type='checkbox' check value='true' checked/><input name='news' type='hidden' value='false'/><label for='news'>Include TechCrunch &amp; TechMeme news</label></div>";
 		else
-		    var news = "<input id='news' name='news' type='checkbox' check value='true'/><input name='news' type='hidden' value='false'/><label for='news'>Include TechCrunch &amp; TechMeme news updates</label><div class='actions'><input id='alert_submit' type='submit' value='Submit' /></div></form>";
-
-		var update_alert = freq + news;
-		$(content_id).append(update_alert);
+		    var news = "<form class='form-update' method='post' name='alert'><div class='edit-news'><input id='news' name='news' type='checkbox' check value='true'/><input name='news' type='hidden' value='false'/><label for='news'>Include TechCrunch &amp; TechMeme news</label></div>";
+		var update_alert = news + freq;
+		$(edit).append(update_alert);
 	    }
 	});
 
+
+/*
 	var delete_button = "<div id='delete_button' class='form-update'>delete button</div>";
 	var cancel_button = "<div id='cancel_button' class='form-update'>cancel button</div>";
-	$(content_id).append(delete_button);
-	$(content_id).append(cancel_button);
+	$(edit).append(delete_button);
+	$(edit).append(cancel_button);
+*/
 
-	$(content_id).submit(function() {
+	$(edit).submit(function() {
 	    var prefs = $('.form-update *').fieldValue();
 	    $.ajax({
 		url: '/editalert',
@@ -46,7 +49,7 @@ $(document).ready(function() {
 	    });
 	});
 
-	$('#delete_button').click(function() {
+	$('.delete-alert').click(function() {       // make delete work with new div
 	    $.ajax({
 		url: '/removealert',
 		type: 'post',
@@ -56,7 +59,7 @@ $(document).ready(function() {
 	    window.location.reload();
 	});
 
-	$('#cancel_button').click(function() {
+	$('#cancel_button').click(function() {      // update cancel button with jquery ui button
 	    $(".form-update").remove();
 	});
     });
