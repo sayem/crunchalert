@@ -13,15 +13,16 @@ $(document).ready(function() {
 	var content = $(this).parent().attr('id');
 	var edit = '#edit-' + content;
 	var content_id = '#' + content;
+	$(edit).css('border', 'solid 1px #C9C9C9');
 	$.ajax({
 	    url: '/prefs',
 	    type: 'post',
 	    data: { content: content },
 	    success: function(data) {
 		if (data[0])
-		    var freq = "<div class='edit-freq'>Frequency: <input type='radio' name='freq' value='true' checked>Daily<input type='radio' name='freq' value='false'>Weekly</div><input class='alert-submit' type='submit' value='Update' /></form><div class='delete-alert'>Delete CrunchAlert</div><div class='button ui-widget ui-helper-clearfix icons'><li class='ui-state-default ui-corner-all'><span class='ui-icon ui-icon-close'></span></li></div>";
+		    var freq = "<div class='edit-freq'>Frequency: <input type='radio' name='freq' value='true' checked>Daily<input type='radio' name='freq' value='false'>Weekly</div><input class='alert-submit' type='submit' value='Update' /></form>";
 		else
-		    var freq = "<div class='edit-freq'>Frequency: <input type='radio' name='freq' value='true'>Daily<input type='radio' name='freq' value='false' checked>Weekly</div><input class='alert-submit' type='submit' value='Update' /></form><div class='delete-alert'>Delete CrunchAlert</div><div class='button ui-widget ui-helper-clearfix icons'><li class='ui-state-default ui-corner-all'><span class='ui-icon ui-icon-close'></span></li></div>";
+		    var freq = "<div class='edit-freq'>Frequency: <input type='radio' name='freq' value='true'>Daily<input type='radio' name='freq' value='false' checked>Weekly</div><input class='alert-submit' type='submit' value='Update' /></form>";
 		if (data[1])
 		    var news = "<form class='form-update' method='post' name='alert'><div class='edit-news'><input id='news' name='news' type='checkbox' check value='true' checked/><input name='news' type='hidden' value='false'/><label for='news'>Include TechCrunch &amp; TechMeme news</label></div>";
 		else
@@ -31,48 +32,44 @@ $(document).ready(function() {
 	    }
 	});
 
-
-/*
-	var delete_button = "<div id='delete_button' class='form-update'>delete button</div>";
-	var cancel_button = "<div id='cancel_button' class='form-update'>cancel button</div>";
-	$(edit).append(delete_button);
+	var cancel_button = "<div class='button ui-widget ui-helper-clearfix icons cancel_button'><li class='ui-state-default ui-corner-all'><span class='ui-icon ui-icon-closethick'></span></li></div>";
+	var delete_button = "<a href='/' class='delete-alert'>Delete CrunchAlert</a>";
 	$(edit).append(cancel_button);
-*/
-
-	$(edit).submit(function() {
-	    var prefs = $('.form-update *').fieldValue();
-	    $.ajax({
-		url: '/editalert',
-		type: 'post', 
-		data: { content: content, freq: prefs[0], news: prefs[1] },
-		async: false
-	    });
-	});
-
-	$('.delete-alert').click(function() {       // make delete work with new div
+	$(edit).append(delete_button);
+	$('.delete-alert').click(function() {
 	    $.ajax({
 		url: '/removealert',
 		type: 'post',
 		data: { content: content },
 		async: false
 	    });
-	    window.location.reload();
 	});
-
-	$('#cancel_button').click(function() {      // update cancel button with jquery ui button
-	    $(".form-update").remove();
+	$('.cancel_button').click(function() {
+	    $(edit).find('.form-update').remove();
+	    $(edit).find('.delete-alert').remove();
+	    $(edit).find('.cancel_button').remove();
+	    $(edit).css('border', 'none');
+	});
+	$(edit).submit(function() {
+	    var prefs = $('.form-update *').fieldValue();
+	    $.ajax({
+		url: '/editalert',
+		type: 'post', 
+		data: { content: content, news: prefs[0], freq: prefs[1] },
+		async: false
+	    });
 	});
     });
-
     $(".crunchalert").click(function(e){   
 	e.stopPropagation();
     });
-
     $(document).click(function(){
+	$(".form-update").parent().css('border', 'none');
 	$(".form-update").remove();
+	$(".delete-alert").remove();
+	$(".cancel_button").remove();
     });
 });
-
 
 function switch_form(data) {
     if (data == 'not there') {

@@ -113,20 +113,20 @@ fieldset { border: none; text-align: right; width: 450px; }
 #url-cancel { margin-right: 25px; }
 
 #wait { visibility: hidden; }
-#alert-list { width: 625px; margin-top: 25px; }
+#alert-list { width: 650px; margin-top: 25px; }
 #alertlist-header { position: relative; left: 50px; }
 .alert-list { margin-top: 20px; }
 .crunchalert { position: relative; height: 120px; margin-bottom: 25px; }
 .crunchalert-user { max-height: 100px; max-width: 250px; position: absolute; top: 30px; }
-.edit_alert { position: absolute; top: 50%; left: 275px; }   
-.edit-prefs { position: absolute; right: 0px; height: 150px; width: 300px; }
+.edit_alert { position: absolute; top: 50%; left: 260px; }   
+.edit-prefs { position: absolute; right: 0px; top: 0px; height: 125px; width: 320px; }
 
-.form-update { font-size: 1.2em; position: relative; }
-.edit-news { position: absolute; top: 30px; left: 20px; margin-top: 5px; }
+.form-update { font-size: 1.2em; position: relative; padding-left: 15px; }
+.edit-news { position: absolute; top: 30px; }
 .edit-news label { font-weight: normal; margin-left: 5px; }
-.edit-freq { position: absolute; top: 60px; left: 43px; }
-.alert-submit { position: absolute; top: 95px; left: 25px; }
-.delete-alert { position: absolute; top: 95px; right: 0px; text-decoration: underline; color: red; }
+.edit-freq { position: absolute; top: 55px; left: 20px; }
+.alert-submit { position: absolute; top: 95px; }
+.delete-alert { position: absolute; top: 95px; right: 0px; width: 125px; }
 
 .icons {margin: 0; padding: 0; position: absolute; right: 0px; top: 0px; }
 .icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left; list-style: none;}
