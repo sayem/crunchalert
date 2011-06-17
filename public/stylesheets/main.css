@@ -43,10 +43,10 @@ body { font-family: Helvetica Neue, arial, helvetica, sans-serif; color: #333333
 
 /* footer */
 
-#home-footer { padding-top: 40px; margin-top: 40px; }
+#home-footer { padding-top: 40px; margin-top: 40px; width: 500px; }
 .page-footer { position: absolute; left: 0px; width: 500px; }
 
-.footer { position: absolute; bottom: 0px; left: 0px; padding-bottom: 45px; }
+.footer { position: absolute; bottom: 0px; left: 0px; padding-bottom: 50px; }
 .footer a:link { text-decoration: none; color: red } 
 .footer a:hover { text-decoration: underline; } 
 
@@ -92,7 +92,7 @@ fieldset { border: none; text-align: right; width: 450px; }
                                                          /* style fancy checkbox and radio buttons too */
 #news-check label { margin-left: 9px; position: relative; bottom: 2px; }
 #news-freq { font-size: 1.2em; position: relative; top: 17px; }
-#submit-crunchnews { position: relative; left: 17px;   }
+#submit-crunchnews { position: relative; left: 17px; }
 
 #crunchbase-search { margin-top: 35px; height: 215px; width: 500px; border: solid 1px #C9C9C9; padding: 15px 0px 15px 15px; position: relative; }
 #form-crunchbase { font-size: 1.2em; font-weight: normal; margin-top: 50px; }
@@ -112,13 +112,13 @@ fieldset { border: none; text-align: right; width: 450px; }
 #url-buttons { margin-top: 10px; position: absolute; right: 0px; }
 #url-cancel { margin-right: 25px; }
 
-#wait { visibility: hidden; }
-#alert-list { width: 650px; margin-top: 25px; }
+#wait { visibility: hidden; position: absolute; top: 20px; right: 20px; }
+#alert-list { width: 660px; margin-top: 25px; margin-bottom: 135px; }
 #alertlist-header { position: relative; left: 50px; }
-.alert-list { margin-top: 20px; }
+.alert-list { margin-top: 15px; }
 .crunchalert { position: relative; height: 120px; margin-bottom: 25px; }
-.crunchalert-user { max-height: 100px; max-width: 250px; position: absolute; top: 30px; }
-.edit_alert { position: absolute; top: 50%; left: 260px; }   
+.crunchalert-user { max-height: 100px; max-width: 250px; position: absolute; }
+.edit_alert { position: absolute; left: 270px; margin-top: 43px; }   
 .edit-prefs { position: absolute; right: 0px; top: 0px; height: 125px; width: 320px; }
 
 .form-update { font-size: 1.2em; position: relative; padding-left: 15px; }

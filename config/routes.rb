@@ -18,6 +18,7 @@ Crunchalert::Application.routes.draw do
   match '/prefs', :to => 'alerts#prefs'
 
   match '/news', :to => 'news#update'
+  match '/news_prefs', :to => 'news#prefs'
 
 
   # The priority is based upon order of creation:

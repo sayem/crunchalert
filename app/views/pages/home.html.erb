@@ -16,10 +16,8 @@
 </div>
 
 <% if signed_in? %>
-<div id="wait"><%= image_tag("loader.gif", :alt => "loader") %></div>
 <%= render 'news_form' %>
 <%= render 'crunchbase_form' %>
-
 <div id="alert-list">
   <span class="alert-header" id="alertlist-header">Your CrunchAlerts</span>
   <div class="alert-list">
@@ -33,4 +31,5 @@
     <% end %>
   </div>
 </div>
+<div class="page-footer"><%= render 'shared/footer' -%></div>
 <% end %>

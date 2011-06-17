@@ -7,8 +7,50 @@ $(document).ready(function() {
 	function() { $(this).removeClass('ui-state-hover'); }
     );
     $('.edit_alert').button().css('font-weight','bold');
+    if ($('#news-check').html()) {
+	$.ajax({
+	    url: '/news_prefs',
+	    type: 'post',
+	    success: function(data) {
+		if (data[0])
+		    var news = "<input id='news' name='news' type='checkbox' value='true' checked/><label for='news'>Receive our news digest with the latest tech news<br /> and deals from CrunchBase</label>";
+		else
+		    var news = "<input id='news' name='news' type='checkbox' value='true' /><label for='news'>Receive our news digest with the latest tech news<br /> and deals from CrunchBase</label>";
+		if (data[1])
+		    var freq = "<span style='font-weight:bold'>Frequency: </span><input type='radio' name='freq' value='true' checked/>Daily<input type='radio' name='freq' value='false'/>Weekly";
+		else
+		    var freq = "<span style='font-weight:bold'>Frequency: </span><input type='radio' name='freq' value='true' />Daily<input type='radio' name='freq' value='false' checked/>Weekly";
+		$('#news-check').append(news);
+		$('#news-freq').prepend(freq);
+	    }
+	});
+    }
+    $('.crunchalert-user').each(function() {
+	var height = $(this).height();
+	var width = $(this).width();
+	var v_margin = (120 - height)/2;
+	var h_margin = (255 - width)/2;
+	$(this).css('margin-top', v_margin);	
+	$(this).css('margin-left', h_margin);
+    });
     $('#form-crunchbase').ajaxForm({ url: '/crunchbase', beforeSend: function() { $('#wait').css('visibility', 'visible') }, complete: function() { $('#wait').css('visibility', 'hidden') }, success: switch_form });
-    $('#form-crunchnews').ajaxForm({ url: '/news' });
+    $('#form-crunchnews').submit(function() {
+	var prefs = $('#form-crunchnews *').fieldValue();
+	if (prefs.length == '1') {
+	    var news = false;
+	    var freq = prefs[0];
+	}
+	else {
+	    var news = true;
+	    var freq = prefs[1];
+	}
+	$.ajax({
+	    url: '/news',
+	    type: 'post', 
+	    data: { news: news, freq: freq },
+	    async: false
+	});
+    })
     $('.edit_alert').click(function() {
 	var content = $(this).parent().attr('id');
 	var edit = '#edit-' + content;
