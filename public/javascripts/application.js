@@ -12,19 +12,25 @@ $(document).ready(function() {
 	    url: '/news_prefs',
 	    type: 'post',
 	    success: function(data) {
-		if (data[0])
-		    var news = "<input id='news' name='news' type='checkbox' value='true' checked/><label for='news'>Receive our news digest with the latest tech news<br /> and deals from CrunchBase</label>";
-		else
+		if (data == 'undefined') {
 		    var news = "<input id='news' name='news' type='checkbox' value='true' /><label for='news'>Receive our news digest with the latest tech news<br /> and deals from CrunchBase</label>";
-		if (data[1])
-		    var freq = "<span style='font-weight:bold'>Frequency: </span><input type='radio' name='freq' value='true' checked/>Daily<input type='radio' name='freq' value='false'/>Weekly";
-		else
-		    var freq = "<span style='font-weight:bold'>Frequency: </span><input type='radio' name='freq' value='true' />Daily<input type='radio' name='freq' value='false' checked/>Weekly";
+		    var freq = "<span style='font-weight:bold'>Frequency: </span><input type='radio' name='freq' value='true' />Daily<input type='radio' name='freq' value='false'/>Weekly";
+		}
+		else {
+		    if (data[0])
+			var news = "<input id='news' name='news' type='checkbox' value='true' checked/><label for='news'>Receive our news digest with the latest tech news<br /> and deals from CrunchBase</label>";
+		    else
+			var news = "<input id='news' name='news' type='checkbox' value='true' /><label for='news'>Receive our news digest with the latest tech news<br /> and deals from CrunchBase</label>";
+		    if (data[1])
+			var freq = "<span style='font-weight:bold'>Frequency: </span><input type='radio' name='freq' value='true' checked/>Daily<input type='radio' name='freq' value='false'/>Weekly";
+		    else
+			var freq = "<span style='font-weight:bold'>Frequency: </span><input type='radio' name='freq' value='true' />Daily<input type='radio' name='freq' value='false' checked/>Weekly";
+		}
 		$('#news-check').append(news);
 		$('#news-freq').prepend(freq);
 	    }
 	});
-    }
+    };
     $('.crunchalert-user').each(function() {
 	var height = $(this).height();
 	var width = $(this).width();
@@ -33,6 +39,10 @@ $(document).ready(function() {
 	$(this).css('margin-top', v_margin);	
 	$(this).css('margin-left', h_margin);
     });
+    if ($('#crunchbase').val() != 'enter a crunchbase profile name') {
+	$('#crunchbase').val('enter a crunchbase profile name');
+    }
+    $('#crunchbase').click(function(){ $(this).val('') });
     $('#form-crunchbase').ajaxForm({ url: '/crunchbase', beforeSend: function() { $('#wait').css('visibility', 'visible') }, complete: function() { $('#wait').css('visibility', 'hidden') }, success: switch_form });
     $('#form-crunchnews').submit(function() {
 	var prefs = $('#form-crunchnews *').fieldValue();
@@ -94,10 +104,18 @@ $(document).ready(function() {
 	});
 	$(edit).submit(function() {
 	    var prefs = $('.form-update *').fieldValue();
+	    if (prefs.length == '3') {
+		var news = prefs[0];
+		var freq = prefs[2];
+	    }
+	    else {
+		var news = prefs[0];
+		var freq = prefs[1];
+	    }
 	    $.ajax({
 		url: '/editalert',
 		type: 'post', 
-		data: { content: content, news: prefs[0], freq: prefs[1] },
+		data: { content: content, news: news, freq: freq },
 		async: false
 	    });
 	});
@@ -143,11 +161,19 @@ function switch_form(data) {
 	$('#crunchbase-search').append(new_form);
 	$('#form-alert').submit(function() {
 	    var prefs = $('#form-alert *').fieldValue();
+	    if (prefs.length == '3') {
+		var news = prefs[0];
+		var freq = prefs[2];
+	    }
+	    else {
+		var news = prefs[0];
+		var freq = prefs[1];
+	    }
 	    content = content.replace(/\s/g,'-');
 	    $.ajax({
 		url: '/crunchalert',
 		type: 'post',
-		data: { content: content, type: type, freq: prefs[0], news: prefs[1], pic: picurl },
+		data: { content: content, type: type, freq: freq, news: news, pic: picurl },
 		async: false,
 		success: function(data) {
 		    var message = data.split("\"")[1];
@@ -155,7 +181,7 @@ function switch_form(data) {
 			window.location.reload();
 		    else {
 			$('#form-crunchnews').append(message);
-//			$('#input').remove(); //
+			//			$('#input').remove(); //
 			setTimeout("window.location.reload()", 2500);
 		    }
 		}
