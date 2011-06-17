@@ -1,9 +1,11 @@
 <div id="recent">
-  <span class="alert-header">Recent CrunchAlerts</span>
+  <span class="alert-header alert-side">Recent CrunchAlerts</span>
   <div id="recent-alerts">
     <% @recent.each do |alert| %>
-    <% name = alert.content.gsub(/[\s\.]/,'-') %>
-    <a href=<%= "http://crunchbase.com/#{alert.content_type}/#{name}" %> title=<%= alert.content %>><%= image_tag(Picture.find_by_content(alert.content).url, :alt => alert.content, :class => "crunchalert-list") %></a>
+    <div class="crunchalert">
+      <% name = alert.content.gsub(/[\s\.]/,'-') %>
+      <a href=<%= "http://crunchbase.com/#{alert.content_type}/#{name}" %> title=<%= alert.content %>><%= image_tag(Picture.find_by_content(alert.content).url, :alt => alert.content, :class => "crunchalert-user sidebar") %></a>
+    </div>
     <% end %>
   </div>
 </div>

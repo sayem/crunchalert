@@ -31,13 +31,14 @@ body { font-family: Helvetica Neue, arial, helvetica, sans-serif; color: #333333
 .alert-header { position: relative; top: 17px; font-size: 1.4em; color: #DB0C09; font-weight: bold; }
 #yesterday-news { position: absolute; width: 600px; padding-bottom: 50px; }
 
-#alert_sidebar { position: absolute; right: 0px; height: 1375px; width: 260px; text-align: center; }
+#alert_sidebar { position: absolute; right: 0px; height: 1625px; width: 260px; }
+.alert-side { position: relateive; left: 45px; }
 
 #popular { position: absolute; right: 0px; }
 #popular-alerts { margin-top: 40px; }
-.crunchalert-list { margin-bottom: 30px; max-height: 100px; max-width: 250px; }
+.sidebar { margin-bottom: 30px;  }
 
-#recent { position:absolute; right: 0px; bottom: 0px; margin-bottom: 40px; }
+#recent { position:absolute; right: 0px; bottom: 0px; margin-bottom: 30px; }
 #recent-alerts { margin-top: 40px; }
 
 
@@ -117,7 +118,7 @@ fieldset { border: none; text-align: right; width: 450px; }
 #alertlist-header { position: relative; left: 50px; }
 .alert-list { margin-top: 15px; }
 .crunchalert { position: relative; height: 120px; margin-bottom: 25px; }
-.crunchalert-user { max-height: 100px; max-width: 250px; position: absolute; }
+.crunchalert-user { max-height: 100px; max-width: 250px; position: absolute;  }
 .edit_alert { position: absolute; left: 270px; margin-top: 43px; }   
 .edit-prefs { position: absolute; right: 0px; top: 0px; height: 125px; width: 320px; }
 

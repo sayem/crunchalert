@@ -1,10 +1,12 @@
 <div id="popular">
-  <span class="alert-header">Popular CrunchAlerts</span>
+  <span class="alert-header alert-side">Popular CrunchAlerts</span>
   <div id="popular-alerts">
     <% @popular.each do |popular| %>
-    <% alert = Alert.find_by_content(popular[0]) %>
-    <% name = alert.content.gsub(/[\s\.]/,'-') %>
-    <a href=<%= "http://crunchbase.com/#{alert.content_type}/#{name}" %> title=<%= alert.content %>><%= image_tag(Picture.find_by_content(alert.content).url, :alt => alert.content, :class => "crunchalert-list") %></a>
+    <div class="crunchalert">
+      <% alert = Alert.find_by_content(popular[0]) %>
+      <% name = alert.content.gsub(/[\s\.]/,'-') %>
+      <a href=<%= "http://crunchbase.com/#{alert.content_type}/#{name}" %> title=<%= alert.content %>><%= image_tag(Picture.find_by_content(alert.content).url, :alt => alert.content, :class => "crunchalert-user sidebar") %></a>
+    </div>
     <% end%>
   </div>
 </div>
