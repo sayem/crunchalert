@@ -132,9 +132,9 @@ $(document).ready(function() {
 });
 
 function switch_form(data) {
-    if (data == 'not there') {
+    if (data == 'error') {
 	$('#form-crunchbase').remove();
-	var submit_url = "<div id='submit-url'>Sorry, we\'re having trouble finding that. Please enter that profile's CrunchBase URL below to add it as an alert:<form id='form-submit-url' method='post' name='url'><input id='url' name='url' type='text' value='crunchbase.com url' /><div id='url-buttons'><span id='url-cancel'>cancel button</span><input id='url-submit' type='submit' value='Submit' /></div></form></div>";
+	var submit_url = "<div id='submit-url'>Sorry, we\'re having trouble finding that. Please enter that profile's CrunchBase URL (<span style='color: red'>http://www.crunchbase.com/...</span>) below to add it as an alert:<form id='form-submit-url' method='post' name='url'><input id='url' name='url' type='text' value='crunchbase.com url' /><div id='url-buttons'><input id='url-submit' type='submit' value='Submit' /><input id='url-cancel' type='button' value='Cancel' /></div></form></div>";
 	$('#crunchbase-search').append(submit_url);
 	$('#url').click(function() {
 	    $(this).attr('value','');
@@ -143,6 +143,14 @@ function switch_form(data) {
 	    window.location.reload();
 	});
 	$('#form-submit-url').ajaxForm({ url: '/crunchbaseurl', success: switch_form });
+    }
+    else if (data == 'connection error') {
+	var connection_error = "Sorry, we're having trouble connecting to CrunchBase. Please try again later.";
+	$('#cbase-error').html(connection_error);
+    }
+    else if (data == 'regex error') {
+	var regex_error = "Please enter a valid name";
+	$('#cbase-error').html(regex_error);
     }
     else {
 	if (data[3]) {
@@ -177,12 +185,11 @@ function switch_form(data) {
 		async: false,
 		success: function(data) {
 		    var message = data.split("\"")[1];
-		    if (message != 'already added')
+		    if (message != 'Already Added')
 			window.location.reload();
 		    else {
-			$('#form-crunchnews').append(message);
-			//			$('#input').remove(); //
-			setTimeout("window.location.reload()", 2500);
+			$('#message-error').html(message);
+			setTimeout("window.location.reload()", 2000);
 		    }
 		}
 	    });

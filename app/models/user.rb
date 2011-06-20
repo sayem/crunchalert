@@ -5,19 +5,21 @@ require 'open-uri'
 require 'htmlentities'
 
 class User < ActiveRecord::Base
-  validates_presence_of     :email
-  validates_uniqueness_of   :email
-
   attr_accessor  :password_confirmation
-
-  validates_confirmation_of  :password
-
-  validate  :password_non_blank
-
   attr_protected  :id, :salt
 
   has_many :alerts, :dependent => :destroy
   has_many :news, :dependent => :destroy
+
+  email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+
+  validates :email, :presence   => true,
+                    :format     => { :with => email_regex },
+                    :uniqueness => { :case_sensitive => false }
+
+  validates :password, :presence => true,
+                       :confirmation => true,
+                       :length => { :within => 6..40 }
 
   def self.authenticate(email, password)
     user = self.find_by_email(email)
@@ -300,10 +302,6 @@ class User < ActiveRecord::Base
   end
 
   private
-
-    def password_non_blank
-      errors.add(:password, "Missing password") if hashed_password.blank?
-    end
 
     def create_new_salt
       self.salt = BCrypt::Engine.generate_salt

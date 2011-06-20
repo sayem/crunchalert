@@ -3,23 +3,7 @@
   <div class="container">
     <%= render 'shared/header' -%>
     <div class="center-container">
-
-
-
-
-      <div id="notification">
-	<% if flash[:notice] -%>
-	<%= flash[:notice] %>
-	<% end -%>
-      </div>
-
       <%= yield -%>
-
-
-
-
-
-
     </div>
   </div>
   <%= render 'shared/analytics' -%>

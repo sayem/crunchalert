@@ -3,6 +3,7 @@
 </style>
 <div id="settings">
   <%= form_for(@user) do |f| %>
+  <%= render 'shared/error_messages' %>
   <fieldset class="user settings">
     <legend>Account Settings</legend>
     <div class="field">

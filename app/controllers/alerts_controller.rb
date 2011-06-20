@@ -16,29 +16,28 @@ class AlertsController < ApplicationController
         logo = doc.css('#company_logo img').to_s()
         pic = logo.split('"');
         if milestones
-          check = "exists"
           picurl = pic[1]
           picture = "<img src=#{picurl} id='form-img' />"
           link = "<a href=http://crunchbase.com/#{type}/#{content} target=_blank>#{params[:crunchbase]}</a>"
           profile = [picurl, picture, link]
           render :json => profile
         elsif error == "The page you are looking for is temporarily unavailable.\nPlease try again later."
-          check = "crunchbase is unavailable"
-          render :json => check
+          alert = "connection error"
+          render :json => alert
         else
-          check = "not there"
-          render :json => check
+          alert = "error"
+          render :json => alert
         end
       rescue OpenURI::HTTPError
-        check = "not there"
-        render :text => check
+        alert = "error"
+        render :text => alert
       end
     else
-      check = "bad regex input"
-      render :text => check
+      alert = "regex error"
+      render :text => alert
     end
   end
-
+  
   def crunchbaseurl
     url = params[:url]
     if url =~ /^(http:\/\/)(www\.)?(crunchbase.com\/)(company|person|financial-organization)\/([\w+\-]+)(\/)?$/
@@ -49,7 +48,6 @@ class AlertsController < ApplicationController
         logo = doc.css('#company_logo img').to_s()
         pic = logo.split('"');
         if milestones
-          check = "exists"
           picurl = pic[1]
           picture = "<img src=#{picurl} id='form-img' />"
           if url.slice(-1) == '/'
@@ -60,19 +58,19 @@ class AlertsController < ApplicationController
           profile = [picurl, picture, name, type]
           render :json => profile
         elsif error == "The page you are looking for is temporarily unavailable.\nPlease try again later."
-          check = "crunchbase is unavailable"
-          render :text => check
+          alert = "connection error"
+          render :text => alert
         else
-          check = "not there"
-          render :text => check
+          alert = "error"
+          render :text => alert
         end
       rescue OpenURI::HTTPError
-        check = 'not there'
-        render :text => check
+        alert = 'error'
+        render :text => alert
       end
     else
-      check = "bad regex input"
-      render :text => check
+      alert = "regex error"
+      render :text => alert
     end
   end
 

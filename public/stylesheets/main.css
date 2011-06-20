@@ -1,6 +1,7 @@
 
 body { font-family: Helvetica Neue, arial, helvetica, sans-serif; color: #333333; }
 .container { position: relative; }
+ul, ol { list-style: none; }
 
 
 /* header */
@@ -23,7 +24,7 @@ body { font-family: Helvetica Neue, arial, helvetica, sans-serif; color: #333333
 
 /* center-container */
 
-.center-container { position: relative; width: auto; }   /* look into width here */
+.center-container { position: relative; width: auto; }
 
 #intro { position: relative; top: 35px; left: 35px; width: 550px; font-size: 1.25em; line-height: 1.75em; }
 
@@ -61,9 +62,12 @@ body { font-family: Helvetica Neue, arial, helvetica, sans-serif; color: #333333
 
 /* register, login, forgot password, account settings page */
 
-#register { margin-top: 30px; font-size: 1.3em; padding-bottom: 55px; }
+#register { position: relative; margin-top: 30px; font-size: 1.3em; padding-bottom: 55px; }
 legend { color: #DB0C09; margin-left: 15px; }
 fieldset { border: none; text-align: right; width: 450px; }
+.user-register label { width: 100px; position: absolute; left: 15px; margin-top: 13px; }
+#user-error { position: absolute; right: 100px; top: 50px; line-height: 2.9em; font-size: 0.9em; color: red; }
+
 .user input { height: 27px; margin-left: 10px; margin-bottom: 15px; }
 .user input[type=text] { border:1px solid #ccc; color:gray; text-align: center; font-size: 18px; width: 340px; }
 .user input[type=password] { border:1px solid #ccc; color:gray; font-size: 18px; width: 340px; }
@@ -73,6 +77,9 @@ fieldset { border: none; text-align: right; width: 450px; }
 #sign-in a:hover { text-decoration: underline; color: #333333; }
 .sign-in input { height: 27px; margin-left: 10px; margin-bottom: 15px; }
 .forget { text-decoration: none; color: #999999; font-size: 0.9em; }
+.flash { position: absolute; right: 200px; top: 50px; border: none; background: #ffffff; font-size: 0.9em; color: red; }
+.notice { position: absolute; font-size: 1.2em; }
+.message { position: absolute; font-size: 1.2em; }
 
 #forget { margin-top: 50px; margin-bottom: 100px; }
 #forget input[type=text] { margin-left: 20px; }
@@ -81,7 +88,9 @@ fieldset { border: none; text-align: right; width: 450px; }
 
 #settings  { margin-top: 30px; font-size: 1.3em; padding-bottom: 40px; margin-bottom: 40px; }
 #settings legend { margin-left: 50px; }
+#settings li { position: relative; left: 25px; }
 .settings { width: 500px; }
+.settings label { width: 150px; position: absolute; left: 15px; margin-top: 13px; }
 .delete-account { text-decoration: none; color: #999999; font-size: 0.9em; position: relative; top: 20px; }
 #settings a:hover { text-decoration: underline; color: #333333; }
 
@@ -90,7 +99,7 @@ fieldset { border: none; text-align: right; width: 450px; }
 
 #crunchnews { margin-top: 20px; height: 135px; width: 400px; border: solid 1px #C9C9C9; padding: 15px 0px 5px 15px; }
 #news-check { font-size: 1.2em; margin-top: 35px; }
-                                                         /* style fancy checkbox and radio buttons too */
+                                                
 #news-check label { margin-left: 9px; position: relative; bottom: 2px; }
 #news-freq { font-size: 1.2em; position: relative; top: 17px; }
 #submit-crunchnews { position: relative; left: 17px; }
@@ -110,10 +119,12 @@ fieldset { border: none; text-align: right; width: 450px; }
 
 #submit-url { font-size: 1.2em; position: absolute; top: 50px; left: 25px; margin-top: 15px; font-weight: bold; width: 425px; }
 #url { border:1px solid #ccc; color:gray; text-align: center; font-size: 18px; width: 460px; margin-left: 5px; margin-top: 20px; }
-#url-buttons { margin-top: 10px; position: absolute; right: 0px; }
-#url-cancel { margin-right: 25px; }
+#url-buttons { margin-top: 15px; position: absolute; right: 0px; width: 420px; }
+#url-cancel { margin-left: 20px; }
 
 #wait { visibility: hidden; position: absolute; top: 20px; right: 20px; }
+#cbase-error { position: absolute; top: 40px; right: 35px; font-size: 1.15em; color: red; }
+#message-error { position: absolute; bottom: 17px; right: 100px; font-size: 1.25em; color: red; font-weight: bold; }
 #alert-list { width: 660px; margin-top: 25px; margin-bottom: 135px; }
 #alertlist-header { position: relative; left: 50px; }
 .alert-list { margin-top: 15px; }

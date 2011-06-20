@@ -42,10 +42,10 @@ class UsersController < ApplicationController
     if request.post?
       u= User.find_by_email(params[:user][:email])
       if u and u.send_new_password
-        flash[:message]  = "A new password has been sent by email."
+        flash[:message]  = "A new password was just emailed to you."
         redirect_to login_path
       else
-        flash[:warning]  = "Couldn't send password"
+        flash.now[:notice]  = "Invalid email. Couldn't send password."
       end
     end
   end

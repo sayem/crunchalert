@@ -1,5 +1,13 @@
 class NewsController < ApplicationController
   def update
+
+=begin
+
+check if both are true or not
+
+=end
+
+
     news = News.find_by_user_id(current_user[:id])
     if news
       news.update_attributes(:news => params[:news], :freq => params[:freq])
