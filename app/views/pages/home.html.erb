@@ -29,6 +29,9 @@
       <div id="<%= 'edit-' + alert.content %>" class="edit-prefs"></div>
     </div>
     <% end %>
+    <% if @alerts.length == 0 %>
+    <span id="no-alerts"><%= "[no alerts added]" -%></span>    
+    <% end %>
   </div>
 </div>
 <div class="page-footer"><%= render 'shared/footer' -%></div>

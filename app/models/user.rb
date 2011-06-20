@@ -220,6 +220,10 @@ class User < ActiveRecord::Base
         DailyMailer.deliver_news(user.email, news_alerts)
       end
 
+
+
+
+=begin
       weekly_news = WeeklyNews.find_by_id('1')
       unless weekly_news.send(today)
         time = Time.new
@@ -229,6 +233,10 @@ class User < ActiveRecord::Base
         weekly_news.send("#{today}=", news_alerts)
         weekly_news.save
       end
+=end
+
+
+
     end
   end
 
