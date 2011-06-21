@@ -56,7 +56,7 @@ ul, ol { list-style: none; }
 /* about page */
 
 #about { font-size: 1.6em; width: 650px; margin: 0 auto; padding-top: 45px; padding-bottom: 85px; }
-#about a:link { text-decoration: none; }
+#about a:link { text-decoration: none; color: grey; }
 #about a:hover { text-decoration: underline; } 
 
 
@@ -74,7 +74,7 @@ fieldset { border: none; text-align: right; width: 450px; }
 
 #sign-in  { margin-top: 30px; font-size: 1.3em; padding-bottom: 90px; }
 #sign-in legend { margin-left: 50px; }
-#sign-in a:hover { text-decoration: underline; color: #333333; }
+#sign-in a:hover { text-decoration: underline; color: #33333; }
 .sign-in input { height: 27px; margin-left: 10px; margin-bottom: 15px; }
 .forget { text-decoration: none; color: #999999; font-size: 0.9em; }
 .flash { position: absolute; right: 200px; top: 50px; border: none; background: #ffffff; font-size: 0.9em; color: red; }
