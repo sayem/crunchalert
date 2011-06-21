@@ -132,7 +132,7 @@ fieldset { border: none; text-align: right; width: 450px; }
 .crunchalert-user { max-height: 100px; max-width: 250px; position: absolute;  }
 .edit_alert { position: absolute; left: 270px; margin-top: 43px; }   
 .edit-prefs { position: absolute; right: 0px; top: 0px; height: 125px; width: 320px; }
-#no-alerts { font-size: 2em; color: red; position: relative; left: 37px; top: 20px; }
+#no-alerts { font-size: 2em; color: #333333; position: relative; left: 37px; top: 20px; }
 
 .form-update { font-size: 1.2em; position: relative; padding-left: 15px; }
 .edit-news { position: absolute; top: 30px; }

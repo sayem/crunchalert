@@ -3,11 +3,11 @@ class Alert < ActiveRecord::Base
   attr_accessible :content, :content_type, :user_id, :freq, :news
   default_scope :order => 'alerts.created_at DESC'
 
-  validates :user_id, :presence   => true
+  validates :user_id, :presence => true
   validates_uniqueness_of :content, :scope => :user_id, :message => 'Already Added'
   content_regex = /[\w+\-.]/i
-  validates :content, :presence   => true,
-                      :format     => { :with => content_regex }
+  validates :content, :presence => true,
+                      :format => { :with => content_regex }
 
   def self.edit(content, freq, news, user)
     alert = Alert.find_by_content_and_user_id(content, user)

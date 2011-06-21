@@ -1,18 +1,18 @@
 <div id="header">
   <a href="/" title="crunchalert" id="crunchalert-pic"><%= image_tag("crunchalert_logo.png", :alt => "crunchalert") %></a>
-<% if !signed_in? %>
+  <% if !signed_in? %>
   <div class="blurb">
     Email alerts on <a href="http://crunchbase.com" title="crunchbase.com" id="crunchbase-pic"><%= image_tag("crunchbase.png", :alt => "crunchbase") %></a> updates. <span class="sign-up"><%= link_to "Sign up", signup_path %></span> to keep tabs on your favorite tech companies and people
   </div>
   <div class="login">
     <%= link_to "Register", signup_path, :class => 'register-link' %> | <%= link_to "Login", login_path, :class => 'login-link' %>
   </div>
-<% else %>
+  <% else %>
   <div class="blurb">
     Email alerts on <a href="http://crunchbase.com" title="crunchbase.com" id="crunchbase-pic"><%= image_tag("crunchbase.png", :alt => "crunchbase") %></a> updates. Keep tabs on your favorite tech companies and people
   </div>
   <div class="user-account">
     <%= link_to "Account", edit_user_path(current_user), :class => 'account-link' %> | <%= link_to "Logout", logout_path, :method => :delete %>
   </div>
-<% end %>
+  <% end %>
 </div>

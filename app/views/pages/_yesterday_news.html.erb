@@ -1,8 +1,7 @@
 <div id="yesterday-news">
   <span class="alert-header">Recent News</span>
-    <% @news.each do |daily| %>
-    <%= raw("<p>#{daily}</p>") %>
-    <% end %>
-    <div id="home-footer"><%= render 'shared/footer' -%></div>
+  <% @news.each do |daily| %>
+  <%= raw("<p>#{daily}</p>") %>
+  <% end %>
+  <div id="home-footer"><%= render 'shared/footer' -%></div>
 </div>
-

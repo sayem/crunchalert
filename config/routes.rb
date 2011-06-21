@@ -4,18 +4,20 @@ Crunchalert::Application.routes.draw do
   resources :alerts
 
   root :to => "pages#home"
+  match '/about', :to => 'pages#about' 
+
   match '/signup', :to => 'users#new'
+  match '/forgot_password', :to => 'users#forgot_password'
+
   match '/login', :to => 'sessions#new'
   match '/logout', :to => 'sessions#destroy'
-  match '/forgot_password', :to => 'users#forgot_password'
-  match '/about', :to => 'pages#about' 
 
   match '/crunchbase', :to => 'alerts#crunchbase'
   match '/crunchbaseurl', :to => 'alerts#crunchbaseurl'
   match '/crunchalert', :to => 'alerts#crunchalert'
+  match '/prefs', :to => 'alerts#prefs'
   match '/editalert', :to => 'alerts#edit'
   match '/removealert', :to => 'alerts#remove'
-  match '/prefs', :to => 'alerts#prefs'
 
   match '/news', :to => 'news#update'
   match '/news_prefs', :to => 'news#prefs'

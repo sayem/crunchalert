@@ -219,11 +219,6 @@ class User < ActiveRecord::Base
         user = User.find_by_id(id)
         DailyMailer.deliver_news(user.email, news_alerts)
       end
-
-
-
-
-=begin
       weekly_news = WeeklyNews.find_by_id('1')
       unless weekly_news.send(today)
         time = Time.new
@@ -233,10 +228,6 @@ class User < ActiveRecord::Base
         weekly_news.send("#{today}=", news_alerts)
         weekly_news.save
       end
-=end
-
-
-
     end
   end
 
@@ -299,8 +290,19 @@ class User < ActiveRecord::Base
       end
     end
 
-    WeeklyAlert.update_all(:sun => nil, :mon => nil, :tue => nil, :wed => nil, :thu => nil, :fri => nil, :sat => nil)
+    WeeklyAlert.all.each do |x|
+      if Alert.where(:content => x.content).empty?
+        x.delete
+      end
+    end
 
+    Picture.all.each do |x|
+      if Alert.where(:content => x.content).empty?
+        x.delete
+      end
+    end
+    
+    WeeklyAlert.update_all(:sun => nil, :mon => nil, :tue => nil, :wed => nil, :thu => nil, :fri => nil, :sat => nil)
     weekly_news = WeeklyNews.find_by_id('1')    
     yesterday = Date.today.prev_day.strftime("%a").downcase
     yesterday_news = weekly_news.send(yesterday)

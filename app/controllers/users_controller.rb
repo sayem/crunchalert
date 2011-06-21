@@ -1,29 +1,6 @@
 class UsersController < ApplicationController
-  def index
-    @users = User.all
-
-    respond_to do |format|
-      format.html 
-      format.xml  { render :xml => @users }
-    end
-  end
-
-  def show
-    @user = User.find(params[:id])
-
-    respond_to do |format|
-      format.html 
-      format.xml  { render :xml => @user }
-    end
-  end
-
   def new
     @user = User.new
-
-    respond_to do |format|
-      format.html 
-      format.xml  { render :xml => @user }
-    end
   end
 
   def create
@@ -40,12 +17,12 @@ class UsersController < ApplicationController
 
   def forgot_password
     if request.post?
-      u= User.find_by_email(params[:user][:email])
+      u = User.find_by_email(params[:user][:email])
       if u and u.send_new_password
-        flash[:message]  = "A new password was just emailed to you."
+        flash[:message] = "A new password was just emailed to you."
         redirect_to login_path
       else
-        flash.now[:notice]  = "Invalid email. Couldn't send password."
+        flash.now[:notice] = "Invalid email. Couldn't send password."
       end
     end
   end
@@ -57,7 +34,6 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update_attributes(params[:user])
-      flash[:success] = "Profile updated."
       sign_in @user  
       redirect_to root_path
     else
@@ -68,6 +44,11 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy
+    if News.find_by_user_id(params[:id])
+      News.find_by_user_id(params[:id]).delete
+    end
+    alerts = Alert.where(:user_id => params[:id])
+    alerts.each {|x| x.delete }
     redirect_to root_path
   end
 end
