@@ -11,6 +11,10 @@ gem 'bcrypt-ruby', :require => 'bcrypt'
 
 gem 'jquery-rails', '>= 0.2.6'
 
+gem 'haml'
+gem 'sass'
+gem "compass", ">= 0.11.3"
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
